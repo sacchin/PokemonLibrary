@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save" >
+        </Button>
+
+        <AutoCompleteTextView
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="ユーザ名" />
+
+        <AutoCompleteTextView
+            android:id="@+id/memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="メモ" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Party" />
+
+    <LinearLayout
+        android:id="@+id/party"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+                android:id="@+id/mainview"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:stretchColumns="0,1,2,3,4,5" >
+
+                <TableLayout
+                    android:id="@+id/status"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" >
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="技" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="持ち物" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技1" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技2" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物2" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill3"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技3" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item3"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物3" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill4"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技4" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item4"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物4" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill5"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技5" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item5"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物5" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_skill6"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="技6" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/member1_item6"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="持ち物6" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
