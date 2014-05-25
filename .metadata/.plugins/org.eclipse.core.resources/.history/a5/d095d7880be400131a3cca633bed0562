@@ -1,0 +1,136 @@
+package com.gmail.sacchin.pockemonbattletools.entity;
+
+import net.vvakame.util.jsonpullparser.annotation.JsonKey;
+import net.vvakame.util.jsonpullparser.annotation.JsonModel;
+import net.vvakame.util.jsonpullparser.util.JsonArray;
+import net.vvakame.util.jsonpullparser.util.JsonHash;
+
+@JsonModel
+public class Test {
+
+	  @JsonKey
+	  String status_code;
+
+	  @JsonKey
+	  JsonArray rankingPokemonSuffererWaza;
+	  
+	  @JsonKey
+	  JsonArray rankingPokemonSufferer;
+	  
+	  @JsonKey
+	  JsonArray rankingPokemonIn;
+	  
+	  @JsonKey
+	  JsonHash rankingPokemonTrend;
+	  
+	  @JsonKey
+	  JsonHash rankingPokemonInfo;
+	  
+	  @JsonKey
+	  JsonArray rankingPokemonDown;
+
+	  @JsonKey
+	  JsonArray rankingPokemonDownWazaOther;
+	  
+	  @JsonKey
+	  JsonArray rankingPokemonDownWaza;
+
+	public String getStatus_code() {
+		return status_code;
+	}
+
+	public JsonArray getRankingPokemonSuffererWaza() {
+		return rankingPokemonSuffererWaza;
+	}
+
+	public void setRankingPokemonSuffererWaza(JsonArray rankingPokemonSuffererWaza) {
+		this.rankingPokemonSuffererWaza = rankingPokemonSuffererWaza;
+	}
+
+	public JsonArray getRankingPokemonSufferer() {
+		return rankingPokemonSufferer;
+	}
+
+	public void setRankingPokemonSufferer(JsonArray rankingPokemonSufferer) {
+		this.rankingPokemonSufferer = rankingPokemonSufferer;
+	}
+
+	public JsonArray getRankingPokemonIn() {
+		return rankingPokemonIn;
+	}
+
+	public void setRankingPokemonIn(JsonArray rankingPokemonIn) {
+		this.rankingPokemonIn = rankingPokemonIn;
+	}
+
+	public JsonHash getRankingPokemonTrend() {
+		return rankingPokemonTrend;
+	}
+
+	public void setRankingPokemonTrend(JsonHash rankingPokemonTrend) {
+		this.rankingPokemonTrend = rankingPokemonTrend;
+	}
+
+	public JsonHash getRankingPokemonInfo() {
+		return rankingPokemonInfo;
+	}
+
+	public void setRankingPokemonInfo(JsonHash rankingPokemonInfo) {
+		this.rankingPokemonInfo = rankingPokemonInfo;
+	}
+
+	public JsonArray getRankingPokemonDown() {
+		return rankingPokemonDown;
+	}
+
+	public void setRankingPokemonDown(JsonArray rankingPokemonDown) {
+		this.rankingPokemonDown = rankingPokemonDown;
+	}
+
+	public JsonArray getRankingPokemonDownWazaOther() {
+		return rankingPokemonDownWazaOther;
+	}
+
+	public void setRankingPokemonDownWazaOther(JsonArray rankingPokemonDownWazaOther) {
+		this.rankingPokemonDownWazaOther = rankingPokemonDownWazaOther;
+	}
+
+	public JsonArray getRankingPokemonDownWaza() {
+		return rankingPokemonDownWaza;
+	}
+
+	public void setRankingPokemonDownWaza(JsonArray rankingPokemonDownWaza) {
+		this.rankingPokemonDownWaza = rankingPokemonDownWaza;
+	}
+
+	public void setStatus_code(String status_code) {
+		this.status_code = status_code;
+	}
+
+
+	  
+	  
+	  
+
+
+//public class EntityTest {
+//  @Test
+//  public void jsonToPojo() throws IOException, JsonFormatException {
+//    Entity entity = EntityGen.get("{\\"foo\":\\"1st\\",\\"bar\\":2}");
+//
+//    assertThat(entity.getFoo(), is("1st"));
+//    assertThat(entity.getBar(), is(2));
+//  }
+//
+//  @Test
+//  public void pojoToJson() throws IOException, JsonFormatException {
+//    Entity entity = new Entity();
+//    entity.setFoo("3rd");
+//    entity.setBar(4);
+//
+//    Writer writer = new StringWriter();
+//    EntityGen.encode(writer, entity);
+//
+//    assertThat(writer.toString(), is("{\\"foo\\":\\"3rd\\",\\"bar\\":4}"));
+//  }
+}

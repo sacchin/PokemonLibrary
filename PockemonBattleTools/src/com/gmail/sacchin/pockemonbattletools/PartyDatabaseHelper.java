@@ -42,6 +42,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	public static final String		POCKEMON_ITEM_TABLE_NAME		= "pockemon_item";
 	public static final String		MEGA_POCKEMON_TABLE_NAME		= "mega_pockemon";
 	private Util util = new Util();
+	
 
 	private final String[] DATABASE_TABLE_NAMES;
 
@@ -60,6 +61,9 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				"characteristic1 TEXT, " +
 				"characteristic2 TEXT, " +
 				"characteristicd TEXT, " +
+				"type1 INTEGER, " +
+				"type2 INTEGER, " +
+				"weight REAL, " +
 				"count INTEGER)",
 
 				SKILL_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, skillName TEXT)",
@@ -200,12 +204,12 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	synchronized public void insertPockemonData(int no, String ｊname, String ename, int h, int a, int b, int c, int d, int s, 
-			String characteristic1, String characteristic2, String characteristicd) throws IOException, SQLException {
-		insertPockemonData(String.valueOf(no), ｊname, ename, h, a, b, c, d, s, characteristic1, characteristic2, characteristicd);
+			String characteristic1, String characteristic2, String characteristicd, int type1, int type2, double weight) throws IOException, SQLException {
+		insertPockemonData(String.valueOf(no), ｊname, ename, h, a, b, c, d, s, characteristic1, characteristic2, characteristicd, type1, type2, weight);
 	}
 
 	synchronized public void insertPockemonData(String no, String ｊname, String ename, int h, int a, int b, int c, int d, int s, 
-			String characteristic1, String characteristic2, String characteristicd) throws IOException, SQLException {
+			String characteristic1, String characteristic2, String characteristicd, int type1, int type2, double weight) throws IOException, SQLException {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db.isReadOnly()){
 			throw new IOException("Cannot get writable access to DB.");
@@ -224,6 +228,9 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 			values.put("characteristic1", characteristic1);
 			values.put("characteristic2", characteristic2);
 			values.put("characteristicd", characteristicd);
+			values.put("type1", type1);
+			values.put("type2", type2);
+			values.put("weight", weight);
 			values.put("count", 0);
 
 			db.insert(POCKEMON_MASTER_TABLE_NAME, null, values );
@@ -341,8 +348,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		ArrayList<Pockemon> list = new ArrayList<Pockemon>();
 		try {
 			while(cur.moveToNext()) {
-				Pockemon p = new Pockemon(cur.getString(1), cur.getString(2), cur.getString(3), cur.getInt(4), cur.getInt(5), cur.getInt(6), cur.getInt(7), cur.getInt(8),
-						cur.getInt(9), cur.getString(10), cur.getString(11), cur.getString(12), cur.getInt(13));
+				Pockemon p = createPockemon(cur);
 				p.setRowId(cur.getInt(0));
 
 				Integer id = util.imageResouse.get(String.valueOf(p.getNo()));
@@ -470,7 +476,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				String skillNo3 = individualCur.getString(6);
 				String skillNo4 = individualCur.getString(7);
 				String rowNo = individualCur.getString(8);
-//				Cursor cur = db.query(POCKEMON_MASTER_TABLE_NAME, null, BaseColumns._ID + " = ?", new String[] {String.valueOf(rowNo)}, null, null, null, null);
 				Cursor cur = db.rawQuery("select * from " + POCKEMON_MASTER_TABLE_NAME + " left outer join " + MEGA_POCKEMON_TABLE_NAME + " on " +
 						POCKEMON_MASTER_TABLE_NAME + "." + BaseColumns._ID + " = " + 
 						MEGA_POCKEMON_TABLE_NAME + ".pockemonNo where " + BaseColumns._ID + " = ?", new String[] {String.valueOf(rowNo)});
@@ -503,7 +508,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 					
 					if(0 < cur.getInt(14)){
 						Pockemon mega = new Pockemon(individualCur.getString(1), "メガ" + individualCur.getString(2), "Mega " + individualCur.getString(2), 
-								cur.getInt(16), cur.getInt(17), cur.getInt(18), cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getString(22), "", "", 0);
+								cur.getInt(16), cur.getInt(17), cur.getInt(18), cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getString(22), "", "", 0, 0, 0, 0);
 
 						Integer resouceId = util.imageResouse.get(result.getNo() + "m" + cur.getString(23));
 						Log.v(mega.getJname(), result.getNo() + "m" + cur.getString(23));
@@ -815,6 +820,10 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+	public Pockemon createPockemon(Cursor cur){
+		return new Pockemon(cur.getString(1), cur.getString(2), cur.getString(3), cur.getInt(4), cur.getInt(5), cur.getInt(6), cur.getInt(7), cur.getInt(8),
+				cur.getInt(9), cur.getString(10), cur.getString(11), cur.getString(12), cur.getInt(13), cur.getInt(14), cur.getFloat(15), cur.getInt(16));
 	}
 
 	@Override

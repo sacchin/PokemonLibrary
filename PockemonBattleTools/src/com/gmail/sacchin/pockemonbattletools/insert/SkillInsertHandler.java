@@ -22,7 +22,7 @@ public class SkillInsertHandler implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Pockemon p = new Pockemon("3", "フシギバナ", "Venusaur",  80,  82,  83,  100,  100,  80, " しんりょく", " -", " ようりょくそ", 3);
+			Pockemon p = new Pockemon("3", "フシギバナ", "Venusaur",  80,  82,  83,  100,  100,  80, " しんりょく", " -", " ようりょくそ", 3, 0, 0, 0);
 			IndividualPockemon ip = new IndividualPockemon(p, 0, new Timestamp(System.currentTimeMillis()), "たべのこし", "ようりょくそ", "ヘドロばくだん", "ギガドレイン", "やどぎのたね", "めざめるパワー");
 			databaseHelper.insertIndividualPockemonData(ip, new Timestamp(System.currentTimeMillis()));
 			ip = new IndividualPockemon(p, 0, new Timestamp(System.currentTimeMillis()), "たべのこし", "ようりょくそ", "やどぎのたね", "こうごうせい", "ギガドレイン", "ヘドロばくだん");

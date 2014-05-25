@@ -1,0 +1,11 @@
+package com.gmail.sacchin.pockemonbattletools.entity;
+
+import org.json.JSONObject;
+
+public class Tokusei {
+	
+	public Tokusei(JSONObject tokusei){
+		
+	}
+
+}

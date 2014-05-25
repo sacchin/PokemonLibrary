@@ -1,0 +1,35 @@
+package com.gmail.sacchin.pockemonbattletools.entity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.gmail.sacchin.pokemonlibrary.entity.Skill;
+
+public class Waza extends Skill{
+	private double rate = 0;
+	
+
+	public Waza createWaza(JSONObject waza){
+		String name;
+		try {
+			name = waza.getString("name");
+			int ranking = waza.getInt("ranking");
+			int type = waza.getInt("typeId");
+			rate = waza.getDouble("usageRate");
+			return new Waza(0, name, name, type, 0, 0, 0, 0);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+			
+			
+			
+	public Waza(int no, String ‚Šname, String ename, int type, int power,
+			int accuracy, int category, int pp) {
+		super(no, ‚Šname, ename, type, power, accuracy, category, pp);
+	}
+	
+	
+
+}

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import com.gmail.sacchin.pockemonbattletools.entity.IndividualPockemon;
 import com.gmail.sacchin.pockemonbattletools.entity.Party;
 import com.gmail.sacchin.pockemonbattletools.entity.Pockemon;
+import com.gmail.sacchin.pockemonbattletools.http.PGLGetter;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -90,7 +91,7 @@ public class PartListActivity extends Activity {
 					Bitmap image = createImage(p);
 					ImageView imageView = new ImageView(this);
 					imageView.setImageBitmap(image);
-//					imageView.setOnClickListener(new OnClickIndividualPockemon2(this, p));
+					//					imageView.setOnClickListener(new OnClickIndividualPockemon2(this, p));
 					images.addView(imageView);
 				}				
 			}

@@ -1,0 +1,19 @@
+package com.gmail.sacchin.pockemonbattletools.entity.pgl;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class RankingPokemonTrend {
+	
+//	{"wazaInfo":[{"ranking":1,"typeId":9,"usageRate":63.333333333333336,"name":"ÉwÉhÉçÇŒÇ≠ÇæÇÒ","sequenceNumber":1},
+//	"seikakuInfo":[{"ranking":1,"usageRate":66.66666666666667,"name":"Ç–Ç©Ç¶Çﬂ","sequenceNumber":1},
+//	"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"ÇµÇÒÇËÇÂÇ≠","sequenceNumber":1},
+//	"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"ÇµÇÒÇ©ÇÃÇ´ÇπÇ´","sequenceNumber":1},
+	
+	public RankingPokemonTrend(JSONObject rankingPokemonTrend){
+		JSONArray wazaInfo = new JSONArray("wazaInfo");
+		JSONArray seikakuInfo = new JSONArray("seikakuInfo");
+		JSONArray tokuseiInfo = new JSONArray("tokuseiInfo");
+		JSONArray itemInfo = new JSONArray("itemInfo");
+	}
+}

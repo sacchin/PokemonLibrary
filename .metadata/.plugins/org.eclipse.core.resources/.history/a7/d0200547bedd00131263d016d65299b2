@@ -1,0 +1,53 @@
+package com.gmail.sacchin.pockemonbattletools.entity;
+
+import net.vvakame.util.jsonpullparser.annotation.JsonModel;
+
+@JsonModel
+public class Test {
+//{"status_code":"0000","rankingPokemonSuffererWaza":[{"ranking":1,"typeId":9,"usageRate":50.0,"wazaName":"ヘドロばくだん","sequenceNumber":1},{"ranking":2,"typeId":7,"usageRate":16.666666666666668,"wazaName":"くさのちかい","sequenceNumber":2},{"ranking":3,"typeId":1,"usageRate":16.666666666666668,"wazaName":"ウェザーボール","sequenceNumber":3},{"ranking":4,"typeId":7,"usageRate":16.666666666666668,"wazaName":"つるのムチ","sequenceNumber":4}],"rankingPokemonSufferer":[{"monsno":479,"formNo":"1","ranking":1,"pokemonId":"479-1","countBattleByForm":1,"battlingChangeFlg":0,"typeId1":5,"typeId2":3,"typeName2":"ほのお","formName":null,"typeName1":"でんき","name":"ロトム","sequenceNumber":1},{"monsno":707,"formNo":"0","ranking":2,"pokemonId":"707-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":17,"typeId2":18,"typeName2":"フェアリー","formName":null,"typeName1":"はがね","name":"クレッフィ","sequenceNumber":2},{"monsno":510,"formNo":"0","ranking":3,"pokemonId":"510-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":11,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"あく","name":"レパルダス","sequenceNumber":3},{"monsno":297,"formNo":"0","ranking":4,"pokemonId":"297-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":2,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"かくとう","name":"ハリテヤマ","sequenceNumber":4},{"monsno":171,"formNo":"0","ranking":5,"pokemonId":"171-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":12,"typeId2":5,"typeName2":"でんき","formName":null,"typeName1":"みず","name":"ランターン","sequenceNumber":5}],"rankingPokemonIn":[{"monsno":6,"formNo":"0","ranking":1,"pokemonId":"6-0","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":3,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"ほのお","name":"リザードン","sequenceNumber":1},{"monsno":260,"formNo":"0","ranking":2,"pokemonId":"260-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":12,"typeId2":8,"typeName2":"じめん","formName":null,"typeName1":"みず","name":"ラグラージ","sequenceNumber":2},{"monsno":115,"formNo":"0","ranking":3,"pokemonId":"115-0","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":1,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"ノーマル","name":"ガルーラ","sequenceNumber":3},{"monsno":663,"formNo":"0","ranking":4,"pokemonId":"663-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":3,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"ほのお","name":"ファイアロー","sequenceNumber":4},{"monsno":478,"formNo":"0","ranking":5,"pokemonId":"478-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":4,"typeId2":16,"typeName2":"ゴースト","formName":null,"typeName1":"こおり","name":"ユキメノコ","sequenceNumber":5},{"monsno":448,"formNo":"0","ranking":6,"pokemonId":"448-0","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":2,"typeId2":17,"typeName2":"はがね","formName":null,"typeName1":"かくとう","name":"ルカリオ","sequenceNumber":6},{"monsno":132,"formNo":"0","ranking":7,"pokemonId":"132-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":1,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"ノーマル","name":"メタモン","sequenceNumber":7},{"monsno":94,"formNo":"0","ranking":8,"pokemonId":"94-0","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":16,"typeId2":9,"typeName2":"どく","formName":null,"typeName1":"ゴースト","name":"ゲンガー","sequenceNumber":8},{"monsno":25,"formNo":"0","ranking":9,"pokemonId":"25-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":5,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"でんき","name":"ピカチュウ","sequenceNumber":9},{"monsno":656,"formNo":"0","ranking":10,"pokemonId":"656-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":12,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"みず","name":"ケロマツ","sequenceNumber":10}],"beforePokemonId":"718-0","rankingPokemonTrend":{"wazaInfo":[{"ranking":1,"typeId":9,"usageRate":63.333333333333336,"name":"ヘドロばくだん","sequenceNumber":1},{"ranking":2,"typeId":7,"usageRate":36.666666666666664,"name":"ねむりごな","sequenceNumber":2},{"ranking":3,"typeId":7,"usageRate":36.666666666666664,"name":"やどりぎのタネ","sequenceNumber":3},{"ranking":4,"typeId":1,"usageRate":26.666666666666668,"name":"まもる","sequenceNumber":4},{"ranking":5,"typeId":7,"usageRate":26.666666666666668,"name":"はなびらのまい","sequenceNumber":5},{"ranking":6,"typeId":7,"usageRate":23.333333333333332,"name":"ハードプラント","sequenceNumber":6},{"ranking":7,"typeId":1,"usageRate":23.333333333333332,"name":"ウェザーボール","sequenceNumber":7},{"ranking":8,"typeId":9,"usageRate":23.333333333333332,"name":"どくどく","sequenceNumber":8},{"ranking":9,"typeId":7,"usageRate":16.666666666666668,"name":"リーフストーム","sequenceNumber":9},{"ranking":10,"typeId":7,"usageRate":13.333333333333334,"name":"くさのちかい","sequenceNumber":10},{"ranking":0,"typeId":0,"usageRate":109.99999999999997,"name":null,"sequenceNumber":0}],"seikakuInfo":[{"ranking":1,"usageRate":66.66666666666667,"name":"ひかえめ","sequenceNumber":1},{"ranking":2,"usageRate":10.0,"name":"てれや","sequenceNumber":2},{"ranking":3,"usageRate":3.3333333333333335,"name":"しんちょう","sequenceNumber":3},{"ranking":4,"usageRate":3.3333333333333335,"name":"なまいき","sequenceNumber":4},{"ranking":5,"usageRate":3.3333333333333335,"name":"おだやか","sequenceNumber":5},{"ranking":6,"usageRate":3.3333333333333335,"name":"おっとり","sequenceNumber":6},{"ranking":7,"usageRate":3.3333333333333335,"name":"ようき","sequenceNumber":7},{"ranking":8,"usageRate":3.3333333333333335,"name":"おくびょう","sequenceNumber":8},{"ranking":9,"usageRate":3.3333333333333335,"name":"やんちゃ","sequenceNumber":9}],"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"しんりょく","sequenceNumber":1},{"ranking":2,"usageRate":6.666666666666667,"name":"ようりょくそ","sequenceNumber":2}],"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"しんかのきせき","sequenceNumber":1},{"ranking":2,"usageRate":26.666666666666668,"name":"きあいのタスキ","sequenceNumber":2},{"ranking":3,"usageRate":13.333333333333334,"name":"こだわりメガネ","sequenceNumber":3},{"ranking":4,"usageRate":10.0,"name":"フシギバナイト","sequenceNumber":4},{"ranking":5,"usageRate":3.3333333333333335,"name":"おおきなねっこ","sequenceNumber":5},{"ranking":6,"usageRate":3.3333333333333335,"name":"かわらずのいし","sequenceNumber":6}]},"rankingPokemonInfo":{"monsno":1,"formNo":"0","ranking":486,"pokemonId":"1-0","weight":"69.0","typeId1":7,"typeId2":9,"typeName2":"どく","formName":null,"typeName1":"くさ","name":"フシギダネ","sequenceNumber":486,"height":"70.0"},"rankingPokemonDown":[{"monsno":115,"formNo":"1","ranking":1,"pokemonId":"115-1","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":1,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"ノーマル","name":"ガルーラ","sequenceNumber":1},{"monsno":663,"formNo":"0","ranking":2,"pokemonId":"663-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":3,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"ほのお","name":"ファイアロー","sequenceNumber":2},{"monsno":94,"formNo":"1","ranking":3,"pokemonId":"94-1","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":16,"typeId2":9,"typeName2":"どく","formName":null,"typeName1":"ゴースト","name":"ゲンガー","sequenceNumber":3},{"monsno":711,"formNo":"3","ranking":4,"pokemonId":"711-3","countBattleByForm":1,"battlingChangeFlg":0,"typeId1":16,"typeId2":7,"typeName2":"くさ","formName":null,"typeName1":"ゴースト","name":"パンプジン","sequenceNumber":4},{"monsno":700,"formNo":"0","ranking":5,"pokemonId":"700-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":18,"typeId2":0,"typeName2":null,"formName":null,"typeName1":"フェアリー","name":"ニンフィア","sequenceNumber":5},{"monsno":681,"formNo":"1","ranking":6,"pokemonId":"681-1","countBattleByForm":1,"battlingChangeFlg":1,"typeId1":17,"typeId2":16,"typeName2":"ゴースト","formName":null,"typeName1":"はがね","name":"ギルガルド","sequenceNumber":6},{"monsno":658,"formNo":"0","ranking":7,"pokemonId":"658-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":12,"typeId2":11,"typeName2":"あく","formName":null,"typeName1":"みず","name":"ゲッコウガ","sequenceNumber":7},{"monsno":645,"formNo":"1","ranking":8,"pokemonId":"645-1","countBattleByForm":1,"battlingChangeFlg":0,"typeId1":8,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"じめん","name":"ランドロス","sequenceNumber":8},{"monsno":472,"formNo":"0","ranking":9,"pokemonId":"472-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":8,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"じめん","name":"グライオン","sequenceNumber":9},{"monsno":468,"formNo":"0","ranking":10,"pokemonId":"468-0","countBattleByForm":0,"battlingChangeFlg":0,"typeId1":18,"typeId2":6,"typeName2":"ひこう","formName":null,"typeName1":"フェアリー","name":"トゲキッス","sequenceNumber":10}],"rankingPokemonDownWazaOther":{"ranking":0,"typeId":0,"usageRate":5.0,"wazaName":"その他","sequenceNumber":0},"nextPokemonId":"2-0","rankingPokemonDownWaza":[{"ranking":1,"typeId":11,"usageRate":10.0,"wazaName":"ふいうち","sequenceNumber":1},{"ranking":2,"typeId":9,"usageRate":10.0,"wazaName":"ヘドロばくだん","sequenceNumber":2},{"ranking":3,"typeId":15,"usageRate":10.0,"wazaName":"いわなだれ","sequenceNumber":3},{"ranking":4,"typeId":8,"usageRate":10.0,"wazaName":"じしん","sequenceNumber":4},{"ranking":5,"typeId":11,"usageRate":5.0,"wazaName":"イカサマ","sequenceNumber":5},{"ranking":6,"typeId":13,"usageRate":5.0,"wazaName":"サイコショック","sequenceNumber":6},{"ranking":7,"typeId":17,"usageRate":5.0,"wazaName":"アイアンヘッド","sequenceNumber":7},{"ranking":8,"typeId":9,"usageRate":5.0,"wazaName":"クロスポイズン","sequenceNumber":8},{"ranking":9,"typeId":6,"usageRate":5.0,"wazaName":"ブレイブバード","sequenceNumber":9},{"ranking":10,"typeId":6,"usageRate":5.0,"wazaName":"エアスラッシュ","sequenceNumber":10},{"ranking":0,"typeId":0,"usageRate":25.0,"wazaName":null,"sequenceNumber":0}],"timezoneName":"JST"}
+
+	  @JsonKey
+	  String foo;
+
+	  @JsonKey
+	  int bar;
+
+	  public String getFoo() {
+	    return foo;
+	  }
+
+	  public void setFoo(String foo) {
+	    this.foo = foo;
+	  }
+
+	  public int getBar() {
+	    return bar;
+	  }
+
+	  public void setBar(int bar) {
+	    this.bar = bar;
+	  }
+}
+
+
+//public class EntityTest {
+//  @Test
+//  public void jsonToPojo() throws IOException, JsonFormatException {
+//    Entity entity = EntityGen.get("{\\"foo\":\\"1st\\",\\"bar\\":2}");
+//
+//    assertThat(entity.getFoo(), is("1st"));
+//    assertThat(entity.getBar(), is(2));
+//  }
+//
+//  @Test
+//  public void pojoToJson() throws IOException, JsonFormatException {
+//    Entity entity = new Entity();
+//    entity.setFoo("3rd");
+//    entity.setBar(4);
+//
+//    Writer writer = new StringWriter();
+//    EntityGen.encode(writer, entity);
+//
+//    assertThat(writer.toString(), is("{\\"foo\\":\\"3rd\\",\\"bar\\":4}"));
+//  }
+}

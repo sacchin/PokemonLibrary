@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import net.vvakame.util.jsonpullparser.JsonFormatException;
+
 import com.gmail.sacchin.pockemonbattletools.entity.Party;
 import com.gmail.sacchin.pockemonbattletools.entity.Pockemon;
+import com.gmail.sacchin.pockemonbattletools.http.PGLGetter;
 import com.gmail.sacchin.pockemonbattletools.insert.IndividualPockemonInsertHandler;
 import com.gmail.sacchin.pockemonbattletools.insert.ItemInsertHandler;
 import com.gmail.sacchin.pockemonbattletools.insert.MegaPockemonInsertHandler;
@@ -103,7 +106,7 @@ public class MainActivity extends Activity {
 		if(0 < scrollView.getChildCount()){
 			return;
 		}
-
+			
 		LinearLayout all = new LinearLayout(this);
 		all.setLayoutParams(LP);
 		all.setOrientation(LinearLayout.VERTICAL);
@@ -133,6 +136,9 @@ public class MainActivity extends Activity {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		executorService.execute(
+				new PGLGetter());
 	}
 	
 	public FrameLayout createFrameLayout(Pockemon p, HashMap<String, Integer> countMap){
@@ -169,9 +175,6 @@ public class MainActivity extends Activity {
 			partyLayout.removeAllViews();
 			party.clear();
 		}
-		
-		
-
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	

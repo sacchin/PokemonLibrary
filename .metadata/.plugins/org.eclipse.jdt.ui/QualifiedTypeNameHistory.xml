@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pokemonlibrary.Pokemon"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pokemonlibrary.test.TypeTest"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pokemonlibrary.entity.Pokemon"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pokemonlibrary.entity.Type"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pockemonbattletools.entity.Pockemon"/>
+<fullyQualifiedTypeName name="android.database.Cursor"/>
+<fullyQualifiedTypeName name="net.vvakame.util.jsonpullparser.annotation.JsonModel"/>
+<fullyQualifiedTypeName name="net.vvakame.util.jsonpullparser.annotation.JsonKey"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="net.vvakame.util.jsonpullparser.util.JsonArray"/>
+<fullyQualifiedTypeName name="net.vvakame.util.jsonpullparser.util.JsonHash"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pockemonbattletools.entity.TestGen"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pockemonbattletools.entity.Test"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream.PutField"/>
+<fullyQualifiedTypeName name="org.apache.http.impl.client.DefaultHttpClient"/>
+<fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPost"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.apache.http.message.BasicNameValuePair"/>
+<fullyQualifiedTypeName name="org.apache.http.client.entity.UrlEncodedFormEntity"/>
+<fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
+<fullyQualifiedTypeName name="org.apache.http.NameValuePair"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayOutputStream"/>
+<fullyQualifiedTypeName name="org.apache.http.HttpStatus"/>
+<fullyQualifiedTypeName name="org.apache.http.util.EntityUtils"/>
+<fullyQualifiedTypeName name="org.apache.http.Header"/>
+<fullyQualifiedTypeName name="org.apache.http.message.BasicHeader"/>
+<fullyQualifiedTypeName name="org.apache.http.client.ClientProtocolException"/>
+<fullyQualifiedTypeName name="java.lang.StackTraceElement"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="com.gmail.sacchin.pockemonbattletools.http.PGLGetter"/>
+<fullyQualifiedTypeName name="java.nio.CharBuffer"/>
+</qualifiedTypeNameHistroy>

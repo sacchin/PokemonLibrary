@@ -10,6 +10,7 @@ import com.gmail.sacchin.pockemonbattletools.entity.IndividualPockemon;
 import com.gmail.sacchin.pockemonbattletools.entity.Party;
 import com.gmail.sacchin.pockemonbattletools.entity.Pockemon;
 import com.gmail.sacchin.pockemonbattletools.listener.OnClickIndividualPockemon;
+import com.gmail.sacchin.pokemonlibrary.entity.*;
 
 import android.app.Activity;
 import android.content.Context;
@@ -169,8 +170,8 @@ public class ToolActivity extends Activity{
     	
     	createPockemonStatus(p);
     	if(p.getMega() != null){
-    		for(Pockemon mega : p.getMega()){
-    	    	createPockemonStatus(mega);
+    		for(Pokemon mega : p.getMega()){
+    	    	createPockemonStatus((Pockemon)mega);
     		}
     	}
     	

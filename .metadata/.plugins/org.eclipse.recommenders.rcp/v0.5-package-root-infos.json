@@ -1,0 +1,249 @@
+[
+  {
+    "symbolicName": "org.mvel.mvel2",
+    "version": {
+      "major": 2,
+      "minor": 1,
+      "micro": 4,
+      "qualifier": "Final"
+    },
+    "jarFileFingerprint": "dd932b5a5e475e6f14c35d9b752373e99a49566d",
+    "jarFileModificationDate": "2014-05-17T21:56:58.168+09:00",
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\jsonpullparser-apt-1.6.2.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "bad5efeb8864023266a8a3a84da1ede49505006e",
+    "jarFileModificationDate": "2013-04-23T19:40:15.331+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\resources.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "90ebaf94769f693824cf85d1340f9c7fedd87430",
+    "jarFileModificationDate": "2013-04-23T19:40:24.594+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\rt.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "c40b948a8103c939a0da54723630db9d4633c350",
+    "jarFileModificationDate": "2013-04-23T19:40:15.223+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\ext\\sunjce_provider.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "PokemonLibrary",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "5cd2b0a19a6be4cbbada7c31904e1710029414e2",
+    "jarFileModificationDate": "2014-05-13T01:35:17.181+09:00",
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\PokemonLibrary.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "android-support-v4",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "307c1cc532eabbf1d135b43e5c983c9da700449d",
+    "jarFileModificationDate": "2013-10-05T21:53:00.416+09:00",
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\android-support-v4.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "70e3f9e76e3d5884415516c0cee0855295bcb571",
+    "jarFileModificationDate": "2013-04-23T19:40:15.296+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\jce.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "PokemonLibrary",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "5cd2b0a19a6be4cbbada7c31904e1710029414e2",
+    "jarFileModificationDate": "2014-05-13T01:35:17.181+09:00",
+    "location": "C:\\Users\\U-U\\git\\ImageEditor\\lib\\PokemonLibrary.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "junit-4.11",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "4e031bb61df09069aeb2bffb4019e7a5034a4ee0",
+    "jarFileModificationDate": "2014-05-13T00:40:43.116+09:00",
+    "location": "C:\\Users\\U-U\\git\\PokemonUtilLibrary\\lib\\junit-4.11.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "4808e59d44d9b44e3fb93070a7a832dcf31f9c5d",
+    "jarFileModificationDate": "2013-04-23T19:40:25.910+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\charsets.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "android",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "322db3959c3383f4be9daa75ffa427d1485879ad",
+    "jarFileModificationDate": "2013-04-23T20:42:20.842+09:00",
+    "location": "C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "9bcb75a83b79e616c348c7affc1115329d272fcc",
+    "jarFileModificationDate": "2013-04-23T19:40:15.217+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\ext\\dnsns.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "f4d8d94eb6255fb00946f496bc6fe4e6916d264d",
+    "jarFileModificationDate": "2013-04-23T19:40:26.084+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\ext\\localedata.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "android-support-v4",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "db0f122c99ef9f90dbab3fada6d191f2880cbb8e",
+    "jarFileModificationDate": "2014-03-15T23:42:04.388+09:00",
+    "location": "C:\\Users\\U-U\\git\\TottoriCompass\\libs\\android-support-v4.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "junit-4.10",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "e4f1766ce7404a08f45d859fb9c226fc9e41a861",
+    "jarFileModificationDate": "2014-05-13T00:50:25.803+09:00",
+    "location": "C:\\Users\\U-U\\git\\PokemonUtilLibrary\\lib\\junit-4.10.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "org.json-20120521",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "e04ebf63b984b19433748f06d50c1aba995a6292",
+    "jarFileModificationDate": "2014-05-09T23:52:13.657+09:00",
+    "location": "C:\\Users\\U-U\\git\\ImageEditor\\lib\\org.json-20120521.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "0046b4afa97bf972a1148ecd4ea3426df5a585f6",
+    "jarFileModificationDate": "2013-04-23T19:40:15.224+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\ext\\sunmscapi.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "d683f8bcb0473898652c5560a802e33e054baa3c",
+    "jarFileModificationDate": "2013-04-23T19:40:24.789+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\jsse.jar",
+    "javaRuntime": true
+  },
+  {
+    "symbolicName": "junit-4.11",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "4e031bb61df09069aeb2bffb4019e7a5034a4ee0",
+    "jarFileModificationDate": "2014-05-13T00:40:43.116+09:00",
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\junit-4.11.jar",
+    "javaRuntime": false
+  }
+]

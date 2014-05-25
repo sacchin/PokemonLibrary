@@ -1,0 +1,27 @@
+{
+  "C:\\Program Files\\Java\\jre6\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\rt.jar",
+    "status": "RESOLVED"
+  },
+  "C:\\Users\\U-U\\git\\PokemonUtilLibrary\\src": {
+    "location": "C:\\Users\\U-U\\git\\PokemonUtilLibrary\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Users\\U-U\\git\\PokemonUtilLibrary\\src\u0027. Skipped."
+  },
+  "C:\\Users\\U-U\\git\\ImageEditor\\lib\\PokemonLibrary.jar": {
+    "location": "C:\\Users\\U-U\\git\\ImageEditor\\lib\\PokemonLibrary.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\Users\\U-U\\git\\ImageEditor\\lib\\PokemonLibrary.jar\u0027. Neither fingerprint \u00275cd2b0a19a6be4cbbada7c31904e1710029414e2\u0027 nor symbolic name \u0027PokemonLibrary\u0027 are known."
+  },
+  "C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar": {
+    "location": "C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar\u0027. Neither fingerprint \u0027322db3959c3383f4be9daa75ffa427d1485879ad\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "C:\\Users\\U-U\\git\\PockemonBattleTools\\src": {
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Users\\U-U\\git\\PockemonBattleTools\\src\u0027. Skipped."
+  }
+}

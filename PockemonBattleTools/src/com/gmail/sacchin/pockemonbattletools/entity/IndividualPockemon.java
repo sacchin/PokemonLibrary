@@ -24,7 +24,7 @@ public class IndividualPockemon extends Pockemon{
 	public IndividualPockemon(Pockemon p, long id, Timestamp time, String item, String characteristic, 
 			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
 		super(p.getNo(), p.getJname(), p.getEname(), p.getH(), p.getA(), p.getB(), p.getC(), p.getD(), p.getS(), p.getCharacteristic1(), 
-				p.getCharacteristic2(), p.getCharacteristicd(), 0);
+				p.getCharacteristic2(), p.getCharacteristicd(), 0, 0, 0, 0);
 		setRowId(p.getRowId());
 		this.id = id;
 		this.time = time;
@@ -41,7 +41,7 @@ public class IndividualPockemon extends Pockemon{
 			String characteristic2, String characteristicd, long id, Timestamp time, String item, String characteristic, 
 			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
 		super(no, ‚Šname, ename, h, a, b, c, d, s, characteristic1, characteristic2,
-				characteristicd, 0);
+				characteristicd, 0, 0, 0, 0);
 		this.id = id;
 		this.time = time;
 		this.item = item;

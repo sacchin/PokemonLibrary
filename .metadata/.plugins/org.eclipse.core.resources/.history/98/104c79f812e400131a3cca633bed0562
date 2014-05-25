@@ -1,0 +1,104 @@
+package com.gmail.sacchin.pokemonlibrary.entity;
+
+public class Seikaku {
+	public static final int SAMISIGARI = 0;	//ノーマル
+	public static final int IJIPPARI = 1;	//ほのお
+	public static final int YANCHA = 2;	//みず
+	public static final int YUKAN = 3;	//でんき
+	public static final int ZUBUTOI = 4;	//くさ
+	public static final int WANPAKU = 5;	//こおり
+	public static final int NOTENKI = 6;	//かくとう
+	public static final int NONKI = 7;	//どく
+	public static final int HIKAEME = 8;	//じめん	
+	public static final int OTTORI = 9;	//ひこう
+	public static final int UKKARIYA = 10;	//エスパー
+	public static final int REISEI = 11;	//むし	
+	public static final int ODAYAKA = 12;	//いわ
+	public static final int OTONASI = 13;	//ゴースト
+	public static final int SINCHO = 14;	//ドラゴン
+	public static final int NAMAIKI = 15;	//あく
+	public static final int OKUBYO = 16;	//はがね
+	public static final int SEKKATI = 17;	//フェアリー
+	public static final int YOKI = 18;	//フェアリー
+	public static final int MUJAKI = 19;	//フェアリー
+	
+	public static final int TEREYA = 20;
+	public static final int GANBAIYA = 21;
+	public static final int SUNAO = 22;
+	public static final int KIMAGURE = 23;
+	public static final int MAJIME = 24;
+	
+	public static float AFFINITY_TABLE[][] = 
+		{
+		{1.1f,0.9f,1,1,1},
+		{1.1f,1,0.9f,1,1},
+		{1.1f,1,1,0.9f,1},
+		{1.1f,1,1,1,0.9f},
+		{0.9f,1.1f,1,1,1},
+		{1,1.1f,0.9f,1,1},
+		{1,1.1f,1,0.9f,1},
+		{1,1.1f,1,1,0.9f},
+		{0.9f,1,1.1f,1,1},
+		{1,0.9f,1.1f,1,1},
+		{1,1,1.1f,0.9f,1},
+		{1,1,1.1f,0.9f,1},
+		{0.9f,1,1,1.1f,1},
+		{1,0.9f,1,1.1f,1},
+		{1,1,0.9f,1.1f,1},
+		{1,1,1,1.1f,0.9f},
+		{0.9f,1,1,1,1.1f},
+		{1,0.9f,1,1,1.1f},
+		{1,1,0.9f,1,1.1f},
+		{1,1,1,0.9f,1.1f},
+		{1,1,1,1,1}
+		};
+
+
+
+	public static int convertSkillNameToNo(String skillName){
+		if("ノーマル".equals(skillName)){
+			return NORMAL;
+		}else if("ほのお".equals(skillName)){
+			return FIRE;
+		}else if("みず".equals(skillName)){
+			return WATER;
+		}else if("でんき".equals(skillName)){
+			return ELECTRIC;
+		}else if("くさ".equals(skillName)){
+			return GRASS;
+		}else if("こおり".equals(skillName)){
+			return ICE;
+		}else if("かくとう".equals(skillName)){
+			return FIGHTING;
+		}else if("どく".equals(skillName)){
+			return POINSON;
+		}else if("じめん".equals(skillName)){
+			return GROUND;
+		}else if("ひこう".equals(skillName)){
+			return FLYNG;
+		}else if("エスパー".equals(skillName)){
+			return PSYCHIC;
+		}else if("むし".equals(skillName)){
+			return BUG;
+		}else if("いわ".equals(skillName)){
+			return ROCK;
+		}else if("ゴースト".equals(skillName)){
+			return GHOST;
+		}else if("ドラゴン".equals(skillName)){
+			return DRAGON;
+		}else if("あく".equals(skillName)){
+			return DARK;
+		}else if("はがね".equals(skillName)){
+			return STEEL;
+		}else if("フェアリー".equals(skillName)){
+			return FEARY;
+		}else{
+			return -1;
+		}
+
+	}
+
+	public static float calcurateAffinity(int attackType, Pokemon p){
+		return AFFINITY_TABLE[attackType][p.getType1()] * AFFINITY_TABLE[attackType][p.getType2()];
+	}
+}
