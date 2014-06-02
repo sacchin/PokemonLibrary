@@ -29,7 +29,7 @@ public class OnClickCreateNewPartyButton implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(party.getMember() == null || party.getMember().size() < 1){
-			Toast.makeText(context, "1‘ÌˆÈã‘I‘ð‚µ‚Ä‚­‚¾‚³‚¢B", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "ãƒã‚±ãƒ¢ãƒ³ãŒé¸æŠžã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		party.setTime(new Timestamp(System.currentTimeMillis()));

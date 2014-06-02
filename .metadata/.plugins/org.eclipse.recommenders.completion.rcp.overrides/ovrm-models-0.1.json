@@ -3,5 +3,10 @@
     "location": "C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar",
     "status": "UNRESOLVED",
     "error": "No call model found for \u0027C:\\Users\\U-U\\android-sdks\\platforms\\android-17\\android.jar\u0027. Neither fingerprint \u0027322db3959c3383f4be9daa75ffa427d1485879ad\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\PokemonLibrary.jar": {
+    "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\PokemonLibrary.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\PokemonLibrary.jar\u0027. Neither fingerprint \u0027b2b4de0da29bda838f8824f7915caa4b7263a0bb\u0027 nor symbolic name \u0027PokemonLibrary\u0027 are known."
   }
 }

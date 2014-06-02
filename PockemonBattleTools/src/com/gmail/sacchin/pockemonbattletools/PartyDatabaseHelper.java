@@ -50,7 +50,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		POCKEMON_MASTER_TABLE_NAME + "(" + 
 				BaseColumns._ID + " INTEGER PRIMARY KEY, " + 
 				"no TEXT, " +
-				"ｊname TEXT, " +
+				"jname TEXT, " +
 				"ename TEXT, " +
 				"h INTEGER, " +
 				"a INTEGER, " +
@@ -58,9 +58,9 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				"c INTEGER, " +
 				"d INTEGER, " +
 				"s INTEGER, " +
-				"characteristic1 TEXT, " +
-				"characteristic2 TEXT, " +
-				"characteristicd TEXT, " +
+				"ability1 TEXT, " +
+				"ability2 TEXT, " +
+				"abilityd TEXT, " +
 				"type1 INTEGER, " +
 				"type2 INTEGER, " +
 				"weight REAL, " +
@@ -484,7 +484,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				while(cur.moveToNext()) {
 					if(result == null){
 						String no = cur.getString(1);
-						String ｊname = cur.getString(2);
+						String jname = cur.getString(2);
 						String ename = cur.getString(3);
 						int h = cur.getInt(4);
 						int a = cur.getInt(5);
@@ -492,26 +492,24 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 						int c = cur.getInt(7);
 						int d = cur.getInt(8);
 						int s = cur.getInt(9);
-						String characteristic1 = cur.getString(10);
-						String characteristic2 = cur.getString(11);
-						String characteristicd = cur.getString(12);
-						result = new IndividualPockemon(no, ｊname, ename, h, a, b, c, d, s, 
-								characteristic1, characteristic2, characteristicd, id, time, item, 
+						String ability1 = cur.getString(10);
+						String ability2 = cur.getString(11);
+						String abilityd = cur.getString(12);
+						result = new IndividualPockemon(no, jname, ename, h, a, b, c, d, s, 
+								ability1, ability2, abilityd, id, time, item, 
 								characteristic, skillNo1, skillNo2, skillNo3, skillNo4);
 						result.setRowId(Integer.parseInt(rowNo));
-
 						Integer resouceId = util.imageResouse.get(result.getNo());
 						if(resouceId != null){
 							result.setResouceId(resouceId.intValue());
 						}
 					}
 					
-					if(0 < cur.getInt(14)){
+					if(0 < cur.getInt(17)){
 						Pockemon mega = new Pockemon(individualCur.getString(1), "メガ" + individualCur.getString(2), "Mega " + individualCur.getString(2), 
-								cur.getInt(16), cur.getInt(17), cur.getInt(18), cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getString(22), "", "", 0, 0, 0, 0);
+								cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getInt(22), cur.getInt(23), cur.getInt(24), cur.getString(25), "", "", 0, 0, 0, 0);
 
 						Integer resouceId = util.imageResouse.get(result.getNo() + "m" + cur.getString(23));
-						Log.v(mega.getJname(), result.getNo() + "m" + cur.getString(23));
 						if(resouceId != null){
 							mega.setResouceId(resouceId.intValue());
 						}

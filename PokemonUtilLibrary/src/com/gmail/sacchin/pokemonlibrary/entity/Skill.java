@@ -13,7 +13,7 @@ public class Skill {
 	/**
 	 * 
 	 * @param no
-	 * @param ‚Šname
+	 * @param jname
 	 * @param ename
 	 * @param type
 	 * @param power
@@ -21,9 +21,9 @@ public class Skill {
 	 * @param category
 	 * @param pp
 	 */
-	public Skill(int no, String ‚Šname, String ename, int type, int power, int accuracy, int category, int pp) {
+	public Skill(int no, String jname, String ename, int type, int power, int accuracy, int category, int pp) {
 		this.no = no;
-		this.jname = ‚Šname;
+		this.jname = jname;
 		this.ename = ename;
 		this.type = type;
 		this.power = power;

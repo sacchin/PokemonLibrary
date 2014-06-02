@@ -2,24 +2,24 @@ package com.gmail.sacchin.pokemonlibrary.entity;
 
 
 public class Type {
-	public static final int NORMAL = 0;	//ÉmÅ[É}Éã
-	public static final int FIRE = 1;	//ÇŸÇÃÇ®
-	public static final int WATER = 2;	//Ç›Ç∏
-	public static final int ELECTRIC = 3;	//Ç≈ÇÒÇ´
-	public static final int GRASS = 4;	//Ç≠Ç≥
-	public static final int ICE = 5;	//Ç±Ç®ÇË
-	public static final int FIGHTING = 6;	//Ç©Ç≠Ç∆Ç§
-	public static final int POINSON = 7;	//Ç«Ç≠
-	public static final int GROUND = 8;	//Ç∂ÇﬂÇÒ	
-	public static final int FLYNG = 9;	//Ç–Ç±Ç§
-	public static final int PSYCHIC = 10;	//ÉGÉXÉpÅ[
-	public static final int BUG = 11;	//ÇﬁÇµ	
-	public static final int ROCK = 12;	//Ç¢ÇÌ
-	public static final int GHOST = 13;	//ÉSÅ[ÉXÉg
-	public static final int DRAGON = 14;	//ÉhÉâÉSÉì
-	public static final int DARK = 15;	//Ç†Ç≠
-	public static final int STEEL = 16;	//ÇÕÇ™ÇÀ
-	public static final int FEARY = 17;	//ÉtÉFÉAÉäÅ[
+	public static final int NORMAL = 0;
+	public static final int FIRE = 1;
+	public static final int WATER = 2;
+	public static final int ELECTRIC = 3;
+	public static final int GRASS = 4;
+	public static final int ICE = 5;
+	public static final int FIGHTING = 6;
+	public static final int POINSON = 7;
+	public static final int GROUND = 8;
+	public static final int FLYNG = 9;
+	public static final int PSYCHIC = 10;
+	public static final int BUG = 11;
+	public static final int ROCK = 12;
+	public static final int GHOST = 13;
+	public static final int DRAGON = 14;
+	public static final int DARK = 15;
+	public static final int STEEL = 16;
+	public static final int FEARY = 17;
 
 	public static float AFFINITY_TABLE[][] = 
 		{
@@ -43,53 +43,49 @@ public class Type {
 		{1,0.5f,1,1,1,1,2,0.5f,1,1,1,1,1,1,2,2,0.5f,1}
 		};
 
-
-
-	public static int convertSkillNameToNo(String typeName){
-		if("ÉmÅ[É}Éã".equals(typeName)){
+	public static int convertTypeNameToNo(String typeName){
+		if("„Éé„Éº„Éû„É´".equals(typeName)){
 			return NORMAL;
-		}else if("ÇŸÇÃÇ®".equals(typeName)){
+		}else if("„Åª„ÅÆ„Åä".equals(typeName)){
 			return FIRE;
-		}else if("Ç›Ç∏".equals(typeName)){
+		}else if("„Åø„Åö".equals(typeName)){
 			return WATER;
-		}else if("Ç≈ÇÒÇ´".equals(typeName)){
+		}else if("„Åß„Çì„Åç".equals(typeName)){
 			return ELECTRIC;
-		}else if("Ç≠Ç≥".equals(typeName)){
+		}else if("„Åè„Åï".equals(typeName)){
 			return GRASS;
-		}else if("Ç±Ç®ÇË".equals(typeName)){
+		}else if("„Åì„Åä„Çä".equals(typeName)){
 			return ICE;
-		}else if("Ç©Ç≠Ç∆Ç§".equals(typeName)){
+		}else if("„Åã„Åè„Å®„ÅÜ".equals(typeName)){
 			return FIGHTING;
-		}else if("Ç«Ç≠".equals(typeName)){
+		}else if("„Å©„Åè".equals(typeName)){
 			return POINSON;
-		}else if("Ç∂ÇﬂÇÒ".equals(typeName)){
+		}else if("„Åò„ÇÅ„Çì".equals(typeName)){
 			return GROUND;
-		}else if("Ç–Ç±Ç§".equals(typeName)){
+		}else if("„Å≤„Åì„ÅÜ".equals(typeName)){
 			return FLYNG;
-		}else if("ÉGÉXÉpÅ[".equals(typeName)){
+		}else if("„Ç®„Çπ„Éë„Éº".equals(typeName)){
 			return PSYCHIC;
-		}else if("ÇﬁÇµ".equals(typeName)){
+		}else if("„ÇÄ„Åó".equals(typeName)){
 			return BUG;
-		}else if("Ç¢ÇÌ".equals(typeName)){
+		}else if("„ÅÑ„Çè".equals(typeName)){
 			return ROCK;
-		}else if("ÉSÅ[ÉXÉg".equals(typeName)){
+		}else if("„Ç¥„Éº„Çπ„Éà".equals(typeName)){
 			return GHOST;
-		}else if("ÉhÉâÉSÉì".equals(typeName)){
+		}else if("„Éâ„É©„Ç¥„É≥".equals(typeName)){
 			return DRAGON;
-		}else if("Ç†Ç≠".equals(typeName)){
+		}else if("„ÅÇ„Åè".equals(typeName)){
 			return DARK;
-		}else if("ÇÕÇ™ÇÀ".equals(typeName)){
+		}else if("„ÅØ„Åå„Å≠".equals(typeName)){
 			return STEEL;
-		}else if("ÉtÉFÉAÉäÅ[".equals(typeName)){
+		}else if("„Éï„Çß„Ç¢„É™„Éº".equals(typeName)){
 			return FEARY;
 		}else{
 			return -1;
 		}
-
 	}
 
 	public static float calcurateAffinity(int attackType, Pokemon p){
 		return AFFINITY_TABLE[attackType][p.getType1()] * AFFINITY_TABLE[attackType][p.getType2()];
 	}
-
 }

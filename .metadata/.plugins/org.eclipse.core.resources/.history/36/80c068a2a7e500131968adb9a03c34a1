@@ -1,0 +1,17 @@
+package com.gmail.sacchin.pokemonlibrary.test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
+import com.gmail.sacchin.pokemonlibrary.entity.Type;
+
+public class SkillTest {
+	@Test
+	public void testConvertSkillNameToNo() {
+		assertEquals(Type.FIRE, Type.convertSkillNameToNo("ほのお"), 1);
+		assertEquals(Type.FLYNG, Type.convertSkillNameToNo("ひこう"), 1);
+		assertEquals(-1, Type.convertSkillNameToNo("かたな"), 1);
+	}
+}

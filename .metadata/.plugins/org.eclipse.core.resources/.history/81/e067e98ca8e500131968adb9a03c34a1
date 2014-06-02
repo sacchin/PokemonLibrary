@@ -1,0 +1,8 @@
+package com.gmail.sacchin.pokemonlibrary.util;
+
+public class D {
+	ＨＰ
+	{(種族値×2＋個体値＋努力値/4)×Lv/100}＋10＋Lv
+	攻撃、防御、特攻、特防、素早さ
+	[{(種族値×2＋個体値＋努力値/4)×Lv/100}＋5]×性格補正(1.1、1.0、0.9)
+}

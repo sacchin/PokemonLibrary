@@ -13,7 +13,7 @@ public class IndividualPockemon extends Pockemon{
 	private long id = 0;
 	private Timestamp time = null;
 	private String item = "";
-	private String characteristic = null;
+	private String ability = null;
 	private String skillNo1 = "";
 	private String skillNo2 = "";
 	private String skillNo3 = "";
@@ -21,31 +21,31 @@ public class IndividualPockemon extends Pockemon{
 	private ArrayList<Entry<String, Integer>> itemStatistics = null;
 	private ArrayList<Entry<String, Integer>> skillStatistics = null;
 
-	public IndividualPockemon(Pockemon p, long id, Timestamp time, String item, String characteristic, 
+	public IndividualPockemon(Pockemon p, long id, Timestamp time, String item, String ability, 
 			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
-		super(p.getNo(), p.getJname(), p.getEname(), p.getH(), p.getA(), p.getB(), p.getC(), p.getD(), p.getS(), p.getCharacteristic1(), 
-				p.getCharacteristic2(), p.getCharacteristicd(), 0, 0, 0, 0);
+		super(p.getNo(), p.getJname(), p.getEname(), p.getH(), p.getA(), p.getB(), p.getC(), p.getD(), p.getS(), p.getAbility1(), 
+				p.getAbility2(), p.getAbilityd(), 0, 0, 0, 0);
 		setRowId(p.getRowId());
 		this.id = id;
 		this.time = time;
 		this.item = item;
-		this.characteristic = characteristic;
+		this.ability = ability;
 		this.skillNo1 = skillNo1;
 		this.skillNo2 = skillNo2;
 		this.skillNo3 = skillNo3;
 		this.skillNo4 = skillNo4;
 	}
 
-	public IndividualPockemon(String no, String Çäname, String ename, int h, int a,
-			int b, int c, int d, int s, String characteristic1,
-			String characteristic2, String characteristicd, long id, Timestamp time, String item, String characteristic, 
+	public IndividualPockemon(String no, String name, String ename, int h, int a,
+			int b, int c, int d, int s, String ability1,
+			String ability2, String abilityd, long id, Timestamp time, String item, String ability, 
 			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
-		super(no, Çäname, ename, h, a, b, c, d, s, characteristic1, characteristic2,
-				characteristicd, 0, 0, 0, 0);
+		super(no, name, ename, h, a, b, c, d, s, ability1, ability2,
+				abilityd, 0, 0, 0, 0);
 		this.id = id;
 		this.time = time;
 		this.item = item;
-		this.characteristic = characteristic;
+		this.ability = ability;
 		this.skillNo1 = skillNo1;
 		this.skillNo2 = skillNo2;
 		this.skillNo3 = skillNo3;
@@ -56,7 +56,7 @@ public class IndividualPockemon extends Pockemon{
 		List<Entry<String, Integer>> entries = new ArrayList<Entry<String, Integer>>(statistics.entrySet());
 		Collections.sort(entries, new Comparator<Entry<String, Integer>>(){
 			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2){
-				return ((Integer)o2.getValue()).compareTo((Integer)o1.getValue());//ç~èá
+				return ((Integer)o2.getValue()).compareTo((Integer)o1.getValue());//ÔøΩ~ÔøΩÔøΩ
 			}
 		});
 		return entries;
@@ -93,12 +93,12 @@ public class IndividualPockemon extends Pockemon{
 
 
 	public String getCharacteristic() {
-		return characteristic;
+		return ability;
 	}
 
 
 	public void setCharacteristic(String characteristic) {
-		this.characteristic = characteristic;
+		this.ability = characteristic;
 	}
 
 

@@ -1,1 +1,19 @@
 1401022394303	Delete element
+1401111388372	Rename type 'JSONConverter'
+1401111865397	Copy compilation unit
+1401111902039	Copy compilation unit
+1401111918495	Rename local variable 'seikaku'
+1401111942563	Rename type 'Seikaku'
+1401111973467	Rename type 'Charactristic'
+1401112016847	Rename type 'Waza'
+1401112033271	Rename type 'PokemonSkill'
+1401112166474	Rename type 'Tokusei'
+1401112205882	Rename local variable 'characteristic1'
+1401112214218	Rename local variable 'characteristic2'
+1401112218393	Rename local variable 'ability22'
+1401112225063	Rename local variable 'characteristicd'
+1401200969759	Rename field 'characteristic'
+1401369715263	Extract method 'createParameter'
+1401370088345	Delete element
+1401370743833	Rename method 'createWaza'
+1401371066891	Rename type 'Characteristic'

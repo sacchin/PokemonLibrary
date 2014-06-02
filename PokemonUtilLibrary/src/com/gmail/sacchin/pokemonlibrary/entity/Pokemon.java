@@ -19,15 +19,15 @@ public class Pokemon {
 	private int c;
 	private int d;
 	private int s;
-	private String characteristic1;
-	private String characteristic2;
-	private String characteristicd;
+	private String ability1;
+	private String ability2;
+	private String abilityd;
 	private List<Pokemon> mega = null;
 
 	/**
 	 * 
 	 * @param no
-	 * @param ‚Šname
+	 * @param jname
 	 * @param ename
 	 * @param h
 	 * @param a
@@ -35,17 +35,17 @@ public class Pokemon {
 	 * @param c
 	 * @param d
 	 * @param s
-	 * @param characteristic1
-	 * @param characteristic2
-	 * @param characteristicd
+	 * @param ability1
+	 * @param ability2
+	 * @param abilityd
 	 * @param type1
 	 * @param type2
 	 * @param weight
 	 */
-	public Pokemon(String no, String ‚Šname, String ename, int h, int a, int b, int c, int d, int s, 
-			String characteristic1, String characteristic2, String characteristicd, int type1, int type2, float weight) {
+	public Pokemon(String no, String jname, String ename, int h, int a, int b, int c, int d, int s, 
+			String ability1, String ability2, String abilityd, int type1, int type2, float weight) {
 		this.no = no;
-		this.jname = ‚Šname;
+		this.jname = jname;
 		this.ename = ename;
 		this.h = h;
 		this.a = a;
@@ -53,9 +53,9 @@ public class Pokemon {
 		this.c = c;
 		this.d = d;
 		this.s = s;
-		this.characteristic1 = characteristic1;
-		this.characteristic2 = characteristic2;
-		this.characteristicd = characteristicd;
+		this.ability1 = ability1;
+		this.ability2 = ability2;
+		this.abilityd = abilityd;
 		this.type1 = type1;
 		this.type2 = type2;
 		this.weight = weight;
@@ -121,16 +121,16 @@ public class Pokemon {
 		return s;
 	}
 
-	public String getCharacteristic1() {
-		return characteristic1;
+	public String getAbility1() {
+		return ability1;
 	}
 
-	public String getCharacteristic2() {
-		return characteristic2;
+	public String getAbility2() {
+		return ability2;
 	}
 
-	public String getCharacteristicd() {
-		return characteristicd;
+	public String getAbilityd() {
+		return abilityd;
 	}
 
 	public List<Pokemon> getMega() {

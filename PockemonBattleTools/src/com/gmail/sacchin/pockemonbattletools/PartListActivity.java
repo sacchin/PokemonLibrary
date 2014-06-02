@@ -72,11 +72,11 @@ public class PartListActivity extends Activity {
 				row.addView(time);
 
 				TextView user = new TextView(this);
-				user.setText(temp.getUserName() == null || temp.getUserName().isEmpty() ? "ñºñ≥Çµ" : temp.getUserName());
+				user.setText(temp.getUserName() == null || temp.getUserName().isEmpty() ? "ÂêçÁÑ°„Åó" : temp.getUserName());
 				row.addView(user);
 
 				TextView memo = new TextView(this);
-				memo.setText(temp.getUserName() == null || temp.getMemo().isEmpty() ? "ÉÅÉÇñ≥Çµ" : temp.getMemo());
+				memo.setText(temp.getUserName() == null || temp.getMemo().isEmpty() ? "" : temp.getMemo());
 				row.addView(memo);
 
 				party.addView(meta);

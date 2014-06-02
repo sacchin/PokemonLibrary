@@ -2,6 +2,8 @@ package com.gmail.sacchin.pockemonbattletools;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,6 +11,8 @@ import java.util.concurrent.Executors;
 import com.gmail.sacchin.pockemonbattletools.entity.IndividualPockemon;
 import com.gmail.sacchin.pockemonbattletools.entity.Party;
 import com.gmail.sacchin.pockemonbattletools.entity.Pockemon;
+import com.gmail.sacchin.pockemonbattletools.entity.pgl.RankingPokemonTrend;
+import com.gmail.sacchin.pockemonbattletools.http.PGLGetter;
 import com.gmail.sacchin.pockemonbattletools.listener.OnClickIndividualPockemon;
 import com.gmail.sacchin.pokemonlibrary.entity.*;
 
@@ -61,9 +65,13 @@ public class ToolActivity extends Activity{
 		
 		try {
 			party = databaseHelper.selectNewestParty();
-			for(IndividualPockemon p : party.getMember()){
-				p.setItemStatistics(databaseHelper.selectIndividualPockemonItemCount(p.getRowId()));
-				p.setSkillStatistics(databaseHelper.selectIndividualPockemonSkillCount(p.getRowId()));
+			for(int i = 0 ; i < party.getMember().size() ; i++){
+				IndividualPockemon p = party.getMember().get(i);
+				executorService.execute(
+						new PGLGetter(p.getNo(), i, this));
+				
+//				p.setItemStatistics(databaseHelper.selectIndividualPockemonItemCount(p.getRowId()));
+//				p.setSkillStatistics(databaseHelper.selectIndividualPockemonSkillCount(p.getRowId()));
 			}
 			skills = databaseHelper.selectAllSkill();
 			items = databaseHelper.selectAllItem();
@@ -319,7 +327,7 @@ public class ToolActivity extends Activity{
     			String.valueOf(p.getC()), String.valueOf(p.getD()), String.valueOf(p.getS())};
     	status.addView(createTableRow(statuses, this, 0));
     	
-    	String characteristics[] = {p.getCharacteristic1(), p.getCharacteristic2(), p.getCharacteristicd()};
+    	String characteristics[] = {p.getAbility1(), p.getAbility2(), p.getAbilityd()};
     	status.addView(createTableRow(characteristics, this, 2));
     	
     	sss.addView(status);
@@ -354,5 +362,25 @@ public class ToolActivity extends Activity{
 	protected void onStop() {
 		super.onStop();
 		applyToIndividualPockemon();
-		updateIndividualPockemon();	}
+		updateIndividualPockemon();
+	}
+	
+	public void finishDownload(int index, RankingPokemonTrend trend){
+		if(this.index == index){
+			setTrend(trend);
+		}
+	}
+	
+	public void setTrend(RankingPokemonTrend trend){
+		TableLayout tl = (TableLayout) findViewById(R.id.status);
+		tl.removeAllViews();
+		
+    	String headers[] = {"技", "所持率"};
+    	tl.addView(createTableRow(headers, this, 0));
+    	TreeMap<String, String[]> skill = trend.createSkillMap();
+    	for(String key : skill.keySet()){
+    		String[] ttt = skill.get(key);
+        	tl.addView(createTableRow(ttt, this, 0));
+    	}
+	}
 }

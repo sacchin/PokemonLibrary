@@ -11,7 +11,7 @@ public class TypeTest {
 
 	@Test
 	public void testCalcurateAffinity() {
-		Pokemon cuheat = new Pokemon("303-01", "ÉNÉ`Å[Ég", "", 50, 80, 80, 55, 55, 50, 
+		Pokemon cuheat = new Pokemon("303-01", "„ÇØ„ÉÅ„Éº„Éà", "", 50, 80, 80, 55, 55, 50, 
 				"", "", "", Type.STEEL, Type.FEARY, 50);
 		float result = Type.calcurateAffinity(Type.FIRE, cuheat);
 		assertEquals(2f, result, 0.1f);
@@ -20,11 +20,11 @@ public class TypeTest {
 		result = Type.calcurateAffinity(Type.FIGHTING, cuheat);
 		assertEquals(1f, result, 0.1f);
 	}
-
+	
 	@Test
-	public void testConvertSkillNameToNo() {
-		assertEquals(Type.FIRE, Type.convertSkillNameToNo("ÇŸÇÃÇ®"), 1);
-		assertEquals(Type.FLYNG, Type.convertSkillNameToNo("Ç–Ç±Ç§"), 1);
-		assertEquals(-1, Type.convertSkillNameToNo("ÉeÉXÉg"), 1);
+	public void testConvertTypeNameToNo() {
+		assertEquals(Type.FIRE, Type.convertTypeNameToNo("„Åª„ÅÆ„Åä"), 1);
+		assertEquals(Type.FLYNG, Type.convertTypeNameToNo("„Å≤„Åì„ÅÜ"), 1);
+		assertEquals(-1, Type.convertTypeNameToNo("„Åã„Åü„Å™"), 1);
 	}
 }

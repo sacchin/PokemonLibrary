@@ -136,9 +136,6 @@ public class MainActivity extends Activity {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
-		executorService.execute(
-				new PGLGetter());
 	}
 	
 	public FrameLayout createFrameLayout(Pockemon p, HashMap<String, Integer> countMap){

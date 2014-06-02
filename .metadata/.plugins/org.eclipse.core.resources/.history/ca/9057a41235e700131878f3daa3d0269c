@@ -1,0 +1,12 @@
+package com.gmail.sacchin.pockemonbattletools.entity.pgl;
+
+import com.gmail.sacchin.pokemonlibrary.entity.Skill;
+
+public class WazaInfo extends Skill{
+
+	public WazaInfo(int no, String jname, String ename, int type, int power,
+			int accuracy, int category, int pp) {
+		super(no, jname, ename, type, power, accuracy, category, pp);
+	}
+
+}

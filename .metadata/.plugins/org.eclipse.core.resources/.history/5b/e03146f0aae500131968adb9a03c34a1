@@ -1,0 +1,139 @@
+package com.gmail.sacchin.pokemonlibrary.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Pokemon {
+	/**
+	 * nnn-mm
+	 */
+	private String no = "";
+	private String jname;
+	private String ename;
+	private int type1;
+	private int type2;
+	private float weight;
+	private int h;
+	private int a;
+	private int b;
+	private int c;
+	private int d;
+	private int s;
+	private String ability1;
+	private String ability2;
+	private String abilityd;
+	private List<Pokemon> mega = null;
+
+	/**
+	 * 
+	 * @param no
+	 * @param jname
+	 * @param ename
+	 * @param h
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @param s
+	 * @param ability1
+	 * @param ability2
+	 * @param abilityd
+	 * @param type1
+	 * @param type2
+	 * @param weight
+	 */
+	public Pokemon(String no, String jname, String ename, int h, int a, int b, int c, int d, int s, 
+			String ability1, String ability2, String abilityd, int type1, int type2, float weight) {
+		this.no = no;
+		this.jname = jname;
+		this.ename = ename;
+		this.h = h;
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+		this.s = s;
+		this.ability1 = ability1;
+		this.ability2 = ability2;
+		this.abilityd = abilityd;
+		this.type1 = type1;
+		this.type2 = type2;
+		this.weight = weight;
+		this.mega = new ArrayList<Pokemon>();
+	}
+
+	/**
+	 * 
+	 * @param mega
+	 */
+	public void addMega(Pokemon mega) {
+		if(this.mega == null){
+			this.mega = new ArrayList<Pokemon>();
+		}
+		this.mega.add(mega);
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public String getJname() {
+		return jname;
+	}
+
+	public String getEname() {
+		return ename;
+	}
+
+	public int getType1() {
+		return type1;
+	}
+
+	public int getType2() {
+		return type2;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public int getA() {
+		return a;
+	}
+
+	public int getB() {
+		return b;
+	}
+
+	public int getC() {
+		return c;
+	}
+
+	public int getD() {
+		return d;
+	}
+
+	public int getS() {
+		return s;
+	}
+
+	public String getCharacteristic1() {
+		return ability1;
+	}
+
+	public String getCharacteristic2() {
+		return ability2;
+	}
+
+	public String getCharacteristicd() {
+		return abilityd;
+	}
+
+	public List<Pokemon> getMega() {
+		return mega;
+	}
+}
