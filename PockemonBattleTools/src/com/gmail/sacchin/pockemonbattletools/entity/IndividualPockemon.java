@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.gmail.sacchin.pockemonbattletools.entity.pgl.RankingPokemonTrend;
+
 public class IndividualPockemon extends Pockemon{
 
 	private long id = 0;
@@ -18,8 +20,7 @@ public class IndividualPockemon extends Pockemon{
 	private String skillNo2 = "";
 	private String skillNo3 = "";
 	private String skillNo4 = "";
-	private ArrayList<Entry<String, Integer>> itemStatistics = null;
-	private ArrayList<Entry<String, Integer>> skillStatistics = null;
+	private RankingPokemonTrend trend = null;
 
 	public IndividualPockemon(Pockemon p, long id, Timestamp time, String item, String ability, 
 			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
@@ -141,38 +142,21 @@ public class IndividualPockemon extends Pockemon{
 		this.skillNo4 = skillNo4;
 	}
 
-	public void setItemStatistics(Map<String, Integer> itemStatistics) {
-		ArrayList<Entry<String, Integer>> entries = new ArrayList<Entry<String, Integer>>();
-		for(Entry<String, Integer> temp : valueSort(itemStatistics)){
-			entries.add(temp);
-		}
-
-		this.itemStatistics = entries;
+	public RankingPokemonTrend getTrend() {
+		return trend;
 	}
 
-	public Entry<String, Integer> getSkillStatictics(int i){
-		if(skillStatistics != null && i < skillStatistics.size() ){
-			return skillStatistics.get(i);
-		}
-		return null;
+	public void setTrend(RankingPokemonTrend trend) {
+		this.trend = trend;
 	}
 
-	public Entry<String, Integer> getItemStatictics(int i){
-		if(itemStatistics != null && i < itemStatistics.size() ){
-			return itemStatistics.get(i);
-		}
-		return null;
+	public String getAbility() {
+		return ability;
 	}
 
-	public ArrayList<Entry<String, Integer>> getSkillStatistics() {
-		return skillStatistics;
+	public void setAbility(String ability) {
+		this.ability = ability;
 	}
 
-	public void setSkillStatistics(Map<String, Integer> skillStatistics) {
-		ArrayList<Entry<String, Integer>> entries = new ArrayList<Entry<String, Integer>>();
-		for(Entry<String, Integer> temp : valueSort(skillStatistics)){
-			entries.add(temp);
-		}
-		this.skillStatistics = entries;
-	}
+
 }

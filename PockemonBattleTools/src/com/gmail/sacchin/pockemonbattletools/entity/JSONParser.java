@@ -14,7 +14,7 @@ public class JSONParser {
 		for(int i = 0 ; i < wazaInfo.length() ; i++){
 			try {
 				PockemonSkill temp = PockemonSkill.createPockemonSkill(wazaInfo.getJSONObject(i));
-				if(temp != null){
+				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}
 			} catch (JSONException e) {
@@ -32,7 +32,7 @@ public class JSONParser {
 		for(int i = 0 ; i < tokuseiInfo.length() ; i++){
 			try {
 				Ability temp = Ability.createAbility(tokuseiInfo.getJSONObject(i));
-				if(temp != null){
+				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}
 			} catch (JSONException e) {
@@ -50,7 +50,7 @@ public class JSONParser {
 		for(int i = 0 ; i < seikakuInfo.length() ; i++){
 			try {
 				PockemonCharacteristic temp = PockemonCharacteristic.createCharacteristic(seikakuInfo.getJSONObject(i));
-				if(temp != null){
+				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}
 			} catch (JSONException e) {
@@ -68,7 +68,7 @@ public class JSONParser {
 		for(int i = 0 ; i < itemInfo.length() ; i++){
 			try {
 				Item temp = Item.createItem(itemInfo.getJSONObject(i));
-				if(temp != null){
+				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}
 			} catch (JSONException e) {

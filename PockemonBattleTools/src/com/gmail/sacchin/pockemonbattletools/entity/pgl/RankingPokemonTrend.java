@@ -1,7 +1,6 @@
 package com.gmail.sacchin.pockemonbattletools.entity.pgl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.gmail.sacchin.pockemonbattletools.entity.Ability;
 import com.gmail.sacchin.pockemonbattletools.entity.Item;
 import com.gmail.sacchin.pockemonbattletools.entity.JSONParser;
@@ -20,17 +17,17 @@ import com.gmail.sacchin.pockemonbattletools.entity.PockemonCharacteristic;
 import com.gmail.sacchin.pockemonbattletools.entity.PockemonSkill;
 
 public class RankingPokemonTrend {
-//	{"wazaInfo":[{"ranking":1,"typeId":9,"usageRate":63.333333333333336,"name":"","sequenceNumber":1},
-//	"seikakuInfo":[{"ranking":1,"usageRate":66.66666666666667,"name":"","sequenceNumber":1},
-//	"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"","sequenceNumber":1},
-//	"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"","sequenceNumber":1},
-	
+	//	{"wazaInfo":[{"ranking":1,"typeId":9,"usageRate":63.333333333333336,"name":"","sequenceNumber":1},
+	//	"seikakuInfo":[{"ranking":1,"usageRate":66.66666666666667,"name":"","sequenceNumber":1},
+	//	"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"","sequenceNumber":1},
+	//	"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"","sequenceNumber":1},
+
 	private ArrayList<PockemonSkill> skillList = null;
 	private ArrayList<Ability> abilityList = null;
 	private ArrayList<PockemonCharacteristic> characteristicList = null;
 	private ArrayList<Item> itemList = null;
-	
-	
+
+
 	public static RankingPokemonTrend createRankingPokemonTrend(JSONObject rankingPokemonTrend){
 		try {
 			JSONArray wazaInfo = rankingPokemonTrend.getJSONArray("wazaInfo");
@@ -43,10 +40,8 @@ public class RankingPokemonTrend {
 		}
 		return null;
 	}
-	
-	public RankingPokemonTrend(JSONArray wazaInfo, JSONArray seikakuInfo, JSONArray tokuseiInfo, JSONArray itemInfo){
-		Log.v("RankingPokemonTrend", wazaInfo.toString());
 
+	public RankingPokemonTrend(JSONArray wazaInfo, JSONArray seikakuInfo, JSONArray tokuseiInfo, JSONArray itemInfo){
 		skillList = JSONParser.createSkillList(wazaInfo);
 		abilityList = JSONParser.createAbilityList(tokuseiInfo);
 		characteristicList = JSONParser.createCharacteristicList(seikakuInfo);
@@ -68,7 +63,7 @@ public class RankingPokemonTrend {
 	public ArrayList<Item> getItemList() {
 		return itemList;
 	}
-	
+
 	public TreeMap<String, String[]> createSkillMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
 		for(PockemonSkill pockemonSkill : skillList){
@@ -76,16 +71,16 @@ public class RankingPokemonTrend {
 				continue;
 			}
 
-			String[] a = new String[2];
-			a[0] = pockemonSkill.getJname();
-			a[1] = String.valueOf((int)pockemonSkill.getUsageRate()) + "%";
-			result.put(String.valueOf(pockemonSkill.getSequenceNumber()), a);
+			String[] temp = new String[2];
+			temp[0] = pockemonSkill.getJname();
+			temp[1] = String.valueOf((int)pockemonSkill.getUsageRate());
+			result.put(String.valueOf(pockemonSkill.getSequenceNumber()), temp);
 		}
-        TreeMap<String, String[]> treeMap =
-                new TreeMap<String, String[]>(new UsageMapComparator(result));
-           treeMap.putAll(result);
-   		
-   		return treeMap;
+		TreeMap<String, String[]> treeMap =
+				new TreeMap<String, String[]>(new UsageMapComparator(result));
+				treeMap.putAll(result);
+
+				return treeMap;
 	}
 	public TreeMap<String, String[]> createAbilityMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
@@ -93,16 +88,16 @@ public class RankingPokemonTrend {
 			if(ability.getName() == null || ability.getName().isEmpty()){
 				continue;
 			}
-			String[] a = new String[2];
-			a[0] = ability.getName();
-			a[1] = String.valueOf((int)ability.getUsageRate()) + "%";
-			result.put(String.valueOf(ability.getSequenceNumber()), a);
+			String[] temp = new String[2];
+			temp[0] = ability.getName();
+			temp[1] = String.valueOf((int)ability.getUsageRate());
+			result.put(String.valueOf(ability.getSequenceNumber()), temp);
 		}
-        TreeMap<String, String[]> treeMap =
-                new TreeMap<String, String[]>(new UsageMapComparator(result));
-           treeMap.putAll(result);
-   		
-   		return treeMap;
+		TreeMap<String, String[]> treeMap =
+				new TreeMap<String, String[]>(new UsageMapComparator(result));
+				treeMap.putAll(result);
+
+				return treeMap;
 	}
 	public TreeMap<String, String[]> createCharacteristicMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
@@ -110,16 +105,16 @@ public class RankingPokemonTrend {
 			if(pockemonCharacteristic.getName() == null || pockemonCharacteristic.getName().isEmpty()){
 				continue;
 			}
-			String[] a = new String[2];
-			a[0] = pockemonCharacteristic.getName();
-			a[1] = String.valueOf((int)pockemonCharacteristic.getUsageRate()) + "%";
-			result.put(String.valueOf(pockemonCharacteristic.getSequenceNumber()), a);
+			String[] temp = new String[2];
+			temp[0] = pockemonCharacteristic.getName();
+			temp[1] = String.valueOf((int)pockemonCharacteristic.getUsageRate());
+			result.put(String.valueOf(pockemonCharacteristic.getSequenceNumber()), temp);
 		}
-        TreeMap<String, String[]> treeMap =
-                new TreeMap<String, String[]>(new UsageMapComparator(result));
-           treeMap.putAll(result);
-   		
-   		return treeMap;
+		TreeMap<String, String[]> treeMap =
+				new TreeMap<String, String[]>(new UsageMapComparator(result));
+				treeMap.putAll(result);
+
+				return treeMap;
 	}
 	public TreeMap<String, String[]> createItemMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
@@ -127,33 +122,39 @@ public class RankingPokemonTrend {
 			if(item.getName() == null || item.getName().isEmpty()){
 				continue;
 			}
-			String[] a = new String[2];
-			a[0] = item.getName();
-			a[1] = String.valueOf((int)item.getUsageRate()) + "%";
-			result.put(String.valueOf(item.getSequenceNumber()), a);
+			String[] temp = new String[2];
+			temp[0] = item.getName();
+			temp[1] = String.valueOf((int)item.getUsageRate());
+			result.put(String.valueOf(item.getSequenceNumber()), temp);
 		}
-        TreeMap<String, String[]> treeMap =
-             new TreeMap<String, String[]>(new UsageMapComparator(result));
-        treeMap.putAll(result);
-		
-		return treeMap;
+		TreeMap<String, String[]> treeMap =
+				new TreeMap<String, String[]>(new UsageMapComparator(result));
+				treeMap.putAll(result);
+
+				return treeMap;
 	}
-	
-	
+
+
 	class UsageMapComparator implements Comparator<String> {
-	    private Map<String, String[]> map;
-	    public UsageMapComparator(Map<String, String[]>  map) {
-	        this.map = map;
-	    }
-	    public int compare(String key1, String key2) {
-	    	String value1 = map.get(key1)[1];
-	    	String value2 = map.get(key2)[1];
-	        if(value1.compareTo(value2) == 0)
-	            return key1.toLowerCase().compareTo(key2.toLowerCase());
-	        else if(value1.compareTo(value2) > 0)
-	            return 1;
-	        else
-	            return -1;
-	    }
+		private Map<String, String[]> map;
+		public UsageMapComparator(Map<String, String[]>  map) {
+			this.map = map;
+		}
+		public int compare(String key1, String key2) {
+			try {
+				int value1 = Integer.parseInt(map.get(key1)[1]);
+				int value2 = Integer.parseInt(map.get(key2)[1]);
+				if(value1 == value2){
+					return key1.toLowerCase().compareTo(key2.toLowerCase());
+				}else if(value1 < value2){
+					return 1;
+				}else{
+					return -1;
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
 	}
 }

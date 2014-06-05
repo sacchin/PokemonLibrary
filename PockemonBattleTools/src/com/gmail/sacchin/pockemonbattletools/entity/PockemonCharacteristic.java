@@ -13,6 +13,10 @@ public class PockemonCharacteristic extends Characteristic{
 
 	public static PockemonCharacteristic createCharacteristic(JSONObject seikaku){
 		try {
+			String name = seikaku.getString("name");
+			if(name == null || name.equals("null") ){
+				return null;
+			}
 			return new PockemonCharacteristic(seikaku.getInt("ranking"), seikaku.getDouble("usageRate"), seikaku.getString("name"), seikaku.getInt("sequenceNumber"));
 		} catch (JSONException e) {
 			e.printStackTrace();

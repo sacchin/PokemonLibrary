@@ -221,19 +221,6 @@
     "javaRuntime": true
   },
   {
-    "symbolicName": "jre",
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "micro": 0,
-      "qualifier": ""
-    },
-    "jarFileFingerprint": "d683f8bcb0473898652c5560a802e33e054baa3c",
-    "jarFileModificationDate": "2013-04-23T19:40:24.789+09:00",
-    "location": "C:\\Program Files\\Java\\jre6\\lib\\jsse.jar",
-    "javaRuntime": true
-  },
-  {
     "symbolicName": "junit-4.11",
     "version": {
       "major": -1,
@@ -245,5 +232,18 @@
     "jarFileModificationDate": "2014-05-13T00:40:43.116+09:00",
     "location": "C:\\Users\\U-U\\git\\PockemonBattleTools\\libs\\junit-4.11.jar",
     "javaRuntime": false
+  },
+  {
+    "symbolicName": "jre",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "micro": 0,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "d683f8bcb0473898652c5560a802e33e054baa3c",
+    "jarFileModificationDate": "2013-04-23T19:40:24.789+09:00",
+    "location": "C:\\Program Files\\Java\\jre6\\lib\\jsse.jar",
+    "javaRuntime": true
   }
 ]

@@ -1,7 +1,5 @@
 package com.gmail.sacchin.pockemonbattletools.entity;
 
-import android.util.Log;
-
 import com.gmail.sacchin.pokemonlibrary.entity.*;
 
 public class Pockemon extends Pokemon{

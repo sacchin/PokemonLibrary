@@ -18,9 +18,10 @@ public class OnClickIndividualPockemon implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		context.applyToIndividualPockemon();
+//		context.applyToIndividualPockemon();
 		IndividualPockemon p = context.getIndividualPockemon(index);
 		context.setMainView(p);
 		context.setIndex(index);
+		context.setTrend();
 	}
 }

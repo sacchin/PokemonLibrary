@@ -504,12 +504,11 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 							result.setResouceId(resouceId.intValue());
 						}
 					}
-					
 					if(0 < cur.getInt(17)){
 						Pockemon mega = new Pockemon(individualCur.getString(1), "メガ" + individualCur.getString(2), "Mega " + individualCur.getString(2), 
 								cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getInt(22), cur.getInt(23), cur.getInt(24), cur.getString(25), "", "", 0, 0, 0, 0);
 
-						Integer resouceId = util.imageResouse.get(result.getNo() + "m" + cur.getString(23));
+						Integer resouceId = util.imageResouse.get(result.getNo() + "m" + cur.getString(26));
 						if(resouceId != null){
 							mega.setResouceId(resouceId.intValue());
 						}

@@ -11,6 +11,10 @@ public class Ability {
 
 	public static Ability createAbility(JSONObject tokusei){
 		try {
+			String name = tokusei.getString("name");
+			if(name == null || name.equals("null") ){
+				return null;
+			}
 			return new Ability(tokusei.getInt("ranking"), tokusei.getDouble("usageRate"), tokusei.getString("name"), tokusei.getInt("sequenceNumber"));
 		} catch (JSONException e) {
 			e.printStackTrace();

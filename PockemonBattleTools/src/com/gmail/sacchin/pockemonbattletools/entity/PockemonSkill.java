@@ -1,12 +1,7 @@
 package com.gmail.sacchin.pockemonbattletools.entity;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.util.Log;
 
 import com.gmail.sacchin.pokemonlibrary.entity.Skill;
 
@@ -16,12 +11,12 @@ public class PockemonSkill extends Skill{
 	private int sequenceNumber = 0;
 	
 	public static PockemonSkill createPockemonSkill(JSONObject waza){
-		if(waza != null){
-			Log.v("createPockemonSkill", waza.toString());
-		}else{
-			Log.v("createPockemonSkill", "null!");
-		}
 		try {
+			String name = waza.getString("name");
+			if(name == null || name.equals("null") ){
+				return null;
+			}
+			
 			PockemonSkill obj = new PockemonSkill(0, waza.getString("name"), waza.getString("name"), waza.getInt("typeId"), 0, 0, 0, 0);
 			obj.setRanking(waza.getInt("ranking"));
 			obj.setUsageRate(waza.getDouble("usageRate"));

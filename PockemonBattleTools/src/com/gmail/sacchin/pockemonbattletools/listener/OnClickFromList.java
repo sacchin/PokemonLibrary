@@ -10,7 +10,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -31,14 +30,14 @@ public class OnClickFromList implements OnClickListener{
 		Bitmap temp = BitmapFactory.decodeResource(context.getResources(), pockemon.getResouceId());
 
 		if(pockemon == null){
-			Toast.makeText(context, "ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		IndividualPockemon ip = new IndividualPockemon(pockemon, 0, new Timestamp(System.currentTimeMillis()), 
 				"", "", "", "", "", "");
 		int index = context.party.setMember(ip);
 		if(index == -1){
-			Toast.makeText(context, "6‘Ì‚ğ‘I‘ğÏ‚İ‚Å‚·B", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "ã™ã§ã«6ä½“é¸æŠã—ã¦ã„ã¾ã™ã€‚", Toast.LENGTH_SHORT).show();
 		}else{
 			Matrix matrix = new Matrix();
 			matrix.postScale(90f / (float)temp.getWidth(), 90f / (float)temp.getHeight());

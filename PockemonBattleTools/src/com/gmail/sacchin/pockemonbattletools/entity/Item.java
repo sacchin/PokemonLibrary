@@ -11,6 +11,10 @@ public class Item {
 
 	public static Item createItem(JSONObject item){
 		try {
+			String name = item.getString("name");
+			if(name == null || name.equals("null") ){
+				return null;
+			}
 			return new Item(item.getInt("ranking"), item.getDouble("usageRate"), item.getString("name"), item.getInt("sequenceNumber"));
 		} catch (JSONException e) {
 			e.printStackTrace();
