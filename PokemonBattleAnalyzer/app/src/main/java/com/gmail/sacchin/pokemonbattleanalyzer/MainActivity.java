@@ -1,5 +1,7 @@
 package com.gmail.sacchin.pokemonbattleanalyzer;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -16,11 +18,14 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +36,9 @@ import com.gmail.sacchin.pokemonbattleanalyzer.entity.Pockemon;
 
 
 public class MainActivity extends Activity {
+    private LayoutParams LP = new LayoutParams(
+            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
     private ScrollView scrollView;
     private LinearLayout partyLayout = null;
 
@@ -204,6 +212,89 @@ public class MainActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(scrollView != null && 0 < scrollView.getChildCount()){
+            return;
+        }
+
+        LinearLayout all = new LinearLayout(this);
+        all.setLayoutParams(LP);
+        all.setOrientation(LinearLayout.VERTICAL);
+        all.setGravity(Gravity.CENTER);
+        scrollView.addView(all);
+
+//        try {
+            HashMap<String, Integer> countMap = new HashMap<String, Integer>();
+            ArrayList<Pockemon> list = new ArrayList<Pockemon>();
+            int count = 0;
+            for(;count < list.size();){
+                LinearLayout block = new LinearLayout(this);
+                block.setLayoutParams(LP);
+                block.setGravity(Gravity.CENTER);
+                for(int i = 0 ; i < 4 ; i++){
+                    FrameLayout d = createFrameLayout(list.get(count), countMap);
+                    block.addView(d);
+                    count++;
+                    if(count > list.size() - 1){
+                        break;
+                    }
+                }
+                all.addView(block);
+            }
+
+
+//            HashMap<String, Integer> countMap = databaseHelper.selectIndividualPockemonCount();
+//            databaseHelper.updatePockemonData(countMap);
+//
+//            ArrayList<Pockemon> list = databaseHelper.selectAllPockemon();
+//            int count = 0;
+//            int count = 0;
+//            for(;count < list.size();){
+//                LinearLayout block = new LinearLayout(this);
+//                block.setLayoutParams(LP);
+//                block.setGravity(Gravity.CENTER);
+//                for(int i = 0 ; i < 4 ; i++){
+//                    FrameLayout d = createFrameLayout(list.get(count), countMap);
+//                    block.addView(d);
+//                    count++;
+//                    if(count > list.size() - 1){
+//                        break;
+//                    }
+//                }
+//                all.addView(block);
+//            }
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
+    }
+
+
+    public FrameLayout createFrameLayout(Pockemon p, HashMap<String, Integer> countMap){
+        Resources r = getResources();
+        FrameLayout fl = new FrameLayout(this);
+        ImageView localView = new ImageView(this);
+        Bitmap temp = BitmapFactory.decodeResource(r, p.getResouceId());
+        Matrix matrix = new Matrix();
+        matrix.postScale(150f / (float)temp.getWidth(), 150f / (float)temp.getHeight());
+        temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(),temp.getHeight(), matrix, true);
+        localView.setImageBitmap(temp);
+//        fl.setOnClickListener(new OnClickFromList(this, p));
+        fl.addView(localView);
+        TextView tv = new TextView(this);
+
+        Integer c = countMap.get(String.valueOf(p.getRowId()));
+        if(c != null){
+            tv.setText(String.valueOf(c));
+        }else{
+            tv.setText("0");
+        }
+        fl.addView(tv);
+        return fl;
     }
 
 }
