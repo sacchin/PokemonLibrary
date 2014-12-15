@@ -7,20 +7,20 @@ import java.util.ArrayList;
 public class Party {
 	
 	private Timestamp time = null;
-	private ArrayList<IndividualPockemon> member = null;
+	private ArrayList<IndividualPBAPokemon> member = null;
 
 	private String userName = null;
 	private String memo = null;
 
 	public Party(){
-		this.member = new ArrayList<IndividualPockemon>();
+		this.member = new ArrayList<IndividualPBAPokemon>();
 	}
 
-	public Party(Timestamp time, IndividualPockemon member1, IndividualPockemon member2,
-			IndividualPockemon member3, IndividualPockemon member4, IndividualPockemon member5,
-			IndividualPockemon member6, String memo, String userName) {
+	public Party(Timestamp time, IndividualPBAPokemon member1, IndividualPBAPokemon member2,
+			IndividualPBAPokemon member3, IndividualPBAPokemon member4, IndividualPBAPokemon member5,
+			IndividualPBAPokemon member6, String memo, String userName) {
 		this.time = time;
-		this.member = new ArrayList<IndividualPockemon>();
+		this.member = new ArrayList<IndividualPBAPokemon>();
 		if(member1 != null){
 			this.member.add(member1);
 		}
@@ -51,11 +51,11 @@ public class Party {
 		this.time = time;
 	}
 
-	public ArrayList<IndividualPockemon> getMember() {
+	public ArrayList<IndividualPBAPokemon> getMember() {
 		return member;
 	}
 
-	public int setMember(IndividualPockemon pockemon) {
+	public int setMember(IndividualPBAPokemon pockemon) {
 		if(this.member != null && this.member.size() < 6){
 			this.member.add(pockemon);
 			return this.member.size() - 1;
@@ -63,11 +63,11 @@ public class Party {
 		return -1;
 	}
 	
-	public int removeMember(Pockemon pockemon){
+	public int removeMember(PBAPokemon PBAPokemon){
 		int index = -1;
-		if(this.member != null && pockemon != null){
+		if(this.member != null && PBAPokemon != null){
 			for (int i = 0; i < this.member.size(); i++) {
-				if(pockemon.getNo() == this.member.get(i).getNo()){
+				if(PBAPokemon.getNo() == this.member.get(i).getNo()){
 					index = i;
 				}
 			}

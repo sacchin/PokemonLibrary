@@ -1,6 +1,5 @@
 package com.gmail.sacchin.pokemonbattleanalyzer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -26,21 +25,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.Pockemon;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
+import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
 
 public class MainActivity extends Activity {
     private LayoutParams LP = new LayoutParams(
             LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-    private ScrollView scrollView;
-    private LinearLayout partyLayout = null;
+    private static ScrollView scrollView;
+    private static LinearLayout partyLayout = null;
 
 
     /**
@@ -69,13 +68,6 @@ public class MainActivity extends Activity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-        partyLayout = (LinearLayout) findViewById(R.id.party);
-        scrollView = (ScrollView)findViewById(R.id.scrollView);
-
-
-
 
 
 //        FragmentTabHost mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
@@ -140,6 +132,60 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onHogehoge() {
+        if(scrollView == null){
+            scrollView = (ScrollView)findViewById(R.id.scrollView);
+        }
+        if(scrollView == null){
+            Log.e("onResume", "scrollView is null");
+            return;
+        }
+        if(0 < scrollView.getChildCount()){
+            return;
+        }
+
+        LinearLayout all = new LinearLayout(this);
+        all.setLayoutParams(LP);
+        all.setOrientation(LinearLayout.VERTICAL);
+        all.setGravity(Gravity.CENTER);
+        scrollView.addView(all);
+
+//        try {
+        HashMap<String, Integer> countMap = new HashMap<String, Integer>();
+        ArrayList<PBAPokemon> list = new ArrayList<PBAPokemon>();
+        PBAPokemon sono2 = new PBAPokemon("003", "フシギバナ", "Venusaur",  80,  82,  83,  100,  100,  80, "しんりょく", " -", "ようりょくそ",4,7,100.0f, 0);
+        sono2.setResourceId(R.drawable.n003);
+        list.add(sono2);
+        PBAPokemon sono3 = new PBAPokemon("006", "リザードン", "Charizard",  78,  84,  78,  109,  85,  100, "もうか", " -", "サンパワー",1,9,100.5f, 0);
+        sono3.setResourceId(R.drawable.n006);
+        list.add(sono3);
+        PBAPokemon sono4 = new PBAPokemon("009", "カメックス", "Blastoise",  79,  83,  100,  85,  105,  78, "げきりゅう", " -", "あめうけざら",2,-1,85.5f, 0);
+        sono4.setResourceId(R.drawable.n009);
+        list.add(sono4);
+        PBAPokemon sono5 = new PBAPokemon("012", "バタフリー", "Butterfree",  60,  45,  50,  90,  80,  70, "ふくがん", " -", "いろめがね",11,9,32.0f, 0);
+        sono5.setResourceId(R.drawable.n012);
+        list.add(sono5);
+        PBAPokemon sono6 = new PBAPokemon("015", "スピアー", "Beedrill",  65,  90,  40,  45,  80,  75, "むしのしらせ", " -", "スナイパー",11,7,129.5f, 0);
+        sono6.setResourceId(R.drawable.n015);
+        list.add(sono6);
+
+        int count = 0;
+        for(;count < list.size();){
+            LinearLayout block = new LinearLayout(this);
+            block.setLayoutParams(LP);
+            block.setGravity(Gravity.CENTER);
+            for(int i = 0 ; i < 4 ; i++){
+                FrameLayout d = createFrameLayout(list.get(count), countMap);
+                block.addView(d);
+                count++;
+                if(count > list.size() - 1){
+                    break;
+                }
+            }
+            all.addView(block);
+        }
     }
 
 
@@ -210,7 +256,23 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            partyLayout = (LinearLayout) rootView.findViewById(R.id.party);
+            scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
+
             return rootView;
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+
+            try {
+                    ( (MainActivity)activity). onHogehoge();
+            } catch (ClassCastException e) {
+                // Fragment が組み込まれる先の Activity に対して、FragmentCallbacks インタフェースの実装を要求する為
+                // キャストに失敗した場合は、実行時例外としてプログラムのミスであることを示す
+                throw new IllegalStateException("activity should implement FragmentCallbacks", e);
+            }
         }
     }
 
@@ -218,67 +280,15 @@ public class MainActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if(scrollView != null && 0 < scrollView.getChildCount()){
-            return;
-        }
 
-        LinearLayout all = new LinearLayout(this);
-        all.setLayoutParams(LP);
-        all.setOrientation(LinearLayout.VERTICAL);
-        all.setGravity(Gravity.CENTER);
-        scrollView.addView(all);
-
-//        try {
-            HashMap<String, Integer> countMap = new HashMap<String, Integer>();
-            ArrayList<Pockemon> list = new ArrayList<Pockemon>();
-            int count = 0;
-            for(;count < list.size();){
-                LinearLayout block = new LinearLayout(this);
-                block.setLayoutParams(LP);
-                block.setGravity(Gravity.CENTER);
-                for(int i = 0 ; i < 4 ; i++){
-                    FrameLayout d = createFrameLayout(list.get(count), countMap);
-                    block.addView(d);
-                    count++;
-                    if(count > list.size() - 1){
-                        break;
-                    }
-                }
-                all.addView(block);
-            }
-
-
-//            HashMap<String, Integer> countMap = databaseHelper.selectIndividualPockemonCount();
-//            databaseHelper.updatePockemonData(countMap);
-//
-//            ArrayList<Pockemon> list = databaseHelper.selectAllPockemon();
-//            int count = 0;
-//            int count = 0;
-//            for(;count < list.size();){
-//                LinearLayout block = new LinearLayout(this);
-//                block.setLayoutParams(LP);
-//                block.setGravity(Gravity.CENTER);
-//                for(int i = 0 ; i < 4 ; i++){
-//                    FrameLayout d = createFrameLayout(list.get(count), countMap);
-//                    block.addView(d);
-//                    count++;
-//                    if(count > list.size() - 1){
-//                        break;
-//                    }
-//                }
-//                all.addView(block);
-//            }
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
     }
 
 
-    public FrameLayout createFrameLayout(Pockemon p, HashMap<String, Integer> countMap){
+    public FrameLayout createFrameLayout(PBAPokemon p, HashMap<String, Integer> countMap){
         Resources r = getResources();
         FrameLayout fl = new FrameLayout(this);
         ImageView localView = new ImageView(this);
-        Bitmap temp = BitmapFactory.decodeResource(r, p.getResouceId());
+        Bitmap temp = BitmapFactory.decodeResource(r, p.getResourceId());
         Matrix matrix = new Matrix();
         matrix.postScale(150f / (float)temp.getWidth(), 150f / (float)temp.getHeight());
         temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(),temp.getHeight(), matrix, true);

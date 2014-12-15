@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
 
-public class IndividualPockemon extends Pockemon{
+public class IndividualPBAPokemon extends PBAPokemon {
 
 	private long id = 0;
 	private Timestamp time = null;
@@ -22,8 +22,8 @@ public class IndividualPockemon extends Pockemon{
 	private String skillNo4 = "";
 	private RankingPokemonTrend trend = null;
 
-	public IndividualPockemon(Pockemon p, long id, Timestamp time, String item, String ability, 
-			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
+	public IndividualPBAPokemon(PBAPokemon p, long id, Timestamp time, String item, String ability,
+                                String skillNo1, String skillNo2, String skillNo3, String skillNo4){
 		super(p.getNo(), p.getJname(), p.getEname(), p.getH(), p.getA(), p.getB(), p.getC(), p.getD(), p.getS(), p.getAbility1(), 
 				p.getAbility2(), p.getAbilityd(), 0, 0, 0, 0);
 		setRowId(p.getRowId());
@@ -37,10 +37,10 @@ public class IndividualPockemon extends Pockemon{
 		this.skillNo4 = skillNo4;
 	}
 
-	public IndividualPockemon(String no, String name, String ename, int h, int a,
-			int b, int c, int d, int s, String ability1,
-			String ability2, String abilityd, long id, Timestamp time, String item, String ability, 
-			String skillNo1, String skillNo2, String skillNo3, String skillNo4){
+	public IndividualPBAPokemon(String no, String name, String ename, int h, int a,
+                                int b, int c, int d, int s, String ability1,
+                                String ability2, String abilityd, long id, Timestamp time, String item, String ability,
+                                String skillNo1, String skillNo2, String skillNo3, String skillNo4){
 		super(no, name, ename, h, a, b, c, d, s, ability1, ability2,
 				abilityd, 0, 0, 0, 0);
 		this.id = id;
