@@ -13,8 +13,8 @@ import org.json.JSONObject;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Ability;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Item;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.JSONParser;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.PockemonCharacteristic;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.PockemonSkill;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.PokemonCharacteristic;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.PokemonSkill;
 
 public class RankingPokemonTrend {
 	//	{"wazaInfo":[{"ranking":1,"typeId":9,"usageRate":63.333333333333336,"name":"","sequenceNumber":1},
@@ -22,9 +22,9 @@ public class RankingPokemonTrend {
 	//	"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"","sequenceNumber":1},
 	//	"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"","sequenceNumber":1},
 
-	private ArrayList<PockemonSkill> skillList = null;
+	private ArrayList<PokemonSkill> skillList = null;
 	private ArrayList<Ability> abilityList = null;
-	private ArrayList<PockemonCharacteristic> characteristicList = null;
+	private ArrayList<PokemonCharacteristic> characteristicList = null;
 	private ArrayList<Item> itemList = null;
 
 
@@ -48,7 +48,7 @@ public class RankingPokemonTrend {
 		itemList = JSONParser.createItemList(itemInfo);
 	}
 
-	public ArrayList<PockemonSkill> getSkillList() {
+	public ArrayList<PokemonSkill> getSkillList() {
 		return skillList;
 	}
 
@@ -56,7 +56,7 @@ public class RankingPokemonTrend {
 		return abilityList;
 	}
 
-	public ArrayList<PockemonCharacteristic> getCharacteristicList() {
+	public ArrayList<PokemonCharacteristic> getCharacteristicList() {
 		return characteristicList;
 	}
 
@@ -66,15 +66,15 @@ public class RankingPokemonTrend {
 
 	public TreeMap<String, String[]> createSkillMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
-		for(PockemonSkill pockemonSkill : skillList){
-			if(pockemonSkill.getJname() == null || pockemonSkill.getJname().isEmpty()){
+		for(PokemonSkill pokemonSkill : skillList){
+			if(pokemonSkill.getJname() == null || pokemonSkill.getJname().isEmpty()){
 				continue;
 			}
 
 			String[] temp = new String[2];
-			temp[0] = pockemonSkill.getJname();
-			temp[1] = String.valueOf((int)pockemonSkill.getUsageRate());
-			result.put(String.valueOf(pockemonSkill.getSequenceNumber()), temp);
+			temp[0] = pokemonSkill.getJname();
+			temp[1] = String.valueOf((int) pokemonSkill.getUsageRate());
+			result.put(String.valueOf(pokemonSkill.getSequenceNumber()), temp);
 		}
 		TreeMap<String, String[]> treeMap =
 				new TreeMap<String, String[]>(new UsageMapComparator(result));
@@ -101,14 +101,14 @@ public class RankingPokemonTrend {
 	}
 	public TreeMap<String, String[]> createCharacteristicMap(){
 		HashMap<String, String[]> result = new HashMap<String, String[]>();
-		for(PockemonCharacteristic pockemonCharacteristic : characteristicList){
-			if(pockemonCharacteristic.getName() == null || pockemonCharacteristic.getName().isEmpty()){
+		for(PokemonCharacteristic pokemonCharacteristic : characteristicList){
+			if(pokemonCharacteristic.getName() == null || pokemonCharacteristic.getName().isEmpty()){
 				continue;
 			}
 			String[] temp = new String[2];
-			temp[0] = pockemonCharacteristic.getName();
-			temp[1] = String.valueOf((int)pockemonCharacteristic.getUsageRate());
-			result.put(String.valueOf(pockemonCharacteristic.getSequenceNumber()), temp);
+			temp[0] = pokemonCharacteristic.getName();
+			temp[1] = String.valueOf((int) pokemonCharacteristic.getUsageRate());
+			result.put(String.valueOf(pokemonCharacteristic.getSequenceNumber()), temp);
 		}
 		TreeMap<String, String[]> treeMap =
 				new TreeMap<String, String[]>(new UsageMapComparator(result));

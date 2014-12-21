@@ -6,14 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class JSONParser {
-	public static ArrayList<PockemonSkill> createSkillList(JSONArray wazaInfo){
-		ArrayList<PockemonSkill> result = new ArrayList<PockemonSkill>();
+	public static ArrayList<PokemonSkill> createSkillList(JSONArray wazaInfo){
+		ArrayList<PokemonSkill> result = new ArrayList<PokemonSkill>();
 		if(wazaInfo == null || wazaInfo.length() == 0){
 			return result;
 		}
 		for(int i = 0 ; i < wazaInfo.length() ; i++){
 			try {
-				PockemonSkill temp = PockemonSkill.createPockemonSkill(wazaInfo.getJSONObject(i));
+				PokemonSkill temp = PokemonSkill.createPockemonSkill(wazaInfo.getJSONObject(i));
 				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}
@@ -42,14 +42,14 @@ public class JSONParser {
 		return result;
 	}
 	
-	public static ArrayList<PockemonCharacteristic> createCharacteristicList(JSONArray seikakuInfo){
-		ArrayList<PockemonCharacteristic> result = new ArrayList<PockemonCharacteristic>();
+	public static ArrayList<PokemonCharacteristic> createCharacteristicList(JSONArray seikakuInfo){
+		ArrayList<PokemonCharacteristic> result = new ArrayList<PokemonCharacteristic>();
 		if(seikakuInfo == null || seikakuInfo.length() == 0){
 			return result;
 		}
 		for(int i = 0 ; i < seikakuInfo.length() ; i++){
 			try {
-				PockemonCharacteristic temp = PockemonCharacteristic.createCharacteristic(seikakuInfo.getJSONObject(i));
+				PokemonCharacteristic temp = PokemonCharacteristic.createCharacteristic(seikakuInfo.getJSONObject(i));
 				if(temp != null&& 2 < temp.getUsageRate()){
 					result.add(temp);
 				}

@@ -5,26 +5,26 @@ import org.json.JSONObject;
 
 import com.gmail.sacchin.pokemonlibrary.entity.Characteristic;
 
-public class PockemonCharacteristic extends Characteristic{
+public class PokemonCharacteristic extends Characteristic{
 	private int ranking = 0;
 	private double usageRate = 0;
 	private String name = "";
 	private int sequenceNumber = 0;
 
-	public static PockemonCharacteristic createCharacteristic(JSONObject seikaku){
+	public static PokemonCharacteristic createCharacteristic(JSONObject seikaku){
 		try {
 			String name = seikaku.getString("name");
 			if(name == null || name.equals("null") ){
 				return null;
 			}
-			return new PockemonCharacteristic(seikaku.getInt("ranking"), seikaku.getDouble("usageRate"), seikaku.getString("name"), seikaku.getInt("sequenceNumber"));
+			return new PokemonCharacteristic(seikaku.getInt("ranking"), seikaku.getDouble("usageRate"), seikaku.getString("name"), seikaku.getInt("sequenceNumber"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public PockemonCharacteristic(int ranking, double usageRate, String name, int sequenceNumber){
+	public PokemonCharacteristic(int ranking, double usageRate, String name, int sequenceNumber){
 		this.ranking = ranking;
 		this.usageRate = usageRate;
 		this.name = name;

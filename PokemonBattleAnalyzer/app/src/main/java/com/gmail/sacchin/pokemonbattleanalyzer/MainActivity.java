@@ -1,8 +1,11 @@
 package com.gmail.sacchin.pokemonbattleanalyzer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -31,7 +34,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
-import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
 
 public class MainActivity extends Activity {
@@ -40,6 +48,10 @@ public class MainActivity extends Activity {
 
     private static ScrollView scrollView;
     private static LinearLayout partyLayout = null;
+    protected ExecutorService executorService = Executors.newCachedThreadPool();
+    private PartyDatabaseHelper databaseHelper;
+    public Party party = null;
+
 
 
     /**
@@ -62,7 +74,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        databaseHelper = new PartyDatabaseHelper(this);
         firstLaunch();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -101,15 +113,23 @@ public class MainActivity extends Activity {
     private void firstLaunch() {
         SharedPreferences serviceStatePreferences = getSharedPreferences("pokemon", MODE_PRIVATE);
         if(serviceStatePreferences.getBoolean("isFirst", true)){
-            //データベースの初期化処理を行う
+            executorService.execute(
+                    new PokemonInsertHandler(databaseHelper, this));
+            executorService.execute(
+                    new ItemInsertHandler(databaseHelper, this));
+            executorService.execute(
+                    new SkillInsertHandler(databaseHelper, this));
+//                executorService.execute(new PartyInsertHandler(databaseHelper, null, true, this));
+//                executorService.execute(new IndividualPokemonInsertHandler(databaseHelper, this));
+            executorService.execute(
+                    new MegaPokemonInsertHandler(databaseHelper, this));
+
             Editor editor = serviceStatePreferences.edit();
             editor.putBoolean("isFirst", false);
             editor.commit();
             Log.i("This is First Time", "create table!");
         }
     }
-
-
 
 
     @Override
@@ -135,14 +155,7 @@ public class MainActivity extends Activity {
     }
 
     public void onHogehoge() {
-        if(scrollView == null){
-            scrollView = (ScrollView)findViewById(R.id.scrollView);
-        }
-        if(scrollView == null){
-            Log.e("onResume", "scrollView is null");
-            return;
-        }
-        if(0 < scrollView.getChildCount()){
+        if(scrollView == null || 0 < scrollView.getChildCount()){
             return;
         }
 
@@ -152,40 +165,33 @@ public class MainActivity extends Activity {
         all.setGravity(Gravity.CENTER);
         scrollView.addView(all);
 
-//        try {
+        try {
+        ArrayList<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
         HashMap<String, Integer> countMap = new HashMap<String, Integer>();
-        ArrayList<PBAPokemon> list = new ArrayList<PBAPokemon>();
-        PBAPokemon sono2 = new PBAPokemon("003", "フシギバナ", "Venusaur",  80,  82,  83,  100,  100,  80, "しんりょく", " -", "ようりょくそ",4,7,100.0f, 0);
-        sono2.setResourceId(R.drawable.n003);
-        list.add(sono2);
-        PBAPokemon sono3 = new PBAPokemon("006", "リザードン", "Charizard",  78,  84,  78,  109,  85,  100, "もうか", " -", "サンパワー",1,9,100.5f, 0);
-        sono3.setResourceId(R.drawable.n006);
-        list.add(sono3);
-        PBAPokemon sono4 = new PBAPokemon("009", "カメックス", "Blastoise",  79,  83,  100,  85,  105,  78, "げきりゅう", " -", "あめうけざら",2,-1,85.5f, 0);
-        sono4.setResourceId(R.drawable.n009);
-        list.add(sono4);
-        PBAPokemon sono5 = new PBAPokemon("012", "バタフリー", "Butterfree",  60,  45,  50,  90,  80,  70, "ふくがん", " -", "いろめがね",11,9,32.0f, 0);
-        sono5.setResourceId(R.drawable.n012);
-        list.add(sono5);
-        PBAPokemon sono6 = new PBAPokemon("015", "スピアー", "Beedrill",  65,  90,  40,  45,  80,  75, "むしのしらせ", " -", "スナイパー",11,7,129.5f, 0);
-        sono6.setResourceId(R.drawable.n015);
-        list.add(sono6);
 
         int count = 0;
-        for(;count < list.size();){
-            LinearLayout block = new LinearLayout(this);
-            block.setLayoutParams(LP);
-            block.setGravity(Gravity.CENTER);
-            for(int i = 0 ; i < 4 ; i++){
-                FrameLayout d = createFrameLayout(list.get(count), countMap);
-                block.addView(d);
-                count++;
-                if(count > list.size() - 1){
-                    break;
+            for(;count < list.size();){
+                LinearLayout block = new LinearLayout(this);
+                block.setLayoutParams(LP);
+                block.setGravity(Gravity.CENTER);
+                for(int i = 0 ; i < 5 ; i++){
+                    FrameLayout d = createFrameLayout(list.get(count), countMap);
+                 block.addView(d);
+                    count++;
+                    if(count > list.size() - 1){
+                        break;
+                    }
                 }
+                all.addView(block);
             }
-            all.addView(block);
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+
+    }
+
+    public void startToolActivity() {
+
     }
 
 
@@ -265,9 +271,8 @@ public class MainActivity extends Activity {
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-
             try {
-                    ( (MainActivity)activity). onHogehoge();
+                ((MainActivity)activity).onHogehoge();
             } catch (ClassCastException e) {
                 // Fragment が組み込まれる先の Activity に対して、FragmentCallbacks インタフェースの実装を要求する為
                 // キャストに失敗した場合は、実行時例外としてプログラムのミスであることを示す
@@ -290,7 +295,7 @@ public class MainActivity extends Activity {
         ImageView localView = new ImageView(this);
         Bitmap temp = BitmapFactory.decodeResource(r, p.getResourceId());
         Matrix matrix = new Matrix();
-        matrix.postScale(150f / (float)temp.getWidth(), 150f / (float)temp.getHeight());
+        matrix.postScale(200f / (float)temp.getWidth(), 200f / (float)temp.getHeight());
         temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(),temp.getHeight(), matrix, true);
         localView.setImageBitmap(temp);
 //        fl.setOnClickListener(new OnClickFromList(this, p));
