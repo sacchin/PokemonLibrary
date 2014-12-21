@@ -1,113 +1,45 @@
 package com.gmail.sacchin.pokemonbattleanalyzer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
-import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
-
 public class MainActivity extends Activity {
-    private LayoutParams LP = new LayoutParams(
-            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-    private static ScrollView scrollView;
-    private static LinearLayout partyLayout = null;
     protected ExecutorService executorService = Executors.newCachedThreadPool();
-    private PartyDatabaseHelper databaseHelper;
-    public Party party = null;
 
-
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
+    private PartyDatabaseHelper databaseHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new PartyDatabaseHelper(this);
+        FragmentManager manager = getFragmentManager();
+        // FragmentTransaction を開始
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        // FragmentContainer のレイアウトに、MyFragment を割当てる
+        transaction.add(R.id.FragmentContainer, MainFragment.newInstance(0));
+
+        // 変更を確定して FragmentTransaction を終える
+        transaction.commit();
+
         firstLaunch();
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-//        FragmentTabHost mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
-//        mTabHost.setup(this,getSupportFragmentManager(),R.id.content);
-//
-//        mTabHost.addTab(setTab( タグ,タブ名),なんとか.class,null);
-//        mTabHost.addTab(setTab( タグ,タブ名),なんとか.class,null);
-//
-//        //TabHostオブジェクト取得
-//        TabHost tabhost = getl
-//        //Tab1設定
-//        TabSpec tab1 = tabhost.newTabSpec(TAB[0]);
-//        tab1.setIndicator(this.getResources().getString(R.string.tab1));
-//        tab1.setContent(R.id.tab1);
-//        tabhost.addTab(tab1);
-//        //Tab2設定
-//        TabSpec tab2 = tabhost.newTabSpec(TAB[1]);
-//        tab2.setIndicator(this.getResources().getString(R.string.tab2));
-//        tab2.setContent(R.id.tab2);
-//        tabhost.addTab(tab2);
-//        //Tab3設定
-//        TabSpec tab3 = tabhost.newTabSpec(TAB[2]);
-//        tab3.setIndicator(this.getResources().getString(R.string.tab3));
-//        tab3.setContent(R.id.tab3);
-//        tabhost.addTab(tab3);
-//        //初期表示するタブ
-//        tabhost.setCurrentTab(0);
-
     }
 
     private void firstLaunch() {
@@ -126,7 +58,7 @@ public class MainActivity extends Activity {
 
             Editor editor = serviceStatePreferences.edit();
             editor.putBoolean("isFirst", false);
-            editor.commit();
+            editor.apply();
             Log.i("This is First Time", "create table!");
         }
     }
@@ -154,162 +86,12 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onHogehoge() {
-        if(scrollView == null || 0 < scrollView.getChildCount()){
-            return;
-        }
-
-        LinearLayout all = new LinearLayout(this);
-        all.setLayoutParams(LP);
-        all.setOrientation(LinearLayout.VERTICAL);
-        all.setGravity(Gravity.CENTER);
-        scrollView.addView(all);
-
-        try {
-        ArrayList<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
-        HashMap<String, Integer> countMap = new HashMap<String, Integer>();
-
-        int count = 0;
-            for(;count < list.size();){
-                LinearLayout block = new LinearLayout(this);
-                block.setLayoutParams(LP);
-                block.setGravity(Gravity.CENTER);
-                for(int i = 0 ; i < 5 ; i++){
-                    FrameLayout d = createFrameLayout(list.get(count), countMap);
-                 block.addView(d);
-                    count++;
-                    if(count > list.size() - 1){
-                        break;
-                    }
-                }
-                all.addView(block);
-            }
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
-    }
-
     public void startToolActivity() {
 
     }
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            partyLayout = (LinearLayout) rootView.findViewById(R.id.party);
-            scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
-
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            try {
-                ((MainActivity)activity).onHogehoge();
-            } catch (ClassCastException e) {
-                // Fragment が組み込まれる先の Activity に対して、FragmentCallbacks インタフェースの実装を要求する為
-                // キャストに失敗した場合は、実行時例外としてプログラムのミスであることを示す
-                throw new IllegalStateException("activity should implement FragmentCallbacks", e);
-            }
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
-
     }
-
-
-    public FrameLayout createFrameLayout(PBAPokemon p, HashMap<String, Integer> countMap){
-        Resources r = getResources();
-        FrameLayout fl = new FrameLayout(this);
-        ImageView localView = new ImageView(this);
-        Bitmap temp = BitmapFactory.decodeResource(r, p.getResourceId());
-        Matrix matrix = new Matrix();
-        matrix.postScale(200f / (float)temp.getWidth(), 200f / (float)temp.getHeight());
-        temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(),temp.getHeight(), matrix, true);
-        localView.setImageBitmap(temp);
-//        fl.setOnClickListener(new OnClickFromList(this, p));
-        fl.addView(localView);
-        TextView tv = new TextView(this);
-
-        Integer c = countMap.get(String.valueOf(p.getRowId()));
-        if(c != null){
-            tv.setText(String.valueOf(c));
-        }else{
-            tv.setText("0");
-        }
-        fl.addView(tv);
-        return fl;
-    }
-
 }
