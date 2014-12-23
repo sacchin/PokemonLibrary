@@ -17,10 +17,8 @@ import android.widget.Toast;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
-import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickIndividualPokemon;
 import com.gmail.sacchin.pokemonlibrary.entity.Type;
 
 import java.io.IOException;
@@ -74,6 +72,9 @@ public class AffinityFragment extends Fragment {
         try {
             this.p = databaseHelper.selectPBAPokemon(pokemonNo);
             Log.e("AffinityFragment", p.getJname());
+
+
+            Type.
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +91,6 @@ public class AffinityFragment extends Fragment {
             imageView.setImageBitmap(image);
             selectPokemon.addView(imageView);
         }
-        Type.
     }
 
     public Bitmap createImage(PBAPokemon p){
