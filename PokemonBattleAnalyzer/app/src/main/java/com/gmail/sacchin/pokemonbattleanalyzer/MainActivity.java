@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
 public class MainActivity extends Activity {
+    private static final int TOOL_ACTIVITY_CODE = 0;
+    private static final int LIST_ACTIVITY_CODE = 1;
 
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -87,7 +90,20 @@ public class MainActivity extends Activity {
     }
 
     public void startToolActivity() {
+        Intent intent = new Intent(MainActivity.this, ToolActivity.class);
+        startActivityForResult(intent, TOOL_ACTIVITY_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == TOOL_ACTIVITY_CODE) {
+//            partyLayout.removeAllViews();
+//            party.clear();
+//        }else if (requestCode == LIST_ACTIVITY_CODE) {
+//            partyLayout.removeAllViews();
+//            party.clear();
+//        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

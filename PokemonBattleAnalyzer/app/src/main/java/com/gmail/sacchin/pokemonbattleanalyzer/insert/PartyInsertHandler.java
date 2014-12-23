@@ -6,27 +6,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 
 import android.database.SQLException;
+import android.util.Log;
 
 public class PartyInsertHandler implements Runnable {
 
 	private PartyDatabaseHelper databaseHelper;
 	private Party party;
 	private boolean isInit = false;
-	private MainActivity c = null;
 
-	public PartyInsertHandler(PartyDatabaseHelper databaseHelper, Party party, boolean isInit, MainActivity c) {
+	public PartyInsertHandler(PartyDatabaseHelper databaseHelper, Party party, boolean isInit) {
 		this.databaseHelper = databaseHelper;
 		this.party = party;
 		this.isInit = isInit;
-		this.c = c;
 	}
 
-	public void initInsert(){		
+    @Override
+    public void run() {
+        if(isInit){
+            insertPastParty();
+        }else{
+            insertOneParty();
+        }
+    }
+
+	public void insertPastParty(){
 		JSONArray party = new JSONArray();
 		try {
 			party.put(new JSONObject("{\"member2\":1072,\"member3\":1073,\"member4\":1074,\"time\":1396098766986,\"member5\":1075,\"memo\":\"\",\"member6\":1076,\"_id\":185,\"userName\":\"\",\"member1\":1071}"));
@@ -197,7 +204,7 @@ public class PartyInsertHandler implements Runnable {
 			for(int i = 0 ; i < party.length() ; i++){
 				databaseHelper.insertPartyData(party.getJSONObject(i));
 			}
-//			c.makeToast("過去のパーティーデータOK!");
+            Log.i("PartyInsertHandler","過去のパーティーデータOK!");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -206,21 +213,17 @@ public class PartyInsertHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
+    public void insertOneParty() {
+        try {
+            databaseHelper.insertPartyData(party);
+            databaseHelper.updatePBAPokemonData(party);
+            Log.i("PartyInsertHandler","パーティーを登録しました。");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	@Override
-	public void run() {
-		if(isInit){
-			initInsert();
-			return;
-		}
-		
-		try {
-			databaseHelper.insertPartyData(party);
-			databaseHelper.updatePBAPokemonData(party);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    }
+
 }

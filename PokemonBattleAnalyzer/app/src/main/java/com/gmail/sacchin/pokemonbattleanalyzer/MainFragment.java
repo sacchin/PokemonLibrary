@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromList;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromParty;
 
@@ -29,7 +32,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,9 +46,7 @@ public class MainFragment extends Fragment {
     public Party party = null;
     public static ScrollView scrollView;
     public static LinearLayout partyLayout = null;
-
-    public MainActivity parentActivity = null;
-
+    protected ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      * The fragment argument representing the section number for this
@@ -67,11 +69,11 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         partyLayout = (LinearLayout) rootView.findViewById(R.id.party);
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
-        databaseHelper = new PartyDatabaseHelper(parentActivity);
+        databaseHelper = new PartyDatabaseHelper(getActivity());
         party = new Party();
 
-//        Button createNewParty = (Button) rootView.findViewById(R.id.createButton);
-//        createNewParty.setOnClickListener(new OnClickCreateNewPartyButton(this, party, databaseHelper, executorService));
+        Button createNewParty = (Button) rootView.findViewById(R.id.createButton);
+        createNewParty.setOnClickListener(new OnClickCreateNewPartyButton(this));
 //        Button showParty = (Button) rootView.findViewById(R.id.showButton);
 //        showParty.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -97,7 +99,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.parentActivity = (MainActivity)activity;
     }
 
     public void createPokemonList() {
@@ -106,7 +107,7 @@ public class MainFragment extends Fragment {
             return;
         }
 
-        LinearLayout all = new LinearLayout(parentActivity);
+        LinearLayout all = new LinearLayout(getActivity());
         all.setLayoutParams(LP);
         all.setOrientation(LinearLayout.VERTICAL);
         all.setGravity(Gravity.CENTER);
@@ -118,7 +119,7 @@ public class MainFragment extends Fragment {
 
             int count = 0;
             for(;count < list.size();){
-                LinearLayout block = new LinearLayout(parentActivity);
+                LinearLayout block = new LinearLayout(getActivity());
                 block.setLayoutParams(LP);
                 block.setGravity(Gravity.CENTER);
                 for(int i = 0 ; i < 5 ; i++){
@@ -139,8 +140,8 @@ public class MainFragment extends Fragment {
     }
     public FrameLayout createFrameLayout(PBAPokemon p, HashMap<String, Integer> countMap){
         Resources r = getResources();
-        FrameLayout fl = new FrameLayout(parentActivity);
-        ImageView localView = new ImageView(parentActivity);
+        FrameLayout fl = new FrameLayout(getActivity());
+        ImageView localView = new ImageView(getActivity());
         Bitmap temp = BitmapFactory.decodeResource(r, p.getResourceId());
         Matrix matrix = new Matrix();
         matrix.postScale(200f / (float)temp.getWidth(), 200f / (float)temp.getHeight());
@@ -149,7 +150,7 @@ public class MainFragment extends Fragment {
         fl.setOnClickListener(new OnClickFromList(this, p));
 
         fl.addView(localView);
-        TextView tv = new TextView(parentActivity);
+        TextView tv = new TextView(getActivity());
 
         Integer c = countMap.get(String.valueOf(p.getRowId()));
         if(c != null){
@@ -165,14 +166,14 @@ public class MainFragment extends Fragment {
         IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
         int index = party.setMember(ip);
         if(index == -1){
-            Toast.makeText(parentActivity, "すでに6体選択しています。", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "すでに6体選択しています。", Toast.LENGTH_SHORT).show();
         }else {
             Bitmap temp = BitmapFactory.decodeResource(getResources(), pokemon.getResourceId());
             Matrix matrix = new Matrix();
             matrix.postScale(120f / (float) temp.getWidth(), 120f / (float) temp.getHeight());
             temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(), temp.getHeight(), matrix, true);
 
-            ImageView localView = new ImageView(parentActivity);
+            ImageView localView = new ImageView(getActivity());
             localView.setImageBitmap(temp);
             localView.setOnClickListener(new OnClickFromParty(this, ip));
 
@@ -192,4 +193,15 @@ public class MainFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    public void start(){
+        if(party.getMember() == null || party.getMember().size() < 1){
+            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        party.setTime(new Timestamp(System.currentTimeMillis()));
+        executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
+        ((MainActivity)getActivity()).startToolActivity();
+    }
+
 }
