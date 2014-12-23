@@ -2,24 +2,27 @@ package com.gmail.sacchin.pokemonlibrary.entity;
 
 
 public class Type {
-	public static final int NORMAL = 0;
-	public static final int FIRE = 1;
-	public static final int WATER = 2;
-	public static final int ELECTRIC = 3;
-	public static final int GRASS = 4;
-	public static final int ICE = 5;
-	public static final int FIGHTING = 6;
-	public static final int POINSON = 7;
-	public static final int GROUND = 8;
-	public static final int FLYNG = 9;
-	public static final int PSYCHIC = 10;
-	public static final int BUG = 11;
-	public static final int ROCK = 12;
-	public static final int GHOST = 13;
-	public static final int DRAGON = 14;
-	public static final int DARK = 15;
-	public static final int STEEL = 16;
-	public static final int FEARY = 17;
+	
+	public enum TypeCode{
+		NORMAL
+		,FIRE
+		,WATER
+		,ELECTRIC
+		,GRASS
+		,ICE
+		,FIGHTING
+		,POINSON
+		,GROUND
+		,FLYNG
+		,PSYCHIC
+		,BUG
+		,ROCK
+		,GHOST
+		,DRAGON
+		,DARK
+		,STEEL
+		,FEARY
+	}
 
 	public static float AFFINITY_TABLE[][] = 
 		{
@@ -43,49 +46,182 @@ public class Type {
 		{1,0.5f,1,1,1,1,2,0.5f,1,1,1,1,1,1,2,2,0.5f,1}
 		};
 
-	public static int convertTypeNameToNo(String typeName){
+	public static TypeCode convertNameToTypeCode(String typeName){
 		if("ノーマル".equals(typeName)){
-			return NORMAL;
+			return TypeCode.NORMAL;
 		}else if("ほのお".equals(typeName)){
-			return FIRE;
+			return TypeCode.FIRE;
 		}else if("みず".equals(typeName)){
-			return WATER;
+			return TypeCode.WATER;
 		}else if("でんき".equals(typeName)){
-			return ELECTRIC;
+			return TypeCode.ELECTRIC;
 		}else if("くさ".equals(typeName)){
-			return GRASS;
+			return TypeCode.GRASS;
 		}else if("こおり".equals(typeName)){
-			return ICE;
+			return TypeCode.ICE;
 		}else if("かくとう".equals(typeName)){
-			return FIGHTING;
+			return TypeCode.FIGHTING;
 		}else if("どく".equals(typeName)){
-			return POINSON;
+			return TypeCode.POINSON;
 		}else if("じめん".equals(typeName)){
-			return GROUND;
+			return TypeCode.GROUND;
 		}else if("ひこう".equals(typeName)){
-			return FLYNG;
+			return TypeCode.FLYNG;
 		}else if("エスパー".equals(typeName)){
-			return PSYCHIC;
+			return TypeCode.PSYCHIC;
 		}else if("むし".equals(typeName)){
-			return BUG;
+			return TypeCode.BUG;
 		}else if("いわ".equals(typeName)){
-			return ROCK;
+			return TypeCode.ROCK;
 		}else if("ゴースト".equals(typeName)){
-			return GHOST;
+			return TypeCode.GHOST;
 		}else if("ドラゴン".equals(typeName)){
-			return DRAGON;
+			return TypeCode.DRAGON;
 		}else if("あく".equals(typeName)){
-			return DARK;
+			return TypeCode.DARK;
 		}else if("はがね".equals(typeName)){
-			return STEEL;
+			return TypeCode.STEEL;
 		}else if("フェアリー".equals(typeName)){
-			return FEARY;
+			return TypeCode.FEARY;
 		}else{
-			return -1;
+			return null;
 		}
 	}
 
-	public static float calcurateAffinity(int attackType, Pokemon p){
-		return AFFINITY_TABLE[attackType][p.getType1()] * AFFINITY_TABLE[attackType][p.getType2()];
+	public static String convertTypeCodeToName(TypeCode type){
+		switch (type) {
+		case NORMAL:
+			return "ノーマル";
+		case FIRE:
+			return "ほのお";
+		case WATER:
+			return "みず";
+		case ELECTRIC:
+			return "でんき";
+		case GRASS:
+			return "くさ";
+		case ICE:
+			return "こおり";
+		case FIGHTING:
+			return "かくとう";		
+		case POINSON:
+			return "どく";
+		case GROUND:
+			return "じめん";
+		case FLYNG:
+			return "ひこう";
+		case PSYCHIC:
+			return "エスパー";
+		case BUG:
+			return "むし";
+		case ROCK:
+			return "いわ";
+		case GHOST:
+			return "ゴースト";
+		case DRAGON:
+			return "ドラゴン";
+		case DARK:
+			return "あく";
+		case STEEL:
+			return "はがね";
+		case FEARY:
+			return "フェアリー";
+		default:
+			return "エラー";
+		}
+	}
+	
+	public static int convertTypeCodeToNo(TypeCode type){
+		switch (type) {
+		case NORMAL:
+			return 0;
+		case FIRE:
+			return 1;
+		case WATER:
+			return 2;
+		case ELECTRIC:
+			return 3;
+		case GRASS:
+			return 4;
+		case ICE:
+			return 5;
+		case FIGHTING:
+			return 6;
+		case POINSON:
+			return 7;
+		case GROUND:
+			return 8;
+		case FLYNG:
+			return 9;
+		case PSYCHIC:
+			return 10;
+		case BUG:
+			return 11;
+		case ROCK:
+			return 12;
+		case GHOST:
+			return 13;
+		case DRAGON:
+			return 14;
+		case DARK:
+			return 15;
+		case STEEL:
+			return 16;
+		case FEARY:
+			return 17;
+		default:
+			return -1;
+		}
+	}
+	
+	public static TypeCode convertNoToTypeCode(int type){
+		switch (type) {
+		case 0:
+			return TypeCode.NORMAL;
+		case 1:
+			return TypeCode.FIRE;
+		case 2:
+			return TypeCode.WATER;
+		case 3:
+			return TypeCode.ELECTRIC;
+		case 4:
+			return TypeCode.GRASS;
+		case 5:
+			return TypeCode.ICE;
+		case 6:
+			return TypeCode.FIGHTING;
+		case 7:
+			return TypeCode.POINSON;
+		case 8:
+			return TypeCode.GROUND;
+		case 9:
+			return TypeCode.FLYNG;
+		case 10:
+			return TypeCode.PSYCHIC;
+		case 11:
+			return TypeCode.BUG;
+		case 12:
+			return TypeCode.ROCK;
+		case 13:
+			return TypeCode.GHOST;
+		case 14:
+			return TypeCode.DRAGON;
+		case 15:
+			return TypeCode.DARK;
+		case 16:
+			return TypeCode.STEEL;
+		case 17:
+			return TypeCode.FEARY;
+		default:
+			return null;
+		}
+	}
+	
+	public static float calcurateAffinity(TypeCode attackType, Pokemon p){
+		int attackNo = convertTypeCodeToNo(attackType);
+		int type1No = convertTypeCodeToNo(p.getType1());
+		int type2No = convertTypeCodeToNo(p.getType2());
+		
+		return AFFINITY_TABLE[attackNo][type1No] * AFFINITY_TABLE[attackNo][type2No];
 	}
 }
