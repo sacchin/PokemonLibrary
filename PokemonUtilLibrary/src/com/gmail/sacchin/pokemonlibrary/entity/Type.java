@@ -215,6 +215,10 @@ public class Type {
 		}
 	}
 	
+	public static TypeCode[] values(){
+		return TypeCode.values();
+	}
+	
 	public static float calcurateAffinity(TypeCode attackType, Pokemon p){
 		int attackNo = convertTypeCodeToNo(attackType);
 		int type1No = convertTypeCodeToNo(p.getType1());
