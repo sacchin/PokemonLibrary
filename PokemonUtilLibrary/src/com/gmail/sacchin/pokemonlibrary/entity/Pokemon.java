@@ -3,6 +3,8 @@ package com.gmail.sacchin.pokemonlibrary.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.sacchin.pokemonlibrary.entity.Type.TypeCode;
+
 public class Pokemon {
 	/**
 	 * nnn-mm
@@ -10,8 +12,8 @@ public class Pokemon {
 	private String no = "";
 	private String jname;
 	private String ename;
-	private int type1;
-	private int type2;
+	private TypeCode type1;
+	private TypeCode type2;
 	private float weight;
 	private int h;
 	private int a;
@@ -56,8 +58,8 @@ public class Pokemon {
 		this.ability1 = ability1;
 		this.ability2 = ability2;
 		this.abilityd = abilityd;
-		this.type1 = type1;
-		this.type2 = type2;
+		this.type1 = Type.convertNoToTypeCode(type1);
+		this.type2 = Type.convertNoToTypeCode(type2);
 		this.weight = weight;
 		this.mega = new ArrayList<Pokemon>();
 	}
@@ -85,11 +87,11 @@ public class Pokemon {
 		return ename;
 	}
 
-	public int getType1() {
+	public TypeCode getType1() {
 		return type1;
 	}
 
-	public int getType2() {
+	public TypeCode getType2() {
 		return type2;
 	}
 
