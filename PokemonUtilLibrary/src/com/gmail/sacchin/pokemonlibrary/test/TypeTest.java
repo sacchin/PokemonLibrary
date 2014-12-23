@@ -27,4 +27,11 @@ public class TypeTest {
 		assertEquals(Type.FLYNG, Type.convertTypeNameToNo("ひこう"), 1);
 		assertEquals(-1, Type.convertTypeNameToNo("かたな"), 1);
 	}
+	
+	@Test
+	public void testConvertNoToTypeName() {
+		assertEquals("でんき", Type.convertNoToTypeName(Type.ELECTRIC));
+		assertEquals("ドラゴン", Type.convertNoToTypeName(Type.DRAGON));
+		assertEquals("エラー", Type.convertNoToTypeName(100));
+	}
 }
