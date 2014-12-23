@@ -72,6 +72,11 @@ public class AffinityFragment extends Fragment {
         try {
             this.p = databaseHelper.selectPBAPokemon(pokemonNo);
             Log.e("AffinityFragment", p.getJname());
+            for(Type.TypeCode temp : Type.TypeCode.values()){
+                float result = Type.calcurateAffinity(temp, p);
+                Log.e(String.valueOf(p.getType1()), String.valueOf(p.getType2()));
+                Log.e("Type:" + Type.convertTypeCodeToName(temp), result + "倍");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
