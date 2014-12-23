@@ -1,8 +1,6 @@
 package com.gmail.sacchin.pokemonbattleanalyzer;
 
-import java.util.ArrayList;
-
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.fragment.ToolFragment;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -10,11 +8,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 public class ToolActivity extends Activity{
-
-	private ArrayList<String> skills = null;
-	private ArrayList<String> items = null;
-	private Party party = null;
-	private int index = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

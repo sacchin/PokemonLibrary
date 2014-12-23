@@ -1,6 +1,6 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.listener;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainFragment;
+import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 
 import android.view.View;
 import android.view.View.OnClickListener;

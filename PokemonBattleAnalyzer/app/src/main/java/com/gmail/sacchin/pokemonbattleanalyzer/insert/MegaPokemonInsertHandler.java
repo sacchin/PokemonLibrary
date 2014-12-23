@@ -7,23 +7,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.SQLException;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 
 public class MegaPokemonInsertHandler implements Runnable {
 
 	private PartyDatabaseHelper databaseHelper;
-	private MainActivity c = null;
 
-	public MegaPokemonInsertHandler(PartyDatabaseHelper databaseHelper, MainActivity c) {
+	public MegaPokemonInsertHandler(PartyDatabaseHelper databaseHelper) {
 		this.databaseHelper = databaseHelper;
-		this.c = c;
 	}
 
 	public void initInsert(){
-		JSONArray megaPockemonArray = new JSONArray();	
+		JSONArray megaPokemonArray = new JSONArray();
 		try {
 			JSONObject megaFushigibana = new JSONObject();
 			megaFushigibana.put("pokemonNo", "003");
@@ -35,7 +32,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaFushigibana.put("s", 80);
 			megaFushigibana.put("characteristic", "あついしぼう");
 			megaFushigibana.put("megaType", "x");
-			megaPockemonArray.put(megaFushigibana);
+			megaPokemonArray.put(megaFushigibana);
 
 			JSONObject megaRizaX = new JSONObject();
 			megaRizaX.put("pokemonNo", "006");
@@ -47,7 +44,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaRizaX.put("s", 100);
 			megaRizaX.put("characteristic", "かたいツメ");
 			megaRizaX.put("megaType", "x");
-			megaPockemonArray.put(megaRizaX);
+			megaPokemonArray.put(megaRizaX);
 			
 			JSONObject megaRizaY = new JSONObject();
 			megaRizaY.put("pokemonNo", "006");
@@ -59,7 +56,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaRizaY.put("s", 100);
 			megaRizaY.put("characteristic", "ひでり");
 			megaRizaY.put("megaType", "y");
-			megaPockemonArray.put(megaRizaY);
+			megaPokemonArray.put(megaRizaY);
 			
 			JSONObject megaKame = new JSONObject();
 			megaKame.put("pokemonNo", "009");
@@ -71,7 +68,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaKame.put("s", 78);
 			megaKame.put("characteristic", "メガランチャー");
 			megaKame.put("megaType", "x");
-			megaPockemonArray.put(megaKame);
+			megaPokemonArray.put(megaKame);
 			
 			JSONObject megaBangi = new JSONObject();
 			megaBangi.put("pokemonNo", "248");
@@ -83,7 +80,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaBangi.put("s", 71);
 			megaBangi.put("characteristic", "すなおこし");
 			megaBangi.put("megaType", "x");
-			megaPockemonArray.put(megaBangi);
+			megaPokemonArray.put(megaBangi);
 			
 			JSONObject megaHell = new JSONObject();
 			megaHell.put("pokemonNo", "229");
@@ -95,7 +92,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaHell.put("s", 115);
 			megaHell.put("characteristic", "サンパワー");
 			megaHell.put("megaType", "x");
-			megaPockemonArray.put(megaHell);
+			megaPokemonArray.put(megaHell);
 			
 			JSONObject megaKairos = new JSONObject();
 			megaKairos.put("pokemonNo", "127");
@@ -107,7 +104,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaKairos.put("s", 105);
 			megaKairos.put("characteristic", "スカイスキン");
 			megaKairos.put("megaType", "x");
-			megaPockemonArray.put(megaKairos);
+			megaPokemonArray.put(megaKairos);
 			
 			JSONObject megaBoss = new JSONObject();
 			megaBoss.put("pokemonNo", "306");
@@ -119,7 +116,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaBoss.put("s", 50);
 			megaBoss.put("characteristic", "フィルター");
 			megaBoss.put("megaType", "x");
-			megaPockemonArray.put(megaBoss);
+			megaPokemonArray.put(megaBoss);
 			
 			JSONObject megaRaibo = new JSONObject();
 			megaRaibo.put("pokemonNo", "310");
@@ -131,7 +128,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaRaibo.put("s", 135);
 			megaRaibo.put("characteristic", "いかく");
 			megaRaibo.put("megaType", "x");
-			megaPockemonArray.put(megaRaibo);
+			megaPokemonArray.put(megaRaibo);
 			
 			JSONObject megaHerakuros = new JSONObject();
 			megaHerakuros.put("pokemonNo", "214");
@@ -143,7 +140,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaHerakuros.put("s", 75);
 			megaHerakuros.put("characteristic", "スキルリンク");
 			megaHerakuros.put("megaType", "x");
-			megaPockemonArray.put(megaHerakuros);
+			megaPokemonArray.put(megaHerakuros);
 			
 			JSONObject megaGenga = new JSONObject();
 			megaGenga.put("pokemonNo", "094");
@@ -155,7 +152,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaGenga.put("s", 130);
 			megaGenga.put("characteristic", "かげふみ");
 			megaGenga.put("megaType", "x");
-			megaPockemonArray.put(megaGenga);
+			megaPokemonArray.put(megaGenga);
 
 			JSONObject megaGyara = new JSONObject();
 			megaGyara.put("pokemonNo", "130");
@@ -167,7 +164,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaGyara.put("s", 81);
 			megaGyara.put("characteristic", "かたやぶり");
 			megaGyara.put("megaType", "x");
-			megaPockemonArray.put(megaGyara);
+			megaPokemonArray.put(megaGyara);
 			
 			JSONObject megaGalra = new JSONObject();
 			megaGalra.put("pokemonNo", "115");
@@ -179,7 +176,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaGalra.put("s", 100);
 			megaGalra.put("characteristic", "おやこあい");
 			megaGalra.put("megaType", "x");
-			megaPockemonArray.put(megaGalra);
+			megaPokemonArray.put(megaGalra);
 			
 			JSONObject megaPutera = new JSONObject();
 			megaPutera.put("pokemonNo", "142");
@@ -191,7 +188,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaPutera.put("s", 150);
 			megaPutera.put("characteristic", "かたいツメ");
 			megaPutera.put("megaType", "x");
-			megaPockemonArray.put(megaPutera);
+			megaPokemonArray.put(megaPutera);
 
 			JSONObject megaMyutuX = new JSONObject();
 			megaMyutuX.put("pokemonNo", "150");
@@ -203,7 +200,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaMyutuX.put("s", 130);
 			megaMyutuX.put("characteristic", "ふくつのこころ");
 			megaMyutuX.put("megaType", "x");
-			megaPockemonArray.put(megaMyutuX);
+			megaPokemonArray.put(megaMyutuX);
 
 			JSONObject megaMyutuY = new JSONObject();
 			megaMyutuY.put("pokemonNo", "150");
@@ -215,7 +212,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaMyutuY.put("s", 140);
 			megaMyutuY.put("characteristic", "ふみん");
 			megaMyutuY.put("megaType", "y");
-			megaPockemonArray.put(megaMyutuY);
+			megaPokemonArray.put(megaMyutuY);
 
 			JSONObject megaDenryu = new JSONObject();
 			megaDenryu.put("pokemonNo", "181");
@@ -227,7 +224,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaDenryu.put("s", 45);
 			megaDenryu.put("characteristic", "かたやぶり");
 			megaDenryu.put("megaType", "x");
-			megaPockemonArray.put(megaDenryu);
+			megaPokemonArray.put(megaDenryu);
 
 			JSONObject megaBasyamo = new JSONObject();
 			megaBasyamo.put("pokemonNo", "257");
@@ -239,7 +236,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaBasyamo.put("s", 100);
 			megaBasyamo.put("characteristic", "かそく");
 			megaBasyamo.put("megaType", "x");
-			megaPockemonArray.put(megaBasyamo);
+			megaPokemonArray.put(megaBasyamo);
 
 			JSONObject megaSanaito = new JSONObject();
 			megaSanaito.put("pokemonNo", "282");
@@ -251,7 +248,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaSanaito.put("s", 100);
 			megaSanaito.put("characteristic", "フェアリースキン");
 			megaSanaito.put("megaType", "x");
-			megaPockemonArray.put(megaSanaito);
+			megaPokemonArray.put(megaSanaito);
 
 			JSONObject megaKucheat = new JSONObject();
 			megaKucheat.put("pokemonNo", "303");
@@ -263,7 +260,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaKucheat.put("s", 50);
 			megaKucheat.put("characteristic", "ちからもち");
 			megaKucheat.put("megaType", "x");
-			megaPockemonArray.put(megaKucheat);
+			megaPokemonArray.put(megaKucheat);
 
 			JSONObject megaJupeta = new JSONObject();
 			megaJupeta.put("pokemonNo", "354");
@@ -275,7 +272,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaJupeta.put("s", 75);
 			megaJupeta.put("characteristic", "いたずらごころ");
 			megaJupeta.put("megaType", "x");
-			megaPockemonArray.put(megaJupeta);
+			megaPokemonArray.put(megaJupeta);
 
 			JSONObject megaAbsol = new JSONObject();
 			megaAbsol.put("pokemonNo", "359");
@@ -287,7 +284,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaAbsol.put("s", 115);
 			megaAbsol.put("characteristic", "マジックミラー");
 			megaAbsol.put("megaType", "x");
-			megaPockemonArray.put(megaAbsol);
+			megaPokemonArray.put(megaAbsol);
 
 			JSONObject megaGabli = new JSONObject();
 			megaGabli.put("pokemonNo", "445");
@@ -299,7 +296,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaGabli.put("s", 92);
 			megaGabli.put("characteristic", "すなのちから");
 			megaGabli.put("megaType", "x");
-			megaPockemonArray.put(megaGabli);
+			megaPokemonArray.put(megaGabli);
 
 			JSONObject megaRukario = new JSONObject();
 			megaRukario.put("pokemonNo", "448");
@@ -311,7 +308,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaRukario.put("s", 112);
 			megaRukario.put("characteristic", "てきおうりょく");
 			megaRukario.put("megaType", "x");
-			megaPockemonArray.put(megaRukario);
+			megaPokemonArray.put(megaRukario);
 
 			JSONObject megaYukinoo = new JSONObject();
 			megaYukinoo.put("pokemonNo", "460");
@@ -323,7 +320,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaYukinoo.put("s", 30);
 			megaYukinoo.put("characteristic", "ゆきふらし");
 			megaYukinoo.put("megaType", "x");
-			megaPockemonArray.put(megaYukinoo);
+			megaPokemonArray.put(megaYukinoo);
 
 			JSONObject megaFudhin = new JSONObject();
 			megaFudhin.put("pokemonNo", "065");
@@ -335,7 +332,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaFudhin.put("s", 150);
 			megaFudhin.put("characteristic", "トレース");
 			megaFudhin.put("megaType", "x");
-			megaPockemonArray.put(megaFudhin);
+			megaPokemonArray.put(megaFudhin);
 
 			JSONObject megaHassamu = new JSONObject();
 			megaHassamu.put("pokemonNo", "212");
@@ -347,7 +344,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaHassamu.put("s", 75);
 			megaHassamu.put("characteristic", "テクニシャン");
 			megaHassamu.put("megaType", "x");
-			megaPockemonArray.put(megaHassamu);
+			megaPokemonArray.put(megaHassamu);
 
 			JSONObject megaCharemu = new JSONObject();
 			megaCharemu.put("pokemonNo", "308");
@@ -359,7 +356,7 @@ public class MegaPokemonInsertHandler implements Runnable {
 			megaCharemu.put("s", 100);
 			megaCharemu.put("characteristic", "ヨガパワー");
 			megaCharemu.put("megaType", "x");
-			megaPockemonArray.put(megaCharemu);
+			megaPokemonArray.put(megaCharemu);
 
             JSONObject megaSupia = new JSONObject();
             megaSupia.put("pokemonNo", "015");
@@ -371,7 +368,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaSupia.put("s", 145);
             megaSupia.put("characteristic", "てきおうりょく");
             megaSupia.put("megaType", "x");
-            megaPockemonArray.put(megaSupia);
+            megaPokemonArray.put(megaSupia);
 
             JSONObject megaPijot = new JSONObject();
             megaPijot.put("pokemonNo", "018");
@@ -383,7 +380,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaPijot.put("s", 121);
             megaPijot.put("characteristic", "ノーガード");
             megaPijot.put("megaType", "x");
-            megaPockemonArray.put(megaPijot);
+            megaPokemonArray.put(megaPijot);
 
             JSONObject megaYadoran = new JSONObject();
             megaYadoran.put("pokemonNo", "080");
@@ -395,7 +392,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaYadoran.put("s", 30);
             megaYadoran.put("characteristic", "シェルアーマー");
             megaYadoran.put("megaType", "x");
-            megaPockemonArray.put(megaYadoran);
+            megaPokemonArray.put(megaYadoran);
 
             JSONObject megaHaganer = new JSONObject();
             megaHaganer.put("pokemonNo", "208");
@@ -407,7 +404,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaHaganer.put("s", 30);
             megaHaganer.put("characteristic", "すなのちから");
             megaHaganer.put("megaType", "x");
-            megaPockemonArray.put(megaHaganer);
+            megaPokemonArray.put(megaHaganer);
 
             JSONObject megaJukain = new JSONObject();
             megaJukain.put("pokemonNo", "254");
@@ -419,7 +416,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaJukain.put("s", 145);
             megaJukain.put("characteristic", "ひらいしん");
             megaJukain.put("megaType", "x");
-            megaPockemonArray.put(megaJukain);
+            megaPokemonArray.put(megaJukain);
 
             JSONObject megaRaguraji = new JSONObject();
             megaRaguraji.put("pokemonNo", "260");
@@ -431,7 +428,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaRaguraji.put("s", 70);
             megaRaguraji.put("characteristic", "すいすい");
             megaRaguraji.put("megaType", "x");
-            megaPockemonArray.put(megaRaguraji);
+            megaPokemonArray.put(megaRaguraji);
 
             JSONObject megaYamirami = new JSONObject();
             megaYamirami.put("pokemonNo", "302");
@@ -443,7 +440,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaYamirami.put("s", 20);
             megaYamirami.put("characteristic", "マジックミラー");
             megaYamirami.put("megaType", "x");
-            megaPockemonArray.put(megaYamirami);
+            megaPokemonArray.put(megaYamirami);
 
             JSONObject megaSamehada = new JSONObject();
             megaSamehada.put("pokemonNo", "319");
@@ -455,7 +452,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaSamehada.put("s", 105);
             megaSamehada.put("characteristic", "がんじょうあご");
             megaSamehada.put("megaType", "x");
-            megaPockemonArray.put(megaSamehada);
+            megaPokemonArray.put(megaSamehada);
 
             JSONObject megaBakuda = new JSONObject();
             megaBakuda.put("pokemonNo", "323");
@@ -467,7 +464,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaBakuda.put("s", 20);
             megaBakuda.put("characteristic", "ちからずく");
             megaBakuda.put("megaType", "x");
-            megaPockemonArray.put(megaBakuda);
+            megaPokemonArray.put(megaBakuda);
 
             JSONObject megaChirutaris = new JSONObject();
             megaChirutaris.put("pokemonNo", "334");
@@ -479,7 +476,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaChirutaris.put("s", 80);
             megaChirutaris.put("characteristic", "フェアリースキン");
             megaChirutaris.put("megaType", "x");
-            megaPockemonArray.put(megaChirutaris);
+            megaPokemonArray.put(megaChirutaris);
 
             JSONObject megaOnigori = new JSONObject();
             megaOnigori.put("pokemonNo", "362");
@@ -491,7 +488,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaOnigori.put("s", 100);
             megaOnigori.put("characteristic", "フリーズスキン");
             megaOnigori.put("megaType", "x");
-            megaPockemonArray.put(megaOnigori);
+            megaPokemonArray.put(megaOnigori);
 
             JSONObject megaManda = new JSONObject();
             megaManda.put("pokemonNo", "373");
@@ -503,7 +500,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaManda.put("s", 120);
             megaManda.put("characteristic", "スカイスキン");
             megaManda.put("megaType", "x");
-            megaPockemonArray.put(megaManda);
+            megaPokemonArray.put(megaManda);
 
             JSONObject megaMetagulos = new JSONObject();
             megaMetagulos.put("pokemonNo", "376");
@@ -515,7 +512,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaMetagulos.put("s", 110);
             megaMetagulos.put("characteristic", "かたいツメ");
             megaMetagulos.put("megaType", "x");
-            megaPockemonArray.put(megaMetagulos);
+            megaPokemonArray.put(megaMetagulos);
 
             JSONObject megaRathias = new JSONObject();
             megaRathias.put("pokemonNo", "380");
@@ -527,7 +524,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaRathias.put("s", 110);
             megaRathias.put("characteristic", "ふゆう");
             megaRathias.put("megaType", "x");
-            megaPockemonArray.put(megaRathias);
+            megaPokemonArray.put(megaRathias);
 
             JSONObject megaRathios = new JSONObject();
             megaRathios.put("pokemonNo", "381");
@@ -539,7 +536,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaRathios.put("s", 110);
             megaRathios.put("characteristic", "ふゆう");
             megaRathios.put("megaType", "x");
-            megaPockemonArray.put(megaRathios);
+            megaPokemonArray.put(megaRathios);
 
             JSONObject megaRekuza = new JSONObject();
             megaRekuza.put("pokemonNo", "384");
@@ -551,7 +548,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaRekuza.put("s", 115);
             megaRekuza.put("characteristic", "デルタストリーム");
             megaRekuza.put("megaType", "x");
-            megaPockemonArray.put(megaRekuza);
+            megaPokemonArray.put(megaRekuza);
 
             JSONObject megaMimilop = new JSONObject();
             megaMimilop.put("pokemonNo", "428");
@@ -563,7 +560,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaMimilop.put("s", 135);
             megaMimilop.put("characteristic", "きもったま");
             megaMimilop.put("megaType", "x");
-            megaPockemonArray.put(megaMimilop);
+            megaPokemonArray.put(megaMimilop);
 
             JSONObject megaErureido = new JSONObject();
             megaErureido.put("pokemonNo", "475");
@@ -575,7 +572,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaErureido.put("s", 110);
             megaErureido.put("characteristic", "せいしんりょく");
             megaErureido.put("megaType", "x");
-            megaPockemonArray.put(megaErureido);
+            megaPokemonArray.put(megaErureido);
 
             JSONObject megaTabune = new JSONObject();
             megaTabune.put("pokemonNo", "531");
@@ -587,12 +584,12 @@ public class MegaPokemonInsertHandler implements Runnable {
             megaTabune.put("s", 50);
             megaTabune.put("characteristic", "いやしのこころ");
             megaTabune.put("megaType", "x");
-            megaPockemonArray.put(megaTabune);
+            megaPokemonArray.put(megaTabune);
 
-            for(int i = 0 ; i < megaPockemonArray.length() ; i++){
-				databaseHelper.insertMegaPBAPokemonData(megaPockemonArray.getJSONObject(i));
+            for(int i = 0 ; i < megaPokemonArray.length() ; i++){
+				databaseHelper.insertMegaPBAPokemonData(megaPokemonArray.getJSONObject(i));
 			}
-//            Toast.makeText(c, "メガシンカポケモンデータOK!", Toast.LENGTH_SHORT).show();
+            Log.i("MegaPokemonInsertHandler", "メガシンカポケモンデータOK!");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -607,3 +604,4 @@ public class MegaPokemonInsertHandler implements Runnable {
 		initInsert();
 	}
 }
+

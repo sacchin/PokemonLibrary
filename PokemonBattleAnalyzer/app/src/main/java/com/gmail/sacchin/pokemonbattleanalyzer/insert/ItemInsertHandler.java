@@ -2,19 +2,16 @@ package com.gmail.sacchin.pokemonbattleanalyzer.insert;
 
 import java.io.IOException;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 
 import android.database.SQLException;
-import android.widget.Toast;
+import android.util.Log;
 
 public class ItemInsertHandler implements Runnable {
 	private PartyDatabaseHelper databaseHelper;
-	private MainActivity c = null;
 
-	public ItemInsertHandler(PartyDatabaseHelper databaseHelper, MainActivity c) {
+	public ItemInsertHandler(PartyDatabaseHelper databaseHelper) {
 		this.databaseHelper = databaseHelper;
-		this.c = c;
 	}
 
 	@Override
@@ -241,7 +238,7 @@ public class ItemInsertHandler implements Runnable {
 			databaseHelper.insertItemData("リザードナイトX");
 			databaseHelper.insertItemData("リザードナイトY");
 
-//            Toast.makeText(c, "ポケモンの持ち物データOK!", Toast.LENGTH_SHORT).show();
+            Log.i("ItemInsertHandler", "ポケモンの持ち物データOK!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
