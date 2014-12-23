@@ -27,6 +27,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCheckAffinityButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromList;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromParty;
@@ -77,13 +78,8 @@ public class MainFragment extends Fragment {
 
         Button createNewParty = (Button) rootView.findViewById(R.id.createButton);
         createNewParty.setOnClickListener(new OnClickCreateNewPartyButton(this));
-//        Button showParty = (Button) rootView.findViewById(R.id.showButton);
-//        showParty.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.e("onClick", "l !");
-//            }
-//        });
+        Button showAffinity = (Button) rootView.findViewById(R.id.affinityButton);
+        showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
         return rootView;
     }
 
@@ -197,7 +193,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public void start(){
+    public void createParty(){
         if(party.getMember() == null || party.getMember().size() < 1){
             Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
             return;
@@ -207,4 +203,11 @@ public class MainFragment extends Fragment {
         ((MainActivity)getActivity()).startToolActivity();
     }
 
+    public void showAffinity(){
+        if(party.getMember() == null || party.getMember().size() < 1){
+            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ((MainActivity)getActivity()).startAffinityActivity(party.getMember().get(0));
+    }
 }

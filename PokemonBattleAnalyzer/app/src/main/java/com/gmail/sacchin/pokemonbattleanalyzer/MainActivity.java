@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
@@ -22,7 +24,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
 public class MainActivity extends Activity {
     private static final int TOOL_ACTIVITY_CODE = 0;
-    private static final int LIST_ACTIVITY_CODE = 1;
+    private static final int AFFINITY_ACTIVITY_CODE = 1;
 
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -95,12 +97,22 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, TOOL_ACTIVITY_CODE);
     }
 
+    public void startAffinityActivity(PBAPokemon selected) {
+        if(selected == null){
+            Toast.makeText(this, "エラーが発生しました。", Toast.LENGTH_SHORT).show();;
+            return;
+        }
+        Intent intent = new Intent(MainActivity.this, AffinityComplementActivity.class);
+        intent.putExtra("selected",selected.getNo());
+        startActivityForResult(intent, AFFINITY_ACTIVITY_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        if (requestCode == TOOL_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();
 //            party.clear();
-//        }else if (requestCode == LIST_ACTIVITY_CODE) {
+//        }else if (requestCode == AFFINITY_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();
 //            party.clear();
 //        }

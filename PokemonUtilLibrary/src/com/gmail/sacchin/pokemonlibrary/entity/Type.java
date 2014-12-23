@@ -1,5 +1,6 @@
 package com.gmail.sacchin.pokemonlibrary.entity;
 
+
 public class Type {
 	
 	public enum TypeCode{
@@ -86,6 +87,7 @@ public class Type {
 			return null;
 		}
 	}
+
 	public static String convertTypeCodeToName(TypeCode type){
 		switch (type) {
 		case NORMAL:

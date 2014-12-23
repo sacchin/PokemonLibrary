@@ -25,10 +25,10 @@
             </Button>
 
             <Button
-                android:id="@+id/showButton"
+                android:id="@+id/affinityButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Party"
+                android:text="Show Affinity Complete"
                 android:layout_weight="1" >
             </Button>
         </LinearLayout>

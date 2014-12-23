@@ -349,6 +349,27 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		return list;
 	}
 
+    synchronized public PBAPokemon selectPBAPokemon(String pokemonNo) throws IOException {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] values = {pokemonNo};
+        Cursor cur = db.query(POKEMON_MASTER_TABLE_NAME, null, "no = ?", values, null, null, null, null);
+        try {
+            if(cur.moveToNext()) {
+                PBAPokemon p = createPBAPokemon(cur);
+                p.setRowId(cur.getInt(0));
+
+                Integer id = util.imageResouse.get(String.valueOf(p.getNo()));
+                if(id != null){
+                    p.setResourceId(id.intValue());
+                }
+                return p;
+            }
+        } catch (SQLiteException e) {
+            Log.e("selectPBAPokemon", "not found");
+        }
+        return null;
+    }
+
 	synchronized public ArrayList<String> selectAllSkill() throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cur = db.query(SKILL_MASTER_TABLE_NAME, new String[]{"skillName"}, null, null, null, null, BaseColumns._ID + " asc", null);

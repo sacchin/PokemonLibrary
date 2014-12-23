@@ -59,5 +59,4 @@ public class TypeTest {
 		result = Type.calcurateAffinity(TypeCode.FIGHTING, cuheat);
 		assertEquals(1f, result, 0.1f);
 	}
-	
 }
