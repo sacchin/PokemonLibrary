@@ -73,8 +73,6 @@ public class AffinityFragment extends Fragment {
             this.p = databaseHelper.selectPBAPokemon(pokemonNo);
             Log.e("AffinityFragment", p.getJname());
 
-
-            Type.
         } catch (IOException e) {
             e.printStackTrace();
         }
