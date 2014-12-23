@@ -208,6 +208,6 @@ public class MainFragment extends Fragment {
             Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
             return;
         }
-        ((MainActivity)getActivity()).startAffinityActivity();
+        ((MainActivity)getActivity()).startAffinityActivity(party.getMember().get(0));
     }
 }

@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
@@ -95,8 +97,13 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, TOOL_ACTIVITY_CODE);
     }
 
-    public void startAffinityActivity() {
+    public void startAffinityActivity(PBAPokemon selected) {
+        if(selected == null){
+            Toast.makeText(this, "エラーが発生しました。", Toast.LENGTH_SHORT).show();;
+            return;
+        }
         Intent intent = new Intent(MainActivity.this, AffinityComplementActivity.class);
+        intent.putExtra("selected",selected.getNo());
         startActivityForResult(intent, AFFINITY_ACTIVITY_CODE);
     }
 
