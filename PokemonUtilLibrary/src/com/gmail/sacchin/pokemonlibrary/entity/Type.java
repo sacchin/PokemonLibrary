@@ -1,6 +1,5 @@
 package com.gmail.sacchin.pokemonlibrary.entity;
 
-
 public class Type {
 	public static final int NORMAL = 0;
 	public static final int FIRE = 1;
@@ -84,7 +83,49 @@ public class Type {
 			return -1;
 		}
 	}
-
+	public static String convertNoToTypeName(int typeNo){
+		switch (typeNo) {
+		case NORMAL:
+			return "ノーマル";
+		case FIRE:
+			return "ほのお";
+		case WATER:
+			return "みず";
+		case ELECTRIC:
+			return "でんき";
+		case GRASS:
+			return "くさ";
+		case ICE:
+			return "こおり";
+		case FIGHTING:
+			return "かくとう";		
+		case POINSON:
+			return "どく";
+		case GROUND:
+			return "じめん";
+		case FLYNG:
+			return "ひこう";
+		case PSYCHIC:
+			return "エスパー";
+		case BUG:
+			return "むし";
+		case ROCK:
+			return "いわ";
+		case GHOST:
+			return "ゴースト";
+		case DRAGON:
+			return "ドラゴン";
+		case DARK:
+			return "あく";
+		case STEEL:
+			return "はがね";
+		case FEARY:
+			return "フェアリー";
+		default:
+			return "エラー";
+		}
+	}
+	
 	public static float calcurateAffinity(int attackType, Pokemon p){
 		return AFFINITY_TABLE[attackType][p.getType1()] * AFFINITY_TABLE[attackType][p.getType2()];
 	}
