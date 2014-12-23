@@ -39,6 +39,14 @@ public class TypeTest {
 		assertEquals(TypeCode.DARK, Type.convertNoToTypeCode(15));
 		assertEquals(TypeCode.PSYCHIC, Type.convertNoToTypeCode(10));
 	}
+	
+	@Test
+	public void testValues() {
+		TypeCode[] array = TypeCode.values();
+		
+		assertNotNull(array);
+		assertEquals(18, array.length);
+	}
 		
 	@Test
 	public void testCalcurateAffinity() {
