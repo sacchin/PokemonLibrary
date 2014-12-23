@@ -1,4 +1,4 @@
-package com.gmail.sacchin.pokemonbattleanalyzer;
+package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -20,6 +20,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
+import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;

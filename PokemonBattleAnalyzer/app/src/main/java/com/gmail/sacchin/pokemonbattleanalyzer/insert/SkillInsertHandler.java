@@ -1,35 +1,22 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.insert;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 
 import android.database.SQLException;
+import android.util.Log;
 
 public class SkillInsertHandler implements Runnable {
 	private PartyDatabaseHelper databaseHelper;
-	private MainActivity c = null;
 
-	public SkillInsertHandler(PartyDatabaseHelper databaseHelper, MainActivity c) {
+	public SkillInsertHandler(PartyDatabaseHelper databaseHelper) {
 		this.databaseHelper = databaseHelper;
-		this.c = c;
 	}
 
 	@Override
 	public void run() {
 		try {
-			PBAPokemon p = new PBAPokemon("3", "フシギバナ", "Venusaur",  80,  82,  83,  100,  100,  80, " しんりょく", " -", " ようりょくそ", 3, 0, 0, 0);
-			IndividualPBAPokemon ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "たべのこし", "ようりょくそ", "ヘドロばくだん", "ギガドレイン", "やどぎのたね", "めざめるパワー");
-			databaseHelper.insertIndividualPBAPokemonData(ip, new Timestamp(System.currentTimeMillis()));
-			ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "たべのこし", "ようりょくそ", "やどぎのたね", "こうごうせい", "ギガドレイン", "ヘドロばくだん");
-			databaseHelper.insertIndividualPBAPokemonData(ip, new Timestamp(System.currentTimeMillis()));
-			ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "くろいヘドロ", "ようりょくそ", "ギガドレイン", "じしん", "ヘドロばくだん", "どくどく");
-			databaseHelper.insertIndividualPBAPokemonData(ip, new Timestamp(System.currentTimeMillis()));
-			
 			databaseHelper.insertSkillData("はたく");
 			databaseHelper.insertSkillData("からてチョップ");
 			databaseHelper.insertSkillData("おうふくビンタ");
@@ -644,7 +631,7 @@ public class SkillInsertHandler implements Runnable {
 			databaseHelper.insertSkillData("ムーンフォース");
 			databaseHelper.insertSkillData("もりののろい");
 			databaseHelper.insertSkillData("ようせいのかぜ");
-//			c.makeToast("ポケモン技データOK!");
+            Log.i("SkillInsertHandler", "ポケモン技データOK!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

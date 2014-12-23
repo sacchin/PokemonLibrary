@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
@@ -49,15 +50,15 @@ public class MainActivity extends Activity {
         SharedPreferences serviceStatePreferences = getSharedPreferences("pokemon", MODE_PRIVATE);
         if(serviceStatePreferences.getBoolean("isFirst", true)){
             executorService.execute(
-                    new PokemonInsertHandler(databaseHelper, this));
+                    new PokemonInsertHandler(databaseHelper));
             executorService.execute(
-                    new ItemInsertHandler(databaseHelper, this));
+                    new ItemInsertHandler(databaseHelper));
             executorService.execute(
-                    new SkillInsertHandler(databaseHelper, this));
+                    new SkillInsertHandler(databaseHelper));
 //                executorService.execute(new PartyInsertHandler(databaseHelper, null, true, this));
 //                executorService.execute(new IndividualPokemonInsertHandler(databaseHelper, this));
             executorService.execute(
-                    new MegaPokemonInsertHandler(databaseHelper, this));
+                    new MegaPokemonInsertHandler(databaseHelper));
 
             Editor editor = serviceStatePreferences.edit();
             editor.putBoolean("isFirst", false);

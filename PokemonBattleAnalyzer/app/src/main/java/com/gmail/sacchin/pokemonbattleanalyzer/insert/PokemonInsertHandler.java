@@ -2,19 +2,16 @@ package com.gmail.sacchin.pokemonbattleanalyzer.insert;
 
 import java.io.IOException;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 
 import android.database.SQLException;
-import android.widget.Toast;
+import android.util.Log;
 
 public class PokemonInsertHandler implements Runnable {
 	private PartyDatabaseHelper databaseHelper;
-	private MainActivity c = null;
 
-	public PokemonInsertHandler(PartyDatabaseHelper databaseHelper, MainActivity c) {
+	public PokemonInsertHandler(PartyDatabaseHelper databaseHelper) {
 		this.databaseHelper = databaseHelper;
-		this.c = c;
 	}
 
 	@Override
@@ -742,20 +739,12 @@ public class PokemonInsertHandler implements Runnable {
 			databaseHelper.insertPBAPokemonData("713", "クレベース", "Avalugg", 95, 117, 184, 44, 46, 28, "マイペース", "アイスボディ", "がんじょう",5,-1,505.0);
 			databaseHelper.insertPBAPokemonData("714", "オンバット", "-", 0, 0, 0, 0, 0, 0, "-", "-", "-",14,9,8.0);
 			databaseHelper.insertPBAPokemonData("715", "オンバーン", "Noivern", 85, 70, 80, 97, 80, 123, "おみとおし", "すりぬけ", "テレパシー",14,9,85.0);
-//			databaseHelper.insertPBAPokemonData("716", "ゼルネアス", "Xerneas", 126, 131, 95, 131, 98, 99, "フェアリーオーラ", " -", " -",17,-1,215.0);
-//			databaseHelper.insertPBAPokemonData("717", "イベルタル", "Yveltal", 126, 131, 95, 131, 98, 99, "ダークオーラ", " -", " -",15,9,203.0);
-//			databaseHelper.insertPBAPokemonData("718", "ジガルデ", "", 108, 100, 121, 81, 95, 95, "オーラブレイク", " -", " -",14,8,305.0);
-//			databaseHelper.insertPBAPokemonData("711-1", "パンプジン小", "Gourgeist", 55, 85, 122, 58, 75, 99, "ものひろい", "おみとおし", " -",13,4,14.0);
-//			databaseHelper.insertPBAPokemonData("711-2", "パンプジン普", "Gourgeist", 65, 90, 122, 58, 75, 84, "ものひろい", "おみとおし", " -",13,4,39.0);
-//			databaseHelper.insertPBAPokemonData("711-3", "パンプジン大", "Gourgeist", 75, 95, 122, 58, 75, 69, "ものひろい", "おみとおし", " -",13,4,12.5);
 
-//            Toast.makeText(c, "ポケモンの種族データOK!", Toast.LENGTH_SHORT).show();
+            Log.i("PokemonInsertHandler", "ポケモンの種族データOK!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 }

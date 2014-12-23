@@ -7,18 +7,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.SQLException;
+import android.util.Log;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 
-public class IndividualPockemonInsertHandler implements Runnable {
+public class IndividualPokemonInsertHandler implements Runnable {
 
 	private PartyDatabaseHelper databaseHelper;
-	private MainActivity c = null;
 
-	public IndividualPockemonInsertHandler(PartyDatabaseHelper databaseHelper, MainActivity c) {
+	public IndividualPokemonInsertHandler(PartyDatabaseHelper databaseHelper) {
 		this.databaseHelper = databaseHelper;
-		this.c = c;
 	}
 
 	public void initInsert(){
@@ -1064,7 +1062,8 @@ public class IndividualPockemonInsertHandler implements Runnable {
 			for(int i = 0 ; i < individual.length() ; i++){
 				databaseHelper.insertIndividualPBAPokemonData(individual.getJSONObject(i));
 			}
-//			c.makeToast("過去のポケモン個体データOK!");
+
+            Log.i("IndividualPockemonInsertHandler", "過去のポケモン個体データOK!");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -1079,3 +1078,4 @@ public class IndividualPockemonInsertHandler implements Runnable {
 		initInsert();
 	}
 }
+

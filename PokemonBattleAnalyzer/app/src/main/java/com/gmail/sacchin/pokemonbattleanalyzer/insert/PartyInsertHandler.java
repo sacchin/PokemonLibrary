@@ -223,7 +223,5 @@ public class PartyInsertHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }
