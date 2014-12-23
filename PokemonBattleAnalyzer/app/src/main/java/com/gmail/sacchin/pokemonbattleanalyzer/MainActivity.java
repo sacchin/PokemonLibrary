@@ -22,7 +22,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
 public class MainActivity extends Activity {
     private static final int TOOL_ACTIVITY_CODE = 0;
-    private static final int LIST_ACTIVITY_CODE = 1;
+    private static final int AFFINITY_ACTIVITY_CODE = 1;
 
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -95,12 +95,17 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, TOOL_ACTIVITY_CODE);
     }
 
+    public void startAffinityActivity() {
+        Intent intent = new Intent(MainActivity.this, AffinityComplementActivity.class);
+        startActivityForResult(intent, AFFINITY_ACTIVITY_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        if (requestCode == TOOL_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();
 //            party.clear();
-//        }else if (requestCode == LIST_ACTIVITY_CODE) {
+//        }else if (requestCode == AFFINITY_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();
 //            party.clear();
 //        }
