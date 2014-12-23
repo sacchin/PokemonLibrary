@@ -87,6 +87,9 @@ public class Type {
 		}
 	}
 	public static String convertTypeCodeToName(TypeCode type){
+		if(type == null){
+			return "エラー";
+		}
 		switch (type) {
 		case NORMAL:
 			return "ノーマル";
@@ -130,6 +133,9 @@ public class Type {
 	}
 	
 	public static int convertTypeCodeToNo(TypeCode type){
+		if(type == null){
+			return -1;
+		}
 		switch (type) {
 		case NORMAL:
 			return 0;
@@ -220,10 +226,23 @@ public class Type {
 	}
 	
 	public static float calcurateAffinity(TypeCode attackType, Pokemon p){
+		if(attackType == null){
+			return -1f;
+		}
 		int attackNo = convertTypeCodeToNo(attackType);
-		int type1No = convertTypeCodeToNo(p.getType1());
-		int type2No = convertTypeCodeToNo(p.getType2());
 		
-		return AFFINITY_TABLE[attackNo][type1No] * AFFINITY_TABLE[attackNo][type2No];
+		if(p.getType1() == null && p.getType2() == null){
+			return -1f;
+		}else if(p.getType1() != null && p.getType2() == null){
+			int type1No = convertTypeCodeToNo(p.getType1());
+			return AFFINITY_TABLE[attackNo][type1No];
+		}else if(p.getType1() == null && p.getType2() != null){
+			int type2No = convertTypeCodeToNo(p.getType2());
+			return AFFINITY_TABLE[attackNo][type2No];
+		}else{
+			int type1No = convertTypeCodeToNo(p.getType1());
+			int type2No = convertTypeCodeToNo(p.getType2());
+			return AFFINITY_TABLE[attackNo][type1No] * AFFINITY_TABLE[attackNo][type2No];
+		}
 	}
 }

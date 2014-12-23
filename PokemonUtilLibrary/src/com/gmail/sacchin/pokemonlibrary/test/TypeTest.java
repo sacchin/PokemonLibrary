@@ -18,36 +18,36 @@ public class TypeTest {
 		TypeCode typeCode3 = Type.convertNameToTypeCode("かぜ");
 		assertNull(typeCode3);
 	}
-	
+
 	@Test
 	public void testConvertTypeCodeToName() {
 		assertEquals("でんき", Type.convertTypeCodeToName(TypeCode.ELECTRIC));
 		assertEquals("ドラゴン", Type.convertTypeCodeToName(TypeCode.DRAGON));
-		assertEquals("フェアリー", Type.convertTypeCodeToName(TypeCode.FEARY));
+		assertEquals("エラー", Type.convertTypeCodeToName(null));
 	}
-	
+
 	@Test
 	public void testConvertTypeCodeToNo() {
 		assertEquals(6, Type.convertTypeCodeToNo(TypeCode.FIGHTING));
 		assertEquals(14, Type.convertTypeCodeToNo(TypeCode.DRAGON));
-		assertEquals(10, Type.convertTypeCodeToNo(TypeCode.PSYCHIC));
+		assertEquals(-1, Type.convertTypeCodeToNo(null));
 	}
-	
+
 	@Test
 	public void testConvertNoToTypeCode() {
 		assertEquals(TypeCode.BUG, Type.convertNoToTypeCode(11));
 		assertEquals(TypeCode.DARK, Type.convertNoToTypeCode(15));
-		assertEquals(TypeCode.PSYCHIC, Type.convertNoToTypeCode(10));
+		assertNull(Type.convertNoToTypeCode(100));
 	}
-	
+
 	@Test
 	public void testValues() {
 		TypeCode[] array = TypeCode.values();
-		
+
 		assertNotNull(array);
 		assertEquals(18, array.length);
 	}
-		
+
 	@Test
 	public void testCalcurateAffinity() {
 		Pokemon cuheat = new Pokemon("303-01", "クチート", "", 50, 80, 80, 55, 55, 50, 
@@ -58,6 +58,18 @@ public class TypeTest {
 		assertEquals(0f, result, 0.1f);
 		result = Type.calcurateAffinity(TypeCode.FIGHTING, cuheat);
 		assertEquals(1f, result, 0.1f);
+		result = Type.calcurateAffinity(null, cuheat);
+		assertEquals(-1f, result, 0.1f);
+
+		Pokemon torimian = new Pokemon("676-01", "トリミアン", "", 50, 80, 80, 55, 55, 50, 
+				"", "", "", 0, -1, 50);
+
+		result = Type.calcurateAffinity(TypeCode.FIGHTING, torimian);
+		assertEquals(2f, result, 0.1f);
+		result = Type.calcurateAffinity(TypeCode.DRAGON, torimian);
+		assertEquals(1f, result, 0.1f);
+		result = Type.calcurateAffinity(null, torimian);
+		assertEquals(-1f, result, 0.1f);
 	}
-	
+
 }
