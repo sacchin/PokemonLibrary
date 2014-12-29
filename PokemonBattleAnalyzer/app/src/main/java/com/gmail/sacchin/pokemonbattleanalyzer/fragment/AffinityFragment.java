@@ -13,16 +13,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickTypeText;
 import com.gmail.sacchin.pokemonlibrary.entity.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,7 +41,12 @@ public class AffinityFragment extends Fragment {
     private Party party = null;
     private int index = 0;
     private LinearLayout selectPokemon = null;
-    private LinearLayout partyLayout = null;
+    private Map<String, Integer> code = null;
+
+    private LinearLayout[] mainPokemonAffinity = null;
+    private LinearLayout[] targetPokemonAffinity = null;
+
+    private LinearLayout typeList = null;
     private PBAPokemon p = null;
 
     private TableLayout tl = null;
@@ -63,19 +73,85 @@ public class AffinityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_affinity, container, false);
         selectPokemon = (LinearLayout)rootView.findViewById(R.id.select_pokemon);
         tl = (TableLayout) rootView.findViewById(R.id.status);
-        partyLayout = (LinearLayout)rootView.findViewById(R.id.party);
-        databaseHelper = new PartyDatabaseHelper(getActivity());
-        Button save = (Button) rootView.findViewById(R.id.back);
+        typeList = (LinearLayout)rootView.findViewById(R.id.type_list);
+        code = new HashMap<>();
+        code.put("400", new Integer(0));
+        code.put("200", new Integer(1));
+        code.put("50", new Integer(2));
+        code.put("25", new Integer(3));
+        code.put("0", new Integer(4));
 
+        mainPokemonAffinity = new LinearLayout[5];
+        mainPokemonAffinity[0] = (LinearLayout)rootView.findViewById(R.id.main_type_of_4);
+        mainPokemonAffinity[1] = (LinearLayout)rootView.findViewById(R.id.main_type_of_2);
+        mainPokemonAffinity[2] = (LinearLayout)rootView.findViewById(R.id.main_type_of_h);
+        mainPokemonAffinity[3] = (LinearLayout)rootView.findViewById(R.id.main_type_of_q);
+        mainPokemonAffinity[4] = (LinearLayout)rootView.findViewById(R.id.main_type_of_z);
+
+        targetPokemonAffinity = new LinearLayout[5];
+        targetPokemonAffinity[0] = (LinearLayout)rootView.findViewById(R.id.target_type_of_4);
+        targetPokemonAffinity[1] = (LinearLayout)rootView.findViewById(R.id.target_type_of_2);
+        targetPokemonAffinity[2] = (LinearLayout)rootView.findViewById(R.id.target_type_of_h);
+        targetPokemonAffinity[3] = (LinearLayout)rootView.findViewById(R.id.target_type_of_q);
+        targetPokemonAffinity[4] = (LinearLayout)rootView.findViewById(R.id.target_type_of_z);
+
+        databaseHelper = new PartyDatabaseHelper(getActivity());
+        Button back = (Button) rootView.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
         String pokemonNo = getArguments().getString(ARG_SECTION_NUMBER);
         try {
             this.p = databaseHelper.selectPBAPokemon(pokemonNo);
-            Log.e("AffinityFragment", p.getJname());
+            Map<String, Integer> resultMap = new HashMap<>();
             for(Type.TypeCode temp : Type.TypeCode.values()){
-                float result = Type.calcurateAffinity(temp, p);
-                Log.e(String.valueOf(p.getType1()), String.valueOf(p.getType2()));
-                Log.e("Type:" + Type.convertTypeCodeToName(temp), result + "倍");
+                Integer result = code.get(String.valueOf((int) (Type.calcurateAffinity(temp, p) * 100)));
+                if(result != null){
+                    resultMap.put(Type.convertTypeCodeToName(temp), result);
+                }
+            }
+            for(String typeName : resultMap.keySet()){
+                int p = resultMap.get(typeName);
+                TextView temp = new TextView(getActivity());
+                temp.setText(typeName);
+                mainPokemonAffinity[p].addView(temp);
+            }
+
+            Map<String, List<PBAPokemon>> typeMap = new HashMap<>();
+            List<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
+            for(PBAPokemon temp : list){
+                String key1 = Type.convertTypeCodeToName(temp.getType1()) +
+                        Type.convertTypeCodeToName(temp.getType2());
+                String key2 = Type.convertTypeCodeToName(temp.getType2()) +
+                        Type.convertTypeCodeToName(temp.getType1());
+
+                List<PBAPokemon> oneType = typeMap.get(key1);
+                if(oneType == null){
+                    oneType = typeMap.get(key2);
+                    if(oneType == null) {
+                        oneType = new ArrayList<PBAPokemon>();
+                        typeMap.put(key1, oneType);
+                    }
+                }
+                oneType.add(temp);
+            }
+            for (String key : typeMap.keySet()) {
+                List<PBAPokemon> oneType = typeMap.get(key);
+                PBAPokemon top = oneType.get(0);
+                String type1 = Type.convertTypeCodeToName(top.getType1());
+                String type2 = Type.convertTypeCodeToName(top.getType2());
+                TextView temp = new TextView(getActivity());
+                temp.setOnClickListener(new OnClickTypeText(this, oneType));
+                if(type2.equals("エラー")){
+                    temp.setText(type1);
+                }else{
+                    temp.setText(type1 + ", " + type2);
+                }
+                typeList.addView(temp);
             }
 
         } catch (IOException e) {
@@ -83,6 +159,26 @@ public class AffinityFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    public void setTypeView(List<PBAPokemon> oneType){
+        for(LinearLayout temp : targetPokemonAffinity){
+            temp.removeAllViews();
+        }
+
+        Map<String, Integer> resultMap = new HashMap<>();
+        for(Type.TypeCode temp : Type.TypeCode.values()){
+            Integer result = code.get(String.valueOf((int) (Type.calcurateAffinity(temp, oneType.get(0)) * 100)));
+            if(result != null){
+                resultMap.put(Type.convertTypeCodeToName(temp), result);
+            }
+        }
+        for(String typeName : resultMap.keySet()){
+            int p = resultMap.get(typeName);
+            TextView temp = new TextView(getActivity());
+            temp.setText(typeName);
+            targetPokemonAffinity[p].addView(temp);
+        }
     }
 
     @Override
