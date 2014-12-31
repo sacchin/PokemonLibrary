@@ -2,9 +2,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
+import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
@@ -108,7 +107,7 @@ public class ToolFragment extends Fragment {
         if(partyLayout != null && party != null){
             for (int i = 0; i < party.getMember().size(); i++) {
                 IndividualPBAPokemon p = party.getMember().get(i);
-                Bitmap image = createImage(p);
+                Bitmap image = Util.createImage(p, 150f, getResources());
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setImageBitmap(image);
                 imageView.setOnClickListener(new OnClickIndividualPokemon(this, i));
@@ -128,17 +127,7 @@ public class ToolFragment extends Fragment {
         this.index = index;
     }
 
-    public Bitmap createImage(PBAPokemon p){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), p.getResourceId());
-        if(image == null){
-            Log.e("createImage", p.getJname() + " - " + p.getResourceId());
-            return null;
-        }
-        Matrix matrix = new Matrix();
-        matrix.postScale(150f / (float)image.getWidth(), 150f / (float)image.getHeight());
-        image = Bitmap.createBitmap(image, 0, 0, image.getWidth(),image.getHeight(), matrix, true);
-        return image;
-    }
+
 
     public void setMainView(IndividualPBAPokemon p) {
         mainView.removeAllViews();
@@ -158,7 +147,7 @@ public class ToolFragment extends Fragment {
         sss.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         sss.setOrientation(LinearLayout.HORIZONTAL);
 
-        Bitmap temp = createImage(p);
+        Bitmap temp = Util.createImage(p, 150f, getResources());
         ImageView imageView = new ImageView(getActivity());
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setImageBitmap(temp);

@@ -335,7 +335,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				PBAPokemon p = createPBAPokemon(cur);
 				p.setRowId(cur.getInt(0));
 
-				Integer id = util.imageResouse.get(String.valueOf(p.getNo()));
+				Integer id = util.imageResource.get(String.valueOf(p.getNo()));
 				if(id != null){
 					p.setResourceId(id.intValue());
 				}else{
@@ -358,7 +358,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
                 PBAPokemon p = createPBAPokemon(cur);
                 p.setRowId(cur.getInt(0));
 
-                Integer id = util.imageResouse.get(String.valueOf(p.getNo()));
+                Integer id = util.imageResource.get(String.valueOf(p.getNo()));
                 if(id != null){
                     p.setResourceId(id.intValue());
                 }
@@ -504,7 +504,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 								ability1, ability2, abilityd, id, time, item, 
 								characteristic, skillNo1, skillNo2, skillNo3, skillNo4);
 						result.setRowId(Integer.parseInt(rowNo));
-						Integer resouceId = util.imageResouse.get(result.getNo());
+						Integer resouceId = util.imageResource.get(result.getNo());
 						if(resouceId != null){
 							result.setResourceId(resouceId.intValue());
 						}
@@ -513,7 +513,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 						PBAPokemon mega = new PBAPokemon(individualCur.getString(1), "メガ" + individualCur.getString(2), "Mega " + individualCur.getString(2), 
 								cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getInt(22), cur.getInt(23), cur.getInt(24), cur.getString(25), "", "", 0, 0, 0, 0);
 
-						Integer resouceId = util.imageResouse.get(result.getNo() + "m" + cur.getString(26));
+						Integer resouceId = util.imageResource.get(result.getNo() + "m" + cur.getString(26));
 						if(resouceId != null){
 							mega.setResourceId(resouceId.intValue());
 						}
