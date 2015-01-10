@@ -3,9 +3,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,11 +68,11 @@ public class AffinityFragment extends Fragment {
         initView(rootView);
 
         affinityCode = new HashMap<>();
-        affinityCode.put("400", new Integer(0));
-        affinityCode.put("200", new Integer(1));
-        affinityCode.put("50", new Integer(2));
-        affinityCode.put("25", new Integer(3));
-        affinityCode.put("0", new Integer(4));
+        affinityCode.put("400", 0);
+        affinityCode.put("200", 1);
+        affinityCode.put("50", 2);
+        affinityCode.put("25", 3);
+        affinityCode.put("0", 4);
 
         databaseHelper = new PartyDatabaseHelper(getActivity());
 
@@ -195,7 +193,7 @@ public class AffinityFragment extends Fragment {
             if(oneType == null){
                 oneType = typeMap.get(key2);
                 if(oneType == null) {
-                    oneType = new ArrayList<PBAPokemon>();
+                    oneType = new ArrayList<>();
                     typeMap.put(key1, oneType);
                 }
             }
@@ -235,9 +233,7 @@ public class AffinityFragment extends Fragment {
         Map<String, Integer> resultMap = new HashMap<>();
         for(Type.TypeCode temp : Type.TypeCode.values()){
             Integer result = (int) (Type.calcurateAffinity(temp, pokemon) * 100);
-            if(result != null){
-                resultMap.put(Type.convertTypeCodeToName(temp), result);
-            }
+            resultMap.put(Type.convertTypeCodeToName(temp), result);
         }
         return resultMap;
     }

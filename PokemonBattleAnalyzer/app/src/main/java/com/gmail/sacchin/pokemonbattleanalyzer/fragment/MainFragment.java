@@ -32,8 +32,11 @@ import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromParty;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -98,6 +101,13 @@ public class MainFragment extends Fragment {
         super.onAttach(activity);
     }
 
+    private static class PBAPokemonRankComparator implements Comparator<PBAPokemon> {
+        @Override
+        public int compare(PBAPokemon pokemonA, PBAPokemon pokemonB) {
+            return pokemonA.getRanking() - pokemonB.getRanking();
+        }
+    }
+
     public void createPokemonList() {
         if(scrollView == null || 0 < scrollView.getChildCount()){
             Log.i("createPokemonList", "null!");
@@ -111,8 +121,9 @@ public class MainFragment extends Fragment {
         scrollView.addView(all);
 
         try {
-            ArrayList<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
-            HashMap<String, Integer> countMap = new HashMap<String, Integer>();
+            List<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
+            Collections.sort(list, new PBAPokemonRankComparator());
+            Map<String, Integer> countMap = new HashMap<>();
 
             int count = 0;
             for(;count < list.size();){
@@ -135,7 +146,7 @@ public class MainFragment extends Fragment {
         }
 
     }
-    public FrameLayout createFrameLayout(PBAPokemon p, HashMap<String, Integer> countMap){
+    public FrameLayout createFrameLayout(PBAPokemon p, Map<String, Integer> countMap){
         FrameLayout fl = new FrameLayout(getActivity());
         Bitmap temp = Util.createImage(p, 200f, getResources());
         ImageView localView = new ImageView(getActivity());

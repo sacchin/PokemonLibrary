@@ -1,7 +1,5 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.entity;
 
-import android.util.Log;
-
 import com.gmail.sacchin.pokemonlibrary.entity.Type;
 
 import java.util.Collections;
@@ -13,7 +11,6 @@ import java.util.Map;
  * Created by sacchin on 2014/12/30.
  */
 public class AffinityRank {
-    private Map<String, Integer> affinityMap = null;
     private List<PBAPokemon> oneType = null;
 
     // point算出アルゴリズム
@@ -28,8 +25,7 @@ public class AffinityRank {
     private int deviation = 0;
 
     public AffinityRank(int point, List<PBAPokemon> oneType, Map<String, Integer> affinityMap){
-        this.affinityMap = affinityMap;
-       this.oneType = oneType;
+        this.oneType = oneType;
         this.point = point;
     }
 
@@ -46,10 +42,6 @@ public class AffinityRank {
 
     public List<PBAPokemon> getOneType() {
         return oneType;
-    }
-
-    public Map<String, Integer> getAffinityMap() {
-        return affinityMap;
     }
 
     public String getType1Name() {
@@ -93,9 +85,6 @@ public class AffinityRank {
         standardDeviation = (int) Math.sqrt(standardDeviation);
 
         for(AffinityRank temp : list){
-            String type1 = temp.getType1Name();
-            String type2 = temp.getType2Name();
-
             //pointが低いほど優秀なため、下記計算式を変えています。
             double value = (sum - temp.getPoint()) / (double)standardDeviation;
             temp.setDeviation((int)(value * 10d + 50d));
