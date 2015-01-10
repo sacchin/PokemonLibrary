@@ -225,6 +225,12 @@ public class Type {
 		return TypeCode.values();
 	}
 	
+	/**
+	 * あるポケモンがあるタイプの技を受けた時の倍率を計算するメソッド
+	 * @param attackType1 攻撃する技のタイプ
+	 * @param p 攻撃を受けるポケモン
+	 * @return
+	 */
 	public static float calcurateAffinity(TypeCode attackType, Pokemon p){
 		if(attackType == null){
 			return -1f;
