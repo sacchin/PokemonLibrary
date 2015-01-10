@@ -3,14 +3,19 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
@@ -38,10 +43,11 @@ public class AffinityFragment extends Fragment {
     private LinearLayout[] mainPokemonAffinity = null;
     private LinearLayout[] targetPokemonAffinity = null;
 
-    private LinearLayout typeList = null;
+    private TableLayout typeList = null;
     private PBAPokemon p = null;
 
     /**
+     *
      * The fragment argument representing the section number for this
      * fragment.
      */
@@ -104,18 +110,69 @@ public class AffinityFragment extends Fragment {
                 ranks.add(new AffinityRank(sum, oneType, targetAffinity));
             }
             AffinityRank.sort(ranks);
+            AffinityRank.calcDeviation(ranks);
+
+            TableRow header = new TableRow(getActivity());
+            header.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+            TextView deviationTitle = new TextView(getActivity());
+            deviationTitle.setText("偏差値");
+            deviationTitle.setBackgroundColor(Color.LTGRAY);
+            header.addView(deviationTitle);
+            TextView typeTitle = new TextView(getActivity());
+            typeTitle.setText("タイプ");
+            typeTitle.setBackgroundColor(Color.LTGRAY);
+            header.addView(typeTitle);
+            TextView pokemonTitle = new TextView(getActivity());
+            pokemonTitle.setText("Pokemon");
+            pokemonTitle.setBackgroundColor(Color.LTGRAY);
+            header.addView(pokemonTitle);
+            typeList.addView(header);
+
             for (AffinityRank r : ranks) {
-                Log.e("after sort", r.toString());
                 String type1 = r.getType1Name();
                 String type2 = r.getType2Name();
-                TextView temp = new TextView(getActivity());
-                temp.setOnClickListener(new OnClickTypeText(this, r.getOneType()));
+                TableRow block = new TableRow(getActivity());
+
+                block.setOrientation(LinearLayout.HORIZONTAL);
+                block.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                TextView deviationValue = new TextView(getActivity());
+                deviationValue.setText(String.valueOf(r.getDeviation()));
+                block.addView(deviationValue);
+
+                TextView typeValue = new TextView(getActivity());
+                typeValue.setOnClickListener(new OnClickTypeText(this, r.getOneType()));
                 if(type2.equals("エラー")){
-                    temp.setText(type1);
+                    typeValue.setText(type1);
                 }else{
-                    temp.setText(type1 + ", " + type2);
+                    typeValue.setText(type1 + ", " + type2);
                 }
-                typeList.addView(temp);
+                block.addView(typeValue);
+
+                LinearLayout pokemons = new LinearLayout(getActivity());
+                pokemons.setOrientation(LinearLayout.VERTICAL);
+                List<PBAPokemon> list = r.getOneType();
+                int count = 0;
+                for(;count < list.size();){
+                    LinearLayout pokemonBlock = new LinearLayout(getActivity());
+                    pokemonBlock.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    pokemonBlock.setGravity(Gravity.CENTER);
+                    for(int i = 0 ; i < 10 ; i++){
+                        Bitmap image = Util.createImage(list.get(count), 100f, getResources());
+                        ImageView iv = new ImageView(getActivity());
+                        iv.setImageBitmap(image);
+                        pokemonBlock.addView(iv);
+                        count++;
+                        if(count > list.size() - 1){
+                            break;
+                        }
+                    }
+                    pokemons.addView(pokemonBlock);
+                }
+                block.addView(pokemons);
+                typeList.addView(block);
+
+
             }
 
         } catch (IOException e) {
@@ -149,7 +206,7 @@ public class AffinityFragment extends Fragment {
 
     public void initView(View rootView){
         selectPokemon = (LinearLayout)rootView.findViewById(R.id.select_pokemon);
-        typeList = (LinearLayout)rootView.findViewById(R.id.type_list);
+        typeList = (TableLayout)rootView.findViewById(R.id.type_list);
 
         mainPokemonAffinity = new LinearLayout[5];
         mainPokemonAffinity[0] = (LinearLayout)rootView.findViewById(R.id.main_type_of_4);

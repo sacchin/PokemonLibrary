@@ -5,18 +5,18 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
         <Button
             android:id="@+id/back"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back" >
         </Button>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
@@ -27,7 +27,7 @@
         </LinearLayout>
         <TableLayout
             android:id="@+id/status"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1,2" >
 
@@ -58,19 +58,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#EE0000"
-                    android:text="4倍" />
+                    android:text="4倍"
+                    android:background="#fffff0"/>
                 <LinearLayout
                     android:id="@+id/main_type_of_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
+                    android:orientation="vertical"
+                    android:background="#fffff0"/>
                 <LinearLayout
                     android:id="@+id/target_type_of_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
+                    android:orientation="vertical"
+                    android:background="#fffff0"/>
             </TableRow>
 
             <TableRow
@@ -175,15 +176,15 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <LinearLayout
+        <TableLayout
             android:id="@+id/type_list"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical" >
+        </TableLayout>
     </ScrollView>
 
 </LinearLayout>
