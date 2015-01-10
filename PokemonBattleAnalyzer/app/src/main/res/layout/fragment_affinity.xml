@@ -57,24 +57,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#EE0000"
                     android:text="4倍" />
                 <LinearLayout
+                    android:id="@+id/main_type_of_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/target_type_of_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
-                v        </TableRow>
+            </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -82,16 +84,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#FFCC00"
                     android:text="2倍" />
                 <LinearLayout
+                    android:id="@+id/main_type_of_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/target_type_of_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
 
             </TableRow>
@@ -102,16 +107,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#8EB8FF"
                     android:text="1/2倍" />
                 <LinearLayout
+                    android:id="@+id/main_type_of_h"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/target_type_of_h"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
 
             </TableRow>
@@ -123,16 +131,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#C299FF"
                     android:text="1/4倍" />
                 <LinearLayout
+                    android:id="@+id/main_type_of_q"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/target_type_of_q"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
 
             </TableRow>
@@ -144,16 +155,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#888888"
                     android:text="効果なし" />
                 <LinearLayout
+                    android:id="@+id/main_type_of_z"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/target_type_of_z"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                 </LinearLayout>
 
             </TableRow>
@@ -165,6 +179,7 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
+            android:id="@+id/type_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

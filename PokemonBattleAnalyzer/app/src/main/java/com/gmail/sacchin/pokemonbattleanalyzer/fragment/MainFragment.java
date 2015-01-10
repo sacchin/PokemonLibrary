@@ -2,10 +2,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +20,7 @@ import android.widget.Toast;
 import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
+import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
@@ -138,13 +136,9 @@ public class MainFragment extends Fragment {
 
     }
     public FrameLayout createFrameLayout(PBAPokemon p, HashMap<String, Integer> countMap){
-        Resources r = getResources();
         FrameLayout fl = new FrameLayout(getActivity());
+        Bitmap temp = Util.createImage(p, 200f, getResources());
         ImageView localView = new ImageView(getActivity());
-        Bitmap temp = BitmapFactory.decodeResource(r, p.getResourceId());
-        Matrix matrix = new Matrix();
-        matrix.postScale(200f / (float)temp.getWidth(), 200f / (float)temp.getHeight());
-        temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(),temp.getHeight(), matrix, true);
         localView.setImageBitmap(temp);
         fl.setOnClickListener(new OnClickFromList(this, p));
 
@@ -167,11 +161,7 @@ public class MainFragment extends Fragment {
         if(index == -1){
             Toast.makeText(getActivity(), "すでに6体選択しています。", Toast.LENGTH_SHORT).show();
         }else {
-            Bitmap temp = BitmapFactory.decodeResource(getResources(), pokemon.getResourceId());
-            Matrix matrix = new Matrix();
-            matrix.postScale(120f / (float) temp.getWidth(), 120f / (float) temp.getHeight());
-            temp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(), temp.getHeight(), matrix, true);
-
+            Bitmap temp = Util.createImage(pokemon, 120f, getResources());
             ImageView localView = new ImageView(getActivity());
             localView.setImageBitmap(temp);
             localView.setOnClickListener(new OnClickFromParty(this, ip));
