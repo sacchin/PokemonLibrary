@@ -22,33 +22,44 @@ import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
 import android.os.Handler;
 import android.util.Log;
 
-public class PGLGetter implements Runnable {
+/**
+ * ToolActivityが開始した時に、ポケモンのトレンドをダウンロードするクラス
+ */
+public class PokemonTrendDownloader implements Runnable {
 
+    /**
+     * PGLのURL
+     */
     private final static String URL = "http://3ds.pokemon-gl.com/frontendApi/gbu/getSeasonPokemonDetail";
 
     private String pokemonNo = "";
     private int index = 0;
     private Handler handler = null;
-    private RankingPokemonTrend trend = null;
     private ToolFragment fragment = null;
 
-    public PGLGetter (String pokemonNo, ToolFragment fragment, int index, Handler handler){
+    /**
+     * @param pokemonNo トレンドをダウンロードするポケモンのNo
+     * @param fragment ダウンロードを行ったfragment
+     * @param index パーティーの何番目のポケモンか？
+     * @param handler 利用するhandler
+     */
+    public PokemonTrendDownloader(String pokemonNo, ToolFragment fragment, int index, Handler handler){
         this.pokemonNo = pokemonNo;
         this.index = index;
         this.handler = handler;
         this.fragment = fragment;
     }
 
-    public String doPost(String pokemonNo) {
+    public String doPostToPGL(String pokemonNo) {
         StringBuilder result = new StringBuilder();
-
         DefaultHttpClient client = new DefaultHttpClient();
-        HttpPost method = new HttpPost(URL);
-        method.setHeader("Referer", "http://3ds.pokemon-gl.com/battle/");
-
         List<NameValuePair> params = createParameter(pokemonNo);
+
         try {
+            HttpPost method = new HttpPost(URL);
+            method.setHeader("Referer", "http://3ds.pokemon-gl.com/battle/");
             method.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
+
             HttpResponse response = client.execute(method);
 
             switch (response.getStatusLine().getStatusCode()) {
@@ -56,23 +67,23 @@ public class PGLGetter implements Runnable {
                     result.append(EntityUtils.toString(response.getEntity(), "UTF-8"));
                     break;
                 case HttpStatus.SC_NOT_FOUND:
-                    Log.e("doPost", "HttpStatus.SC_NOT_FOUND");
+                    Log.e("doPostToPGL", "HttpStatus.SC_NOT_FOUND");
                     break;
                 default:
                     break;
             }
         } catch (ClientProtocolException e) {
-            Log.e("doPost", e.getMessage());
+            Log.e("doPostToPGL", e.getMessage());
         } catch (IOException e) {
-            Log.e("doPost", e.getMessage());
+            Log.e("doPostToPGL", e.getMessage());
         } catch (Exception e) {
-            Log.e("doPost", e.getMessage());
+            Log.e("doPostToPGL", e.getMessage());
         }
         return result.toString();
     }
 
     private List<NameValuePair> createParameter(String pockemonNo) {
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("languageId", "1"));
         params.add(new BasicNameValuePair("seasonId", "4"));
         params.add(new BasicNameValuePair("battleType", "0"));
@@ -88,17 +99,23 @@ public class PGLGetter implements Runnable {
         return params;
     }
 
-    @Override
+    public String doPostToMyServer(String pokemonNo) {
+        return "";
+    }
+
+        @Override
     public void run() {
-        Log.v("PGLGetter[" + index + "]", "posting " + pokemonNo);
         String jsonStr = "";
         try {
-            jsonStr = doPost(pokemonNo);
-            if(jsonStr != null && !jsonStr.isEmpty()){
-                JSONObject j = new JSONObject(jsonStr);
-                JSONObject rankingPokemonTrend = j.getJSONObject("rankingPokemonTrend");
-                trend = RankingPokemonTrend.createRankingPokemonTrend(rankingPokemonTrend);
-                fragment.finishDownload(index, trend);
+            jsonStr = doPostToMyServer(pokemonNo);
+            if(jsonStr != null){
+                jsonStr = doPostToPGL(pokemonNo);
+                if(jsonStr != null){
+                    JSONObject j = new JSONObject(jsonStr);
+                    JSONObject rankingPokemonTrend = j.getJSONObject("rankingPokemonTrend");
+                    RankingPokemonTrend trend = RankingPokemonTrend.createRankingPokemonTrend(rankingPokemonTrend);
+                    fragment.finishDownload(index, trend);
+                }
             }
         } catch (JSONException e) {
             Log.e("PGLGetter[" + index + "]", "JSONException : " + jsonStr);

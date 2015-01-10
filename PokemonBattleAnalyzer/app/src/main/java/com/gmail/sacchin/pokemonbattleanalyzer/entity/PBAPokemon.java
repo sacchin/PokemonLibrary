@@ -6,7 +6,7 @@ public class PBAPokemon extends Pokemon{
 	private int resourceId = 0;
 	private int rowId = 0;
 	private int ranking = 0;
-	
+
 	public PBAPokemon(String no, String jname, String ename, int h, int a, int b, int c, int d, int s,
                       String ability1, String ability2, String abilityd,
                       int type1, int type2, float weight, int ranking) {

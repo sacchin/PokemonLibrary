@@ -23,7 +23,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
-import com.gmail.sacchin.pokemonbattleanalyzer.http.PGLGetter;
+import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonTrendDownloader;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickIndividualPokemon;
 import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
@@ -90,7 +90,7 @@ public class ToolFragment extends Fragment {
                     }
                 }
                 executorService.execute(
-                        new PGLGetter(pokemonNo, this, i, handler));
+                        new PokemonTrendDownloader(pokemonNo, this, i, handler));
             }
             skills = databaseHelper.selectAllSkill();
             items = databaseHelper.selectAllItem();

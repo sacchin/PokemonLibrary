@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonIn;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -441,7 +443,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	synchronized public Map<String, Integer> selectIndividualPBAPokemonSkillCount(int rowId) throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cur = db.rawQuery("select * from " + POKEMON_INDIVIDUAL_TABLE_NAME +
-				" where pokemonNo = " + rowId, null);
+                " where pokemonNo = " + rowId, null);
 
 		try {
 			Map<String, Integer> result = new HashMap<String, Integer>();
@@ -468,7 +470,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 
 	synchronized public IndividualPBAPokemon selectIndividualPBAPokemonByID(long rowId) throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor individualCur = db.query(POKEMON_INDIVIDUAL_TABLE_NAME, null, BaseColumns._ID + " = ?", new String[] {String.valueOf(rowId)}, null, null, null, null);
+		Cursor individualCur = db.query(POKEMON_INDIVIDUAL_TABLE_NAME, null, BaseColumns._ID + " = ?", new String[]{String.valueOf(rowId)}, null, null, null, null);
 		
 		try {
 			if(individualCur.moveToNext()) {
@@ -556,8 +558,8 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	synchronized public void updatePBAPokemonData(Party party) throws IOException, SQLException {
-		if (party == null){
+	synchronized public void updatePBAPokemonRanking(List<RankingPokemonIn> rankingList) throws IOException, SQLException {
+		if (rankingList == null){
 			throw new NullPointerException("argument is null.");
 		}
 
@@ -566,11 +568,11 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 			throw new IOException("Cannot get writable access to DB.");
 		}
 		try {
-			for(PBAPokemon p : party.getMember()){
-				ContentValues values = new ContentValues();
-				values.put("count", 1);
-				db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {String.valueOf(p.getNo())});
-			}
+            for (RankingPokemonIn temp : rankingList){
+                ContentValues values = new ContentValues();
+                values.put("ranking", temp.getRanking());
+                db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {temp.getPokemonNo()});
+            }
 		}catch (IllegalStateException e) {
 			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);
 		}
