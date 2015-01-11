@@ -152,6 +152,7 @@ public class MainFragment extends Fragment {
 
     }
     public FrameLayout createFrameLayout(PBAPokemon p, Map<String, Integer> countMap){
+        Log.e("createFrameLayout", p.getNo() + " - " + p.getJname() + " - " + p.getRanking());
         FrameLayout fl = new FrameLayout(getActivity());
         Bitmap temp = Util.createImage(p, 200f, getResources());
         ImageView localView = new ImageView(getActivity());

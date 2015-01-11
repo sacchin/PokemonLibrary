@@ -9,12 +9,13 @@ import android.util.Log;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Util {
-	public HashMap<String, Integer> imageResource = null;
+	public Map<String, Integer> imageResource = null;
 	
 	public Util(){
-		imageResource = new HashMap<String, Integer>();
+		imageResource = new HashMap<>();
 		imageResource.put("003", R.drawable.n003);
 		imageResource.put("006", R.drawable.n006);
 		imageResource.put("009", R.drawable.n009);
@@ -275,11 +276,11 @@ public class Util {
 		imageResource.put("639", R.drawable.n639);
 		imageResource.put("640", R.drawable.n640);
 		imageResource.put("641", R.drawable.n641);
-		imageResource.put("641-2", R.drawable.n641_2);
+		imageResource.put("641-1", R.drawable.n641_2);
 		imageResource.put("642", R.drawable.n642);
-		imageResource.put("642-2", R.drawable.n642_2);
+		imageResource.put("642-1", R.drawable.n642_2);
 		imageResource.put("645", R.drawable.n645);
-		imageResource.put("645-2", R.drawable.n645_2);
+		imageResource.put("645-1", R.drawable.n645_2);
 		imageResource.put("651", R.drawable.n651);
 		imageResource.put("655", R.drawable.n655);
 		imageResource.put("658", R.drawable.n658);
@@ -361,11 +362,11 @@ public class Util {
 		imageResource.put("476", R.drawable.n476);
 		imageResource.put("477", R.drawable.n477);
 		imageResource.put("478", R.drawable.n478);
-		imageResource.put("479-2", R.drawable.n479_2);
-		imageResource.put("479-3", R.drawable.n479_3);
-		imageResource.put("479-4", R.drawable.n479_4);
-		imageResource.put("479-5", R.drawable.n479_5);
-		imageResource.put("479-6", R.drawable.n479_6);
+		imageResource.put("479-1", R.drawable.n479_2);
+		imageResource.put("479-2", R.drawable.n479_3);
+		imageResource.put("479-3", R.drawable.n479_4);
+		imageResource.put("479-4", R.drawable.n479_5);
+		imageResource.put("479-5", R.drawable.n479_6);
 		imageResource.put("480", R.drawable.n480);
 		imageResource.put("481", R.drawable.n481);
 		imageResource.put("482", R.drawable.n482);

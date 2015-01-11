@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">PokemonBattleAnalyzer</string>
     <string name="affinity_fragment_button">Back</string>
     <string name="affinity_fragment_column1title">選択したポケモン</string>
     <string name="affinity_fragment_column2title">補完対象</string>
@@ -9,7 +10,6 @@
     <string name="affinity_fragment_half">1/2倍</string>
     <string name="affinity_fragment_quarter">1/4倍</string>
     <string name="affinity_fragment_zero">効果なし</string>
-    <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
 

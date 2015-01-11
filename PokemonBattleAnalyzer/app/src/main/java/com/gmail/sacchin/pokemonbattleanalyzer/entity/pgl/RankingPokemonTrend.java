@@ -3,6 +3,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,10 +23,10 @@ public class RankingPokemonTrend {
 	//	"tokuseiInfo":[{"ranking":1,"usageRate":93.33333333333333,"name":"","sequenceNumber":1},
 	//	"itemInfo":[{"ranking":1,"usageRate":26.666666666666668,"name":"","sequenceNumber":1},
 
-	private ArrayList<PokemonSkill> skillList = null;
-	private ArrayList<Ability> abilityList = null;
-	private ArrayList<PokemonCharacteristic> characteristicList = null;
-	private ArrayList<Item> itemList = null;
+	private List<PokemonSkill> skillList = null;
+	private List<Ability> abilityList = null;
+	private List<PokemonCharacteristic> characteristicList = null;
+	private List<Item> itemList = null;
 
 
 	public static RankingPokemonTrend createRankingPokemonTrend(JSONObject rankingPokemonTrend){
@@ -48,19 +49,19 @@ public class RankingPokemonTrend {
 		itemList = JSONParser.createItemList(itemInfo);
 	}
 
-	public ArrayList<PokemonSkill> getSkillList() {
+	public List<PokemonSkill> getSkillList() {
 		return skillList;
 	}
 
-	public ArrayList<Ability> getAbilityList() {
+	public List<Ability> getAbilityList() {
 		return abilityList;
 	}
 
-	public ArrayList<PokemonCharacteristic> getCharacteristicList() {
+	public List<PokemonCharacteristic> getCharacteristicList() {
 		return characteristicList;
 	}
 
-	public ArrayList<Item> getItemList() {
+	public List<Item> getItemList() {
 		return itemList;
 	}
 

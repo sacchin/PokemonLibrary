@@ -217,7 +217,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 			values.put("type1", type1);
 			values.put("type2", type2);
 			values.put("weight", weight);
-			values.put("count", 0);
+			values.put("count", 1000);
 
 			db.insert(POKEMON_MASTER_TABLE_NAME, null, values );
 		}catch (IllegalStateException e) {
@@ -570,8 +570,22 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		try {
             for (RankingPokemonIn temp : rankingList){
                 ContentValues values = new ContentValues();
-                values.put("ranking", temp.getRanking());
-                db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {temp.getPokemonNo()});
+                int rank = temp.getRanking() != 0 ? temp.getRanking() : 1000;
+                values.put("count", rank);
+
+                String pn = temp.getPokemonNo().split("-")[0];
+                int intPokemonNo = Integer.parseInt(pn);
+                if(intPokemonNo < 10){
+                    pn = "00" + pn;
+                }else if(9 < intPokemonNo && intPokemonNo < 100) {
+                    pn = "0" + pn;
+                }else if(intPokemonNo == 479 || intPokemonNo == 641 || intPokemonNo == 642 ||intPokemonNo == 645){
+                    pn = temp.getPokemonNo();
+                }
+
+
+                int result = db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {pn});
+                Log.e("updatePBAPokemonRanking", result + " - " + pn + " - " + rank);
             }
 		}catch (IllegalStateException e) {
 			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);

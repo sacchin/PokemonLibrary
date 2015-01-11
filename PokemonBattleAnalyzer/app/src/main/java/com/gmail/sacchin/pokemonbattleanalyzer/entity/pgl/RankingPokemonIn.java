@@ -13,8 +13,8 @@ public class RankingPokemonIn {
 
     public static RankingPokemonIn createRankingPokemon(JSONObject rankingPokemon){
         try {
-            long time = rankingPokemon.getLong("time");
-            Timestamp updateTIme = new Timestamp(time);
+            String time = rankingPokemon.getString("time");
+            Timestamp updateTIme = Timestamp.valueOf(time);
             int ranking = rankingPokemon.getInt("ranking");
             String pokemonNo = rankingPokemon.getString("pokemon_no");
 
