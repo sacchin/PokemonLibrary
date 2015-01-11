@@ -24,6 +24,8 @@ import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonRankingDownloader;
+import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonTrendDownloader;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCheckAffinityButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
@@ -91,6 +93,9 @@ public class MainFragment extends Fragment {
             party.clear();
             partyLayout.removeAllViews();
             createPokemonList();
+
+            executorService.execute(
+                    new PokemonRankingDownloader(databaseHelper));
         } catch (ClassCastException e) {
             throw new IllegalStateException("activity should implement FragmentCallbacks", e);
         }
@@ -147,6 +152,7 @@ public class MainFragment extends Fragment {
 
     }
     public FrameLayout createFrameLayout(PBAPokemon p, Map<String, Integer> countMap){
+        Log.e("createFrameLayout", p.getNo() + " - " + p.getJname() + " - " + p.getRanking());
         FrameLayout fl = new FrameLayout(getActivity());
         Bitmap temp = Util.createImage(p, 200f, getResources());
         ImageView localView = new ImageView(getActivity());

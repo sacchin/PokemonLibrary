@@ -216,7 +216,6 @@ public class PartyInsertHandler implements Runnable {
     public void insertOneParty() {
         try {
             databaseHelper.insertPartyData(party);
-            databaseHelper.updatePBAPokemonData(party);
             Log.i("PartyInsertHandler","パーティーを登録しました。");
         } catch (SQLException e) {
             e.printStackTrace();
