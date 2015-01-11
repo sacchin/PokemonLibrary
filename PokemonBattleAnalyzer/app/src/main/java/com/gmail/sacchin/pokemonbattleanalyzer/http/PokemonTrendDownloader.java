@@ -85,8 +85,8 @@ public class PokemonTrendDownloader implements Runnable {
     private List<NameValuePair> createParameter(String pockemonNo) {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("languageId", "1"));
-        params.add(new BasicNameValuePair("seasonId", "4"));
-        params.add(new BasicNameValuePair("battleType", "0"));
+        params.add(new BasicNameValuePair("seasonId", "107"));
+        params.add(new BasicNameValuePair("battleType", "1"));
         params.add(new BasicNameValuePair("timezone", "JST"));
         params.add(new BasicNameValuePair("pokemonId", pockemonNo));
         params.add(new BasicNameValuePair("displayNumberWaza", "10"));

@@ -583,9 +583,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
                     pn = temp.getPokemonNo();
                 }
 
-
-                int result = db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {pn});
-                Log.e("updatePBAPokemonRanking", result + " - " + pn + " - " + rank);
+                db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {pn});
             }
 		}catch (IllegalStateException e) {
 			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);
