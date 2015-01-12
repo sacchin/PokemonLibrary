@@ -2,23 +2,24 @@ package com.gmail.sacchin.pokemonbattleanalyzer.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Party {
 	private Timestamp time = null;
-	private ArrayList<IndividualPBAPokemon> member = null;
+	private List<IndividualPBAPokemon> member = null;
 
 	private String userName = null;
 	private String memo = null;
 
 	public Party(){
-		this.member = new ArrayList<IndividualPBAPokemon>();
+		this.member = new ArrayList<>();
 	}
 
 	public Party(Timestamp time, IndividualPBAPokemon member1, IndividualPBAPokemon member2,
 			IndividualPBAPokemon member3, IndividualPBAPokemon member4, IndividualPBAPokemon member5,
 			IndividualPBAPokemon member6, String memo, String userName) {
 		this.time = time;
-		this.member = new ArrayList<IndividualPBAPokemon>();
+		this.member = new ArrayList<>();
 		if(member1 != null){
 			this.member.add(member1);
 		}
@@ -49,7 +50,7 @@ public class Party {
 		this.time = time;
 	}
 
-	public ArrayList<IndividualPBAPokemon> getMember() {
+	public List<IndividualPBAPokemon> getMember() {
 		return member;
 	}
 
@@ -65,7 +66,7 @@ public class Party {
 		int index = -1;
 		if(this.member != null && PBAPokemon != null){
 			for (int i = 0; i < this.member.size(); i++) {
-				if(PBAPokemon.getNo() == this.member.get(i).getNo()){
+				if(PBAPokemon.getNo().equals(this.member.get(i).getNo())){
 					index = i;
 				}
 			}
@@ -75,16 +76,8 @@ public class Party {
 		return -1;
 	}
 
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
 	public String getUserName() {
 		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getMemo() {

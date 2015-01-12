@@ -12,17 +12,11 @@ public class ToolActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         FragmentManager manager = getFragmentManager();
-        // FragmentTransaction を開始
         FragmentTransaction transaction = manager.beginTransaction();
-
-        // FragmentContainer のレイアウトに、MyFragment を割当てる
         transaction.add(R.id.FragmentContainer, ToolFragment.newInstance(0));
-
-        // 変更を確定して FragmentTransaction を終える
         transaction.commit();
 	}
 

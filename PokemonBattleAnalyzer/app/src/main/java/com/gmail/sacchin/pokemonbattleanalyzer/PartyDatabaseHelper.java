@@ -548,7 +548,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 
 			for (int i = 0; i < party.getMember().size(); i++) {
 				long id = this.insertIndividualPBAPokemonData(party.getMember().get(i), party.getTime());
-				Log.v("member" + (i + 1), "IP = " + party.getMember().get(i).getRowId() + ", id = " + id);
 				values.put("member" + (i + 1), id);
 			}
 
