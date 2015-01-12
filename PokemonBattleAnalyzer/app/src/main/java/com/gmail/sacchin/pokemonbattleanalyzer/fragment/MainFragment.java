@@ -47,12 +47,13 @@ import java.util.concurrent.Executors;
  */
 public class MainFragment extends Fragment {
     private ViewGroup.LayoutParams LP = new ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT);
 
     private PartyDatabaseHelper databaseHelper;
-    public Party party = null;
-    public static ScrollView scrollView;
-    public static LinearLayout partyLayout = null;
+    private Party party = null;
+    private static ScrollView scrollView;
+    private static LinearLayout partyLayout = null;
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
@@ -93,9 +94,6 @@ public class MainFragment extends Fragment {
             party.clear();
             partyLayout.removeAllViews();
             createPokemonList();
-
-            executorService.execute(
-                    new PokemonRankingDownloader(databaseHelper));
         } catch (ClassCastException e) {
             throw new IllegalStateException("activity should implement FragmentCallbacks", e);
         }
@@ -114,8 +112,12 @@ public class MainFragment extends Fragment {
     }
 
     public void createPokemonList() {
-        if(scrollView == null || 0 < scrollView.getChildCount()){
-            Log.i("createPokemonList", "null!");
+        if(scrollView == null){
+            Log.e("MainFragment.createPokemonList", "null!");
+            return;
+        }
+        if(0 < scrollView.getChildCount()){
+            Log.i("MainFragment.createPokemonList", "scrollView is already created!");
             return;
         }
 
@@ -145,11 +147,9 @@ public class MainFragment extends Fragment {
                 }
                 all.addView(block);
             }
-
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
     }
     public FrameLayout createFrameLayout(PBAPokemon p, Map<String, Integer> countMap){
         Log.e("createFrameLayout", p.getNo() + " - " + p.getJname() + " - " + p.getRanking());

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
+import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonRankingDownloader;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.MegaPokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PokemonInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
@@ -34,19 +35,17 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        databaseHelper = new PartyDatabaseHelper(this);
 
         FragmentManager manager = getFragmentManager();
-        // FragmentTransaction を開始
         FragmentTransaction transaction = manager.beginTransaction();
-
-        // FragmentContainer のレイアウトに、MyFragment を割当てる
         transaction.add(R.id.FragmentContainer, MainFragment.newInstance(0));
-
-        // 変更を確定して FragmentTransaction を終える
         transaction.commit();
 
         firstLaunch();
+
+        databaseHelper = new PartyDatabaseHelper(this);
+        executorService.execute(
+                new PokemonRankingDownloader(databaseHelper));
     }
 
     private void firstLaunch() {
@@ -69,7 +68,6 @@ public class MainActivity extends Activity {
             Log.i("This is First Time", "create table!");
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,13 +103,12 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == TOOL_ACTIVITY_CODE) {
-//            partyLayout.removeAllViews();
-//            party.clear();
+        if (requestCode == TOOL_ACTIVITY_CODE) {
+
 //        }else if (requestCode == AFFINITY_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();
 //            party.clear();
-//        }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

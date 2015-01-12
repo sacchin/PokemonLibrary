@@ -35,8 +35,8 @@ import java.util.concurrent.Executors;
 
 public class ToolFragment extends Fragment {
     private PartyDatabaseHelper databaseHelper = null;
-    private ArrayList<String> skills = null;
-    private ArrayList<String> items = null;
+//    private ArrayList<String> skills = null;
+//    private ArrayList<String> items = null;
     private Party party = null;
     private int index = 0;
     private LinearLayout mainView = null;
@@ -76,6 +76,17 @@ public class ToolFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resetParty();
+        createPartyList();
+    }
+
+    private void resetParty() {
         final Handler handler = new Handler();
         try {
             party = databaseHelper.selectNewestParty();
@@ -92,19 +103,22 @@ public class ToolFragment extends Fragment {
                 executorService.execute(
                         new PokemonTrendDownloader(pokemonNo, this, i, handler));
             }
-            skills = databaseHelper.selectAllSkill();
-            items = databaseHelper.selectAllItem();
+//            skills = databaseHelper.selectAllSkill();
+//            items = databaseHelper.selectAllItem();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("ToolFragment.onResume", "onResume");
-        if(partyLayout != null && party != null){
+    private void createPartyList() {
+        if(partyLayout == null){
+            Log.e("ToolFragment.createPartyList", "null!");
+            return;
+        }else{
+            partyLayout.removeAllViews();
+        }
+
+        if(party != null){
             for (int i = 0; i < party.getMember().size(); i++) {
                 IndividualPBAPokemon p = party.getMember().get(i);
                 Bitmap image = Util.createImage(p, 150f, getResources());
@@ -127,12 +141,9 @@ public class ToolFragment extends Fragment {
         this.index = index;
     }
 
-
-
     public void setMainView(IndividualPBAPokemon p) {
         mainView.removeAllViews();
 
-        Log.e("setMainView","setMainView");
         createPBAPokemonStatus(p);
         if(p.getMega() != null){
             for(Pokemon mega : p.getMega()){
@@ -142,7 +153,7 @@ public class ToolFragment extends Fragment {
     }
 
     private void createPBAPokemonStatus(PBAPokemon p) {
-        Log.e("createPBAPokemonStatus",p.getJname());
+        Log.e("createPBAPokemonStatus", p.getJname());
         LinearLayout sss = new LinearLayout(getActivity());
         sss.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         sss.setOrientation(LinearLayout.HORIZONTAL);
