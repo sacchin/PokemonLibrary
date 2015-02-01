@@ -548,7 +548,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 
 			for (int i = 0; i < party.getMember().size(); i++) {
 				long id = this.insertIndividualPBAPokemonData(party.getMember().get(i), party.getTime());
-				Log.v("member" + (i + 1), "IP = " + party.getMember().get(i).getRowId() + ", id = " + id);
 				values.put("member" + (i + 1), id);
 			}
 
@@ -583,9 +582,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
                     pn = temp.getPokemonNo();
                 }
 
-
-                int result = db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {pn});
-                Log.e("updatePBAPokemonRanking", result + " - " + pn + " - " + rank);
+                db.update(POKEMON_MASTER_TABLE_NAME, values, "no = ?", new String[] {pn});
             }
 		}catch (IllegalStateException e) {
 			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);

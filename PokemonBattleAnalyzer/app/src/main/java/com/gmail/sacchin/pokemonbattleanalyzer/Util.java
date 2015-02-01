@@ -390,7 +390,7 @@ public class Util {
 		imageResource.put("618", R.drawable.n618);
 		imageResource.put("521", R.drawable.n521);
 		
-		
+		//XY Mega Revolution
 		imageResource.put("003mx", R.drawable.n003_mega);
 		imageResource.put("006mx", R.drawable.n006_megax);
 		imageResource.put("006my", R.drawable.n006_megay);
@@ -401,13 +401,11 @@ public class Util {
 		imageResource.put("127mx", R.drawable.n127_mega);
 		imageResource.put("130mx", R.drawable.n130_mega);
 		imageResource.put("142mx", R.drawable.n142_mega);
-		
 		imageResource.put("181mx", R.drawable.n181_mega);
 		imageResource.put("212mx", R.drawable.n212_mega);
 		imageResource.put("214mx", R.drawable.n214_mega);
 		imageResource.put("229mx", R.drawable.n229_mega);
 		imageResource.put("248mx", R.drawable.n248_mega);
-		
 		imageResource.put("257mx", R.drawable.n257_mega);
 		imageResource.put("282mx", R.drawable.n282_mega);
 		imageResource.put("303mx", R.drawable.n303_mega);
@@ -416,10 +414,29 @@ public class Util {
 		imageResource.put("310mx", R.drawable.n310_mega);
 		imageResource.put("354mx", R.drawable.n354_mega);
 		imageResource.put("359mx", R.drawable.n359_mega);
-		
 		imageResource.put("445mx", R.drawable.n445_mega);
 		imageResource.put("460mx", R.drawable.n460_mega);
 		imageResource.put("448mx", R.drawable.n448_mega);
+
+        //ORAS Mega Revolution
+        imageResource.put("015mx", R.drawable.n015_mega);
+        imageResource.put("018mx", R.drawable.n018_mega);
+        imageResource.put("080mx", R.drawable.n080_mega);
+        imageResource.put("208mx", R.drawable.n208_mega);
+        imageResource.put("254mx", R.drawable.n254_mega);
+        imageResource.put("260mx", R.drawable.n260_mega);
+        imageResource.put("302mx", R.drawable.n302_mega);
+        imageResource.put("319mx", R.drawable.n319_mega);
+        imageResource.put("323mx", R.drawable.n323_mega);
+        imageResource.put("334mx", R.drawable.n334_mega);
+        imageResource.put("362mx", R.drawable.n362_mega);
+        imageResource.put("373mx", R.drawable.n373_mega);
+        imageResource.put("376mx", R.drawable.n376_mega);
+        imageResource.put("380mx", R.drawable.n380_mega);
+        imageResource.put("381mx", R.drawable.n381_mega);
+        imageResource.put("428mx", R.drawable.n428_mega);
+        imageResource.put("475mx", R.drawable.n475_mega);
+        imageResource.put("531mx", R.drawable.n531_mega);
 	}
 
     public static Bitmap createImage(PBAPokemon p, float scale, Resources resource){

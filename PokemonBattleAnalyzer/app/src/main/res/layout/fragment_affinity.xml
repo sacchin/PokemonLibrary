@@ -37,17 +37,31 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#CCCCCC"/>
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/affinity_fragment_column1title"
-                    android:background="#CCCCCC"/>
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/affinity_fragment_column2title"
-                    android:background="#CCCCCC"/>
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
             </TableRow>
 
             <TableRow
@@ -58,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#EE0000"
-                    android:text="@string/affinity_fragment_quadruple"/>
+                    android:text="@string/affinity_fragment_quadruple" />
                 <LinearLayout
                     android:id="@+id/main_type_of_4"
                     android:layout_width="wrap_content"
