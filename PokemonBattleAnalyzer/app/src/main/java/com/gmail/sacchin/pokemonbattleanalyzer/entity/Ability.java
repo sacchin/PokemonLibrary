@@ -1,10 +1,41 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.entity;
 
+import android.util.Log;
+
+import com.gmail.sacchin.pokemonlibrary.entity.Type;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Ability {
-	private int ranking = 0;
+    private static Map<Type.TypeCode, String[]> invalidAbility;
+    private static Map<Type.TypeCode, String[]> scalUpAbility;
+    private static final String[] ELECTRIC_INVALID_ABILITY = {
+            "ちくでん",
+            "でんきエンジン",
+            "ひらいしん"};
+
+    private static final String[] WATER_INVALID_ABILITY = {
+            "かんそうはだ",
+            "ちょすい",
+            "よびみず"};
+
+    private static final String[] GRASS_INVALID_ABILITY = {
+            "そうしょく"};
+
+    private static final String[] FIRE_INVALID_ABILITY = {
+            "もらいび"};
+
+    private static final String[] GRAND_INVALID_ABILITY = {
+            "ふゆう"};
+
+    private static final String[] FIRE_SCALE_UP_ABILITY = {
+            "かんそうはだ"};
+
+    private int ranking = 0;
 	private double usageRate = 0;
 	private String name = "";
 	private int sequenceNumber = 0;
@@ -33,16 +64,8 @@ public class Ability {
 		return ranking;
 	}
 
-	public void setRanking(int ranking) {
-		this.ranking = ranking;
-	}
-
 	public double getUsageRate() {
 		return usageRate;
-	}
-
-	public void setUsageRate(double usageRate) {
-		this.usageRate = usageRate;
 	}
 
 	public String getName() {
@@ -57,8 +80,37 @@ public class Ability {
 		return sequenceNumber;
 	}
 
-	public void setSequenceNumber(int sequenceNumber) {
-		this.sequenceNumber = sequenceNumber;
-	}
+    public static float calcTypeScale(String ability, Type.TypeCode type){
+        if(ability == null || type == null){
+            throw new NullPointerException();
+        }
 
+        invalidAbility = new HashMap<>();
+        invalidAbility.put(Type.TypeCode.ELECTRIC, ELECTRIC_INVALID_ABILITY);
+        invalidAbility.put(Type.TypeCode.WATER, WATER_INVALID_ABILITY);
+        invalidAbility.put(Type.TypeCode.GRASS, GRASS_INVALID_ABILITY);
+        invalidAbility.put(Type.TypeCode.FIRE, FIRE_INVALID_ABILITY);
+        invalidAbility.put(Type.TypeCode.GROUND, GRAND_INVALID_ABILITY);
+        scalUpAbility = new HashMap<>();
+        scalUpAbility.put(Type.TypeCode.FIRE, FIRE_SCALE_UP_ABILITY);
+
+        String[] list = invalidAbility.get(type);
+        if(list != null) {
+            for(String temp : list){
+                if(temp.equals(ability)){
+                    return 0;
+                }
+            }
+        }
+
+        list = scalUpAbility.get(type);
+        if(list != null) {
+            for(String temp : list){
+                if(temp.equals(ability)){
+                    return 1.25f;
+                }
+            }
+        }
+        return 1;
+    }
 }
