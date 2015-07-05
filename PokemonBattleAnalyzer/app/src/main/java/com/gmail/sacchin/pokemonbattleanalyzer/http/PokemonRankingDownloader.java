@@ -72,9 +72,9 @@ public class PokemonRankingDownloader implements Runnable {
             JSONArray temp = new JSONArray(jsonStr);
             List<RankingPokemonIn> rankingList = JSONParser.createPokemonRankingList(temp);
             databaseHelper.updatePBAPokemonRanking(rankingList);
-            Log.e("PokemonRankingDownloader", "finish");
+            Log.e("PokemonRankingDownloade", "finish");
         } catch (JSONException e) {
-            Log.e("PokemonRankingDownloader", "JSONException : " + jsonStr);
+            Log.e("PokemonRankingDownloade", "JSONException : " + jsonStr);
         } catch (IOException e) {
             e.printStackTrace();
         }

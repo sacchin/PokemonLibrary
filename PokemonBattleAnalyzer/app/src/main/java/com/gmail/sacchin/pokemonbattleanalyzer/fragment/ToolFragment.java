@@ -112,7 +112,7 @@ public class ToolFragment extends Fragment {
 
     private void createPartyList() {
         if(partyLayout == null){
-            Log.e("ToolFragment.createPartyList", "null!");
+            Log.e("createPartyList", "null!");
             return;
         }else{
             partyLayout.removeAllViews();

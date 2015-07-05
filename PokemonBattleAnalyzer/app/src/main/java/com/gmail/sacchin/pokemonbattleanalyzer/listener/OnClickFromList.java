@@ -3,6 +3,8 @@ package com.gmail.sacchin.pokemonbattleanalyzer.listener;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -19,4 +21,5 @@ public class OnClickFromList implements OnClickListener{
 	public void onClick(View v) {
         fragment.addPokemonToList(pokemon);
 	}
+
 }

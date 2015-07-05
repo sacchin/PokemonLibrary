@@ -2,7 +2,6 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.AffinityRank;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
-import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickTypeText;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromAffinityList;
 import com.gmail.sacchin.pokemonlibrary.entity.Type;
 
 import java.io.IOException;
@@ -30,11 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sacchin on 2014/12/23.
- */
 public class AffinityFragment extends Fragment {
-    private PartyDatabaseHelper databaseHelper = null;
     private LinearLayout selectPokemon = null;
     private Map<String, Integer> affinityCode = null;
 
@@ -74,132 +69,106 @@ public class AffinityFragment extends Fragment {
         affinityCode.put("25", 3);
         affinityCode.put("0", 4);
 
-        databaseHelper = new PartyDatabaseHelper(getActivity());
+        PartyDatabaseHelper databaseHelper = new PartyDatabaseHelper(getActivity());
 
         String pokemonNo = getArguments().getString(ARG_SECTION_NUMBER);
         try {
             this.p = databaseHelper.selectPBAPokemon(pokemonNo);
-            Map<String, Integer> selectedPokemonAffinity = calcAffinity(p);
+            Map<Type.TypeCode, Map<String, Integer>> selectedPokemonAffinity = p.calcAllTypeScale();
 
-            for(String typeName : selectedPokemonAffinity.keySet()){
-                Integer p = affinityCode.get(String.valueOf(selectedPokemonAffinity.get(typeName)));
-                if(p != null) {
-                    TextView temp = new TextView(getActivity());
-                    temp.setText(typeName);
-                    mainPokemonAffinity[p].addView(temp);
-                }
-            }
+            setAffinity(selectedPokemonAffinity, mainPokemonAffinity);
 
+            List<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
             List<AffinityRank> ranks = new ArrayList<>();
-            Map<String, List<PBAPokemon>> typeMap = getStringListMap();
-            for (String key : typeMap.keySet()) {
-                List<PBAPokemon> oneType = typeMap.get(key);
-                PBAPokemon top = oneType.get(0);
+            for(PBAPokemon pokemon : list){
+                Map<Type.TypeCode, Map<String, Integer>> targetPokemonAffinity = pokemon.calcAllTypeScale();
 
-                Map<String, Integer> targetAffinity = calcAffinity(top);
                 int sum = 0;
-                for(Type.TypeCode temp : Type.TypeCode.values()) {
-                    Integer sp = selectedPokemonAffinity.get(Type.convertTypeCodeToName(temp));
-                    sp = (sp != null) ? sp : 100;
-                    Integer tp = targetAffinity.get(Type.convertTypeCodeToName(temp));
-                    tp = (tp != null) ? tp : 100;
-                    sum += (sp > tp) ? tp : sp;
+                for(Type.TypeCode type : Type.TypeCode.values()){
+                    int minimumScale = Integer.MAX_VALUE;
+                    Map<String, Integer> selectedScale = selectedPokemonAffinity.get(type);
+                    for(String ability : selectedScale.keySet()){
+                        if(selectedScale.get(ability) < minimumScale){
+                            minimumScale = selectedScale.get(ability);
+                        }
+                    }
+                    Map<String, Integer> targetScale = targetPokemonAffinity.get(type);
+                    for(String ability : targetScale.keySet()){
+                        if(targetScale.get(ability) < minimumScale){
+                            minimumScale = targetScale.get(ability);
+                        }
+                    }
+                    sum += minimumScale;
                 }
-                ranks.add(new AffinityRank(sum, oneType, targetAffinity));
+                ranks.add(new AffinityRank(sum, pokemon));
             }
+
             AffinityRank.sort(ranks);
             AffinityRank.calcDeviation(ranks);
 
-            TableRow header = new TableRow(getActivity());
-            header.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-            TextView deviationTitle = new TextView(getActivity());
-            deviationTitle.setText("偏差値");
-            deviationTitle.setBackgroundColor(Color.LTGRAY);
-            header.addView(deviationTitle);
-            TextView typeTitle = new TextView(getActivity());
-            typeTitle.setText("タイプ");
-            typeTitle.setBackgroundColor(Color.LTGRAY);
-            header.addView(typeTitle);
-            TextView pokemonTitle = new TextView(getActivity());
-            pokemonTitle.setText("Pokemon");
-            pokemonTitle.setBackgroundColor(Color.LTGRAY);
-            header.addView(pokemonTitle);
-            typeList.addView(header);
-
             for (AffinityRank r : ranks) {
-                String type1 = r.getType1Name();
-                String type2 = r.getType2Name();
-                TableRow block = new TableRow(getActivity());
+                TableRow lastBlock = (TableRow)typeList.getChildAt(typeList.getChildCount() - 1);
+                TextView deviationValue = (TextView)lastBlock.getChildAt(0);
+                if(deviationValue != null){
+                    try {
+                        int deviation = Integer.parseInt((String)deviationValue.getText());
+                        if(r.getDeviation() == deviation){
+                            LinearLayout pokemons = (LinearLayout)lastBlock.getChildAt(1);
+                            //既存のリストに追加する
+                            LinearLayout pokemonBlock = (LinearLayout)pokemons.getChildAt(pokemons.getChildCount() - 1);
+                            //一行10匹まで
+                            if(pokemonBlock.getChildCount() < 10){
+                                pokemonBlock.addView(createImageView(r.getPokemon()));
+                            }else{
+                                pokemonBlock = createPokemonBlock();
+                                pokemonBlock.addView(createImageView(r.getPokemon()));
 
-                block.setOrientation(LinearLayout.HORIZONTAL);
-                block.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                TextView deviationValue = new TextView(getActivity());
-                deviationValue.setText(String.valueOf(r.getDeviation()));
-                block.addView(deviationValue);
+                                pokemons.addView(pokemonBlock);
+                            }
+                        }else{
+                            //新規のリストに追加する
+                            lastBlock = createTableBlock();
+                            deviationValue = new TextView(getActivity());
+                            deviationValue.setText(String.valueOf(r.getDeviation()));
+                            lastBlock.addView(deviationValue);
 
-                TextView typeValue = new TextView(getActivity());
-                typeValue.setOnClickListener(new OnClickTypeText(this, r.getOneType()));
-                if(type2.equals("エラー")){
-                    typeValue.setText(type1);
-                }else{
-                    typeValue.setText(type1 + ", " + type2);
-                }
-                block.addView(typeValue);
+                            LinearLayout pokemonBlock = createPokemonBlock();
+                            pokemonBlock.addView(createImageView(r.getPokemon()));
 
-                LinearLayout pokemons = new LinearLayout(getActivity());
-                pokemons.setOrientation(LinearLayout.VERTICAL);
-                List<PBAPokemon> list = r.getOneType();
-                int count = 0;
-                for(;count < list.size();){
-                    LinearLayout pokemonBlock = new LinearLayout(getActivity());
-                    pokemonBlock.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                    pokemonBlock.setGravity(Gravity.CENTER);
-                    for(int i = 0 ; i < 10 ; i++){
-                        Bitmap image = Util.createImage(list.get(count), 100f, getResources());
-                        ImageView iv = new ImageView(getActivity());
-                        iv.setImageBitmap(image);
-                        pokemonBlock.addView(iv);
-                        count++;
-                        if(count > list.size() - 1){
-                            break;
+                            LinearLayout pokemons = createPokemons();
+                            pokemons.addView(pokemonBlock);
+                            lastBlock.addView(pokemons);
+                            typeList.addView(lastBlock);
                         }
+                    }catch (NumberFormatException e){
+                        //新規のリストに追加する
+                        lastBlock = createTableBlock();
+                        deviationValue = new TextView(getActivity());
+                        deviationValue.setText(String.valueOf(r.getDeviation()));
+                        lastBlock.addView(deviationValue);
+
+                        LinearLayout pokemonBlock = createPokemonBlock();
+                        pokemonBlock.addView(createImageView(r.getPokemon()));
+
+                        LinearLayout pokemons = createPokemons();
+                        pokemons.addView(pokemonBlock);
+                        lastBlock.addView(pokemons);
+                        typeList.addView(lastBlock);
                     }
-                    pokemons.addView(pokemonBlock);
                 }
-                block.addView(pokemons);
-                typeList.addView(block);
-
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return rootView;
     }
 
-    private Map<String, List<PBAPokemon>> getStringListMap() throws IOException {
-        Map<String, List<PBAPokemon>> typeMap = new HashMap<>();
-        List<PBAPokemon> list = databaseHelper.selectAllPBAPokemon();
-        for(PBAPokemon temp : list){
-            String key1 = Type.convertTypeCodeToName(temp.getType1()) +
-                    Type.convertTypeCodeToName(temp.getType2());
-            String key2 = Type.convertTypeCodeToName(temp.getType2()) +
-                    Type.convertTypeCodeToName(temp.getType1());
-
-            List<PBAPokemon> oneType = typeMap.get(key1);
-            if(oneType == null){
-                oneType = typeMap.get(key2);
-                if(oneType == null) {
-                    oneType = new ArrayList<>();
-                    typeMap.put(key1, oneType);
-                }
-            }
-            oneType.add(temp);
-        }
-        return typeMap;
+    public ImageView createImageView(PBAPokemon pokemon){
+        Bitmap image = Util.createImage(pokemon, 100f, getResources());
+        ImageView iv = new ImageView(getActivity());
+        iv.setImageBitmap(image);
+        iv.setOnClickListener(new OnClickFromAffinityList(this, pokemon));
+        return iv;
     }
 
     public void initView(View rootView){
@@ -229,30 +198,53 @@ public class AffinityFragment extends Fragment {
         });
     }
 
-    public Map<String, Integer> calcAffinity(PBAPokemon pokemon){
-        Map<String, Integer> resultMap = new HashMap<>();
-        for(Type.TypeCode temp : Type.TypeCode.values()){
-            Integer result = (int) (Type.calcurateAffinity(temp, pokemon) * 100);
-            resultMap.put(Type.convertTypeCodeToName(temp), result);
-        }
-        return resultMap;
-    }
-
-
-    public void setTypeView(List<PBAPokemon> oneType){
+    public void setTypeView(PBAPokemon pokemon){
         for(LinearLayout temp : targetPokemonAffinity){
             temp.removeAllViews();
         }
 
-        Map<String, Integer> resultMap = calcAffinity(oneType.get(0));
-        for(String typeName : resultMap.keySet()){
-            Integer p = affinityCode.get(String.valueOf(resultMap.get(typeName)));
-            if(p != null) {
-                TextView temp = new TextView(getActivity());
-                temp.setText(typeName);
-                targetPokemonAffinity[p].addView(temp);
+        Map<Type.TypeCode, Map<String, Integer>> resultMap = pokemon.calcAllTypeScale();
+        setAffinity(resultMap, targetPokemonAffinity);
+    }
+
+    public void setAffinity(Map<Type.TypeCode, Map<String, Integer>> affinityMap, LinearLayout[] targetLayout){
+        for(Type.TypeCode type : affinityMap.keySet()){
+            Map<String, Integer> ttt = affinityMap.get(type);
+            for(String key : ttt.keySet()){
+                Integer p = affinityCode.get(String.valueOf(ttt.get(key)));
+                if(p != null) {
+                    TextView temp = new TextView(getActivity());
+                    if(key.equals("both")){
+                        temp.setText(Type.convertTypeCodeToName(type));
+                    }else{
+                        String message = Type.convertTypeCodeToName(type) + " (" + key + ")";
+                        temp.setText(message);
+                    }
+                    targetLayout[p].addView(temp);
+                }
             }
         }
+    }
+
+    public LinearLayout createPokemonBlock(){
+        LinearLayout pokemonBlock = new LinearLayout(getActivity());
+        pokemonBlock.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        pokemonBlock.setGravity(Gravity.CENTER);
+        pokemonBlock.setOrientation(LinearLayout.HORIZONTAL);
+        return  pokemonBlock;
+    }
+
+    public LinearLayout createPokemons(){
+        LinearLayout pokemons = new LinearLayout(getActivity());
+        pokemons.setOrientation(LinearLayout.VERTICAL);
+        return  pokemons;
+    }
+
+    public TableRow createTableBlock(){
+        TableRow lastBlock = new TableRow(getActivity());
+        lastBlock.setOrientation(LinearLayout.HORIZONTAL);
+        lastBlock.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        return lastBlock;
     }
 
     @Override
@@ -265,6 +257,4 @@ public class AffinityFragment extends Fragment {
             selectPokemon.addView(imageView);
         }
     }
-
-
 }

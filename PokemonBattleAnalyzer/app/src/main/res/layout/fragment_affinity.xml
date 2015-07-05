@@ -52,6 +52,7 @@
                     android:layout_marginRight="3px"
                     android:layout_marginLeft="3px"
                     android:layout_marginBottom="3px"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -189,6 +190,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/affinity_fragment_deviation"
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/affinity_fragment_pokemon"
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+            </TableRow>
         </TableLayout>
     </ScrollView>
 
