@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -84,6 +86,7 @@ public class MainFragment extends Fragment {
         createNewParty.setOnClickListener(new OnClickCreateNewPartyButton(this));
         Button showAffinity = (Button) rootView.findViewById(R.id.affinityButton);
         showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
+
         return rootView;
     }
 
@@ -113,11 +116,11 @@ public class MainFragment extends Fragment {
 
     public void createPokemonList() {
         if(scrollView == null){
-            Log.e("MainFragment.createPokemonList", "null!");
+            Log.e("createPokemonList", "null!");
             return;
         }
         if(0 < scrollView.getChildCount()){
-            Log.i("MainFragment.createPokemonList", "scrollView is already created!");
+            Log.i("createPokemonList", "scrollView is already created!");
             return;
         }
 

@@ -589,7 +589,7 @@ public class MegaPokemonInsertHandler implements Runnable {
             for(int i = 0 ; i < megaPokemonArray.length() ; i++){
 				databaseHelper.insertMegaPBAPokemonData(megaPokemonArray.getJSONObject(i));
 			}
-            Log.i("MegaPokemonInsertHandler", "メガシンカポケモンデータOK!");
+            Log.i("MegaPokemonInsertHandle", "メガシンカポケモンデータOK!");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

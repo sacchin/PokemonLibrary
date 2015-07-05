@@ -11,6 +11,8 @@
     <string name="affinity_fragment_quarter">1/4倍</string>
     <string name="affinity_fragment_zero">効果なし</string>
     <string name="affinity_fragment_exception">特性込み</string>
+    <string name="affinity_fragment_deviation">偏差値</string>
+    <string name="affinity_fragment_pokemon">ポケモン</string>
 
     <string name="action_settings">Settings</string>
 

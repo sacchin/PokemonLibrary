@@ -10,17 +10,17 @@ import com.gmail.sacchin.pokemonbattleanalyzer.fragment.ToolFragment;
 
 import java.util.List;
 
-public class OnClickTypeText implements OnClickListener{
-	private List<PBAPokemon> oneType = null;
+public class OnClickFromAffinityList implements OnClickListener{
+	private PBAPokemon pokemon = null;
 	private AffinityFragment fragment = null;
 
-	public OnClickTypeText(AffinityFragment fragment, List<PBAPokemon> oneType){
-		this.oneType = oneType;
+	public OnClickFromAffinityList(AffinityFragment fragment, PBAPokemon pokemon){
+		this.pokemon = pokemon;
 		this.fragment = fragment;
 	}
 
 	@Override
 	public void onClick(View v) {
-        fragment.setTypeView(oneType);
+        fragment.setTypeView(pokemon);
 	}
 }

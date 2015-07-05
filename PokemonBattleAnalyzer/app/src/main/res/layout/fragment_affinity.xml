@@ -178,29 +178,6 @@
                 </LinearLayout>
 
             </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#333333"
-                    android:text="@string/affinity_fragment_exception" />
-                <LinearLayout
-                    android:id="@+id/main_type_of_e"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/target_type_of_e"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-
-            </TableRow>
         </TableLayout>
     </LinearLayout>
 
@@ -213,6 +190,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/affinity_fragment_deviation"
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/affinity_fragment_pokemon"
+                    android:background="#CCCCCC"
+                    android:layout_marginTop="3px"
+                    android:layout_marginRight="3px"
+                    android:layout_marginLeft="3px"
+                    android:layout_marginBottom="3px"/>
+            </TableRow>
         </TableLayout>
     </ScrollView>
 

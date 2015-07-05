@@ -1,5 +1,7 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.entity;
 
+import android.util.Log;
+
 import com.gmail.sacchin.pokemonlibrary.entity.Type;
 
 import java.util.Collections;
@@ -69,22 +71,22 @@ public class AffinityRank {
             return;
         }
 
-        int sum = 0;
+        int average = 0;
         for(AffinityRank temp : list){
-            sum += temp.getPoint();
+            average += temp.getPoint();
         }
-        sum /= list.size();
+        average /= list.size();
 
         int standardDeviation = 0;
         for(AffinityRank temp : list){
-            standardDeviation += (temp.getPoint() - sum) * (temp.getPoint() - sum);
+            standardDeviation += (temp.getPoint() - average) * (temp.getPoint() - average);
         }
         standardDeviation /= list.size();
         standardDeviation = (int) Math.sqrt(standardDeviation);
 
         for(AffinityRank temp : list){
             //pointが低いほど優秀なため、下記計算式を変えています。
-            double value = (sum - temp.getPoint()) / (double)standardDeviation;
+            double value = (average - temp.getPoint()) / (double)standardDeviation;
             temp.setDeviation((int)(value * 10d + 50d));
         }
     }
