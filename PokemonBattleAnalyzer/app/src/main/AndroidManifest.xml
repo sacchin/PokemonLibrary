@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ToolActivity" />
+        <activity android:name=".SelectActivity" />
         <activity android:name=".AffinityComplementActivity" />
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
