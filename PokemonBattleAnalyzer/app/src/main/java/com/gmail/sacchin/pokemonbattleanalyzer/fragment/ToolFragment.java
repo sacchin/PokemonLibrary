@@ -28,7 +28,6 @@ import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickIndividualPokemon
 import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -89,7 +88,7 @@ public class ToolFragment extends Fragment {
     private void resetParty() {
         final Handler handler = new Handler();
         try {
-            party = databaseHelper.selectNewestParty();
+            party = databaseHelper.selectOpponentParty();
             for(int i = 0 ; i < party.getMember().size() ; i++){
                 IndividualPBAPokemon p = party.getMember().get(i);
                 String pokemonNo = p.getNo();
