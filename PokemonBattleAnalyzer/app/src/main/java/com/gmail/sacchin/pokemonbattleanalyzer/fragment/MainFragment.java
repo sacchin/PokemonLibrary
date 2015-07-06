@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.AddToListInterface;
 import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
@@ -47,7 +48,7 @@ import java.util.concurrent.Executors;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements AddToListInterface{
     private ViewGroup.LayoutParams LP = new ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);

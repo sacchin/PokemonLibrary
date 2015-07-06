@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
     }
 
     public void startToolActivity() {
-        Intent intent = new Intent(MainActivity.this, ToolActivity.class);
+        Intent intent = new Intent(MainActivity.this, SelectActivity.class);
         startActivityForResult(intent, TOOL_ACTIVITY_CODE);
     }
 
