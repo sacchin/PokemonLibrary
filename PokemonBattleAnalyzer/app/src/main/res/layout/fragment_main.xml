@@ -12,11 +12,21 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/createButton"
+                android:id="@+id/createOpponent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create New Party"
-                android:layout_weight="1" >
+                android:text="対戦相手のパーティー"
+                android:layout_weight="1"
+                android:textSize="5pt">
+            </Button>
+
+            <Button
+                android:id="@+id/createMine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自分のパーティー"
+                android:layout_weight="1"
+                android:textSize="5pt">
             </Button>
 
             <Button
@@ -24,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Show Affinity Complete"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:textSize="5pt" >
             </Button>
         </LinearLayout>
 

@@ -80,6 +80,10 @@ public class Party {
 		return userName;
 	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getMemo() {
 		return memo;
 	}

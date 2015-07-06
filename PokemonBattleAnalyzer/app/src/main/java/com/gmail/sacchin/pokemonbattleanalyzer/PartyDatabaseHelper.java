@@ -638,7 +638,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	synchronized public Party selectNewestParty() throws IOException {
+	synchronized public Party selectOpponentParty() throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cur = db.query(PARTY_TABLE_NAME, new String[] { "time", "userName", 
 				"member1", "member2", "member3", "member4", "member5", "member6", "memo"}, 
@@ -662,6 +662,33 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 		return null;
 	}
+
+	synchronized public Party selectMyParty() throws IOException {
+		SQLiteDatabase db = getReadableDatabase();
+		String[] selectArg = { "mine" };
+		Cursor cur = db.query(PARTY_TABLE_NAME, new String[] { "time", "userName",
+						"member1", "member2", "member3", "member4", "member5", "member6", "memo"},
+				"userName=?", selectArg, null, null, "time desc", null);
+		try {
+			if(cur.moveToNext()) {
+				IndividualPBAPokemon member1 = selectIndividualPBAPokemonByID(cur.getLong(2));
+				IndividualPBAPokemon member2 = selectIndividualPBAPokemonByID(cur.getLong(3));
+				IndividualPBAPokemon member3 = selectIndividualPBAPokemonByID(cur.getLong(4));
+				IndividualPBAPokemon member4 = selectIndividualPBAPokemonByID(cur.getLong(5));
+				IndividualPBAPokemon member5 = selectIndividualPBAPokemonByID(cur.getLong(6));
+				IndividualPBAPokemon member6 = selectIndividualPBAPokemonByID(cur.getLong(7));
+
+				return new Party(new Timestamp(cur.getLong(0)),
+						member1, member2, member3, member4, member5, member6,
+						cur.getString(8), cur.getString(1));
+
+			}
+		} catch (SQLiteException e) {
+			Log.e("selectPBAPokemonByNo", "not found");
+		}
+		return null;
+	}
+
 	synchronized public ArrayList<Party> selectAllParty(int limit) throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		if(limit <= 0){

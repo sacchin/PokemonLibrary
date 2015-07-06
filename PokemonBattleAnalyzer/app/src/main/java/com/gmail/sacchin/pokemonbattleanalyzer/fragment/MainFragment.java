@@ -82,8 +82,10 @@ public class MainFragment extends Fragment {
         databaseHelper = new PartyDatabaseHelper(getActivity());
         party = new Party();
 
-        Button createNewParty = (Button) rootView.findViewById(R.id.createButton);
-        createNewParty.setOnClickListener(new OnClickCreateNewPartyButton(this));
+        Button createOpponentParty = (Button) rootView.findViewById(R.id.createOpponent);
+        createOpponentParty.setOnClickListener(new OnClickCreateNewPartyButton(this, false));
+        Button createMyParty = (Button) rootView.findViewById(R.id.createMine);
+        createMyParty.setOnClickListener(new OnClickCreateNewPartyButton(this, true));
         Button showAffinity = (Button) rootView.findViewById(R.id.affinityButton);
         showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
 
@@ -202,7 +204,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public void createParty(){
+    public void createOpponentParty(){
         if(party.getMember() == null || party.getMember().size() < 1){
             Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
             return;
@@ -210,6 +212,17 @@ public class MainFragment extends Fragment {
         party.setTime(new Timestamp(System.currentTimeMillis()));
         executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
         ((MainActivity)getActivity()).startToolActivity();
+    }
+
+    public void createMyParty(){
+        if(party.getMember() == null || party.getMember().size() < 1){
+            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        party.setTime(new Timestamp(System.currentTimeMillis()));
+        party.setUserName("mine");
+        executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
+        Toast.makeText(getActivity(), "登録しました。", Toast.LENGTH_SHORT).show();
     }
 
     public void showAffinity(){
