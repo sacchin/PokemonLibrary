@@ -5,10 +5,8 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.AddToListInterface;
+import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
 import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
@@ -27,8 +25,6 @@ import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
-import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonRankingDownloader;
-import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonTrendDownloader;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCheckAffinityButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
@@ -190,6 +186,11 @@ public class MainFragment extends Fragment implements AddToListInterface{
 
             partyLayout.addView(localView);
         }
+    }
+
+    @Override
+    public void removePokemonFromList(PBAPokemon pokemon) {
+
     }
 
     public void removePokemonFromList(IndividualPBAPokemon pokemon){

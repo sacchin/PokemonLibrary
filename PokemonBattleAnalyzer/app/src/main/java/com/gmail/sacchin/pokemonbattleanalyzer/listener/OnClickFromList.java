@@ -1,6 +1,6 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.listener;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.AddToListInterface;
+import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 
 import android.view.View;

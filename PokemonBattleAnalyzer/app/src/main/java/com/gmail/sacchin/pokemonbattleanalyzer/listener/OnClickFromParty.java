@@ -1,23 +1,23 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.listener;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
+import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
 
 import android.view.View;
 import android.view.View.OnClickListener;
 
 public class OnClickFromParty implements OnClickListener{
 	private IndividualPBAPokemon pokemon = null;
-	private MainFragment fragment = null;
+	private AddToListInterface someFragment = null;
 	
-	public OnClickFromParty(MainFragment fragment, IndividualPBAPokemon pokemon){
+	public OnClickFromParty(AddToListInterface someFragment, IndividualPBAPokemon pokemon){
 		this.pokemon = pokemon;
-		this.fragment = fragment;
+		this.someFragment = someFragment;
 	}
 
 	@Override
 	public void onClick(View v) {
-        fragment.removePokemonFromList(pokemon);
+		someFragment.removePokemonFromList(pokemon);
 	}
 
 }
