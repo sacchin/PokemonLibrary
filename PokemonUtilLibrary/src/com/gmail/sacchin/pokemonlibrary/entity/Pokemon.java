@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.gmail.sacchin.pokemonlibrary.entity.Type.TypeCode;
 
-public class Pokemon {
+public abstract class Pokemon {
 	/**
 	 * nnn-mm
 	 */
@@ -99,6 +99,52 @@ public class Pokemon {
 		return weight;
 	}
 
+	public int getHPValue(int iv, int ev) {
+		return ((h * 2 + iv + ev / 4 ) / 2) + 60;
+	}
+	
+	public int getAttackValue(int iv, int ev) {
+		return (int)((((a*2+iv+ev/4)/2)+5) * getAttackRevision());
+	}
+
+	public int getDeffenceValue(int iv, int ev) {
+		return (int)((((b*2+iv+ev/4)/2)+5) * getDeffenceRevision());
+	}
+
+	public int getSpecialAttackValue(int iv, int ev) {
+		return (int)((((c*2+iv+ev/4)/2)+5) * getSpecialAttackRevision());
+	}
+
+	public int getSpecialDeffenceValue(int iv, int ev) {
+		return (int)((((d*2+iv+ev/4)/2)+5) * getSpecialDeffenceRevision());
+	}
+
+	public int getSpeedValue(int iv, int ev) {
+		return (int)((((s*2+iv+ev/4)/2)+5) * getSpeedRevision());
+	}
+	
+	public abstract float getAttackRevision();
+	public abstract float getDeffenceRevision();
+	public abstract float getSpecialAttackRevision();
+	public abstract float getSpecialDeffenceRevision();
+	public abstract float getSpeedRevision();
+
+	public String getAbility1() {
+		return ability1;
+	}
+
+	public String getAbility2() {
+		return ability2;
+	}
+
+	public String getAbilityd() {
+		return abilityd;
+	}
+
+	public List<Pokemon> getMega() {
+		return mega;
+	}
+
 	public int getH() {
 		return h;
 	}
@@ -121,21 +167,5 @@ public class Pokemon {
 
 	public int getS() {
 		return s;
-	}
-
-	public String getAbility1() {
-		return ability1;
-	}
-
-	public String getAbility2() {
-		return ability2;
-	}
-
-	public String getAbilityd() {
-		return abilityd;
-	}
-
-	public List<Pokemon> getMega() {
-		return mega;
 	}
 }
