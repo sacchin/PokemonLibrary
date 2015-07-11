@@ -98,4 +98,30 @@ public class PBAPokemon extends Pokemon{
         }
         return scaleMap;
     }
+
+
+    @Override
+    public float getAttackRevision() {
+        return 0;
+    }
+
+    @Override
+    public float getDeffenceRevision() {
+        return 0;
+    }
+
+    @Override
+    public float getSpecialAttackRevision() {
+        return 0;
+    }
+
+    @Override
+    public float getSpecialDeffenceRevision() {
+        return 0;
+    }
+
+    @Override
+    public float getSpeedRevision() {
+        return 0;
+    }
 }

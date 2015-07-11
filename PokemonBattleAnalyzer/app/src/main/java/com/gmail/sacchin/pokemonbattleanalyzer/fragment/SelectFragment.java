@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.EstimateOpponentElection;
 import com.gmail.sacchin.pokemonbattleanalyzer.SelectActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
@@ -137,17 +138,9 @@ public class SelectFragment extends Fragment implements AddToListInterface {
         }
     }
 
-    private IndividualPBAPokemon[] estimate(Party mine, Party opponent){
-        IndividualPBAPokemon[] estimated = new IndividualPBAPokemon[3];
-        estimated[0] = opponent.getMember().get(0);
-        estimated[1] = opponent.getMember().get(1);
-        estimated[2] = opponent.getMember().get(2);
-        return estimated;
-    }
-
     private void determineOpponent(){
         estimate.removeAllViews();
-        IndividualPBAPokemon[] estimated = estimate(mine, opponent);
+        IndividualPBAPokemon[] estimated = EstimateOpponentElection.estimate(mine, opponent);
         for(IndividualPBAPokemon p : estimated){
             addPokemonToOpponentParty(p);
         }

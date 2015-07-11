@@ -144,4 +144,28 @@ public abstract class Pokemon {
 	public List<Pokemon> getMega() {
 		return mega;
 	}
+
+	public int getH() {
+		return h;
+	}
+
+	public int getA() {
+		return a;
+	}
+
+	public int getB() {
+		return b;
+	}
+
+	public int getC() {
+		return c;
+	}
+
+	public int getD() {
+		return d;
+	}
+
+	public int getS() {
+		return s;
+	}
 }
