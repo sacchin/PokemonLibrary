@@ -35,6 +35,7 @@ public class SelectFragment extends Fragment implements AddToListInterface {
     private Party mine = null;
 
     private LinearLayout selected = null;
+    private LinearLayout estimate = null;
 
     private ImageView myParty[] = null;
     private ImageView opponentParty[] = null;
@@ -65,21 +66,9 @@ public class SelectFragment extends Fragment implements AddToListInterface {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_select, container, false);
         selected = (LinearLayout) rootView.findViewById(R.id.selected);
+        estimate = (LinearLayout) rootView.findViewById(R.id.opponent);
 
-        myParty = new ImageView[6];
-        myParty[0] = (ImageView) rootView.findViewById(R.id.my_party1);
-        myParty[1] = (ImageView) rootView.findViewById(R.id.my_party2);
-        myParty[2] = (ImageView) rootView.findViewById(R.id.my_party3);
-        myParty[3] = (ImageView) rootView.findViewById(R.id.my_party4);
-        myParty[4] = (ImageView) rootView.findViewById(R.id.my_party5);
-        myParty[5] = (ImageView) rootView.findViewById(R.id.my_party6);
-        opponentParty = new ImageView[6];
-        opponentParty[0] = (ImageView) rootView.findViewById(R.id.opponent_party1);
-        opponentParty[1] = (ImageView) rootView.findViewById(R.id.opponent_party2);
-        opponentParty[2] = (ImageView) rootView.findViewById(R.id.opponent_party3);
-        opponentParty[3] = (ImageView) rootView.findViewById(R.id.opponent_party4);
-        opponentParty[4] = (ImageView) rootView.findViewById(R.id.opponent_party5);
-        opponentParty[5] = (ImageView) rootView.findViewById(R.id.opponent_party6);
+        initPartyList(rootView);
 
         databaseHelper = new PartyDatabaseHelper(getActivity());
         Button save = (Button) rootView.findViewById(R.id.back);
@@ -103,6 +92,24 @@ public class SelectFragment extends Fragment implements AddToListInterface {
     public void onResume() {
         super.onResume();
         createPartyList();
+        determineOpponent();
+    }
+
+    private void initPartyList(View rootView) {
+        myParty = new ImageView[6];
+        myParty[0] = (ImageView) rootView.findViewById(R.id.my_party1);
+        myParty[1] = (ImageView) rootView.findViewById(R.id.my_party2);
+        myParty[2] = (ImageView) rootView.findViewById(R.id.my_party3);
+        myParty[3] = (ImageView) rootView.findViewById(R.id.my_party4);
+        myParty[4] = (ImageView) rootView.findViewById(R.id.my_party5);
+        myParty[5] = (ImageView) rootView.findViewById(R.id.my_party6);
+        opponentParty = new ImageView[6];
+        opponentParty[0] = (ImageView) rootView.findViewById(R.id.opponent_party1);
+        opponentParty[1] = (ImageView) rootView.findViewById(R.id.opponent_party2);
+        opponentParty[2] = (ImageView) rootView.findViewById(R.id.opponent_party3);
+        opponentParty[3] = (ImageView) rootView.findViewById(R.id.opponent_party4);
+        opponentParty[4] = (ImageView) rootView.findViewById(R.id.opponent_party5);
+        opponentParty[5] = (ImageView) rootView.findViewById(R.id.opponent_party6);
     }
 
     private void createPartyList() {
@@ -111,9 +118,8 @@ public class SelectFragment extends Fragment implements AddToListInterface {
             if (opponent != null) {
                 for (int i = 0; i < opponent.getMember().size(); i++) {
                     IndividualPBAPokemon p = opponent.getMember().get(i);
-                    Bitmap image = Util.createImage(p, 200f, getResources());
+                    Bitmap image = Util.createImage(p, 250f, getResources());
                     opponentParty[i].setImageBitmap(image);
-                    opponentParty[i].setOnClickListener(new OnClickFromList(this, p));
                 }
             }
 
@@ -121,16 +127,33 @@ public class SelectFragment extends Fragment implements AddToListInterface {
             if (mine != null) {
                 for (int i = 0; i < mine.getMember().size(); i++) {
                     IndividualPBAPokemon p = mine.getMember().get(i);
-                    Bitmap image = Util.createImage(p, 200f, getResources());
+                    Bitmap image = Util.createImage(p, 250f, getResources());
                     myParty[i].setImageBitmap(image);
+                    myParty[i].setOnClickListener(new OnClickFromList(this, p));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    private IndividualPBAPokemon[] estimate(Party mine, Party opponent){
+        IndividualPBAPokemon[] estimated = new IndividualPBAPokemon[3];
+        estimated[0] = opponent.getMember().get(0);
+        estimated[1] = opponent.getMember().get(1);
+        estimated[2] = opponent.getMember().get(2);
+        return estimated;
+    }
+
+    private void determineOpponent(){
+        estimate.removeAllViews();
+        IndividualPBAPokemon[] estimated = estimate(mine, opponent);
+        for(IndividualPBAPokemon p : estimated){
+            addPokemonToOpponentParty(p);
+        }
+    }
+
+    @Override
     public void addPokemonToList(PBAPokemon pokemon) {
         IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
         if (selectedPokemon == null) {
@@ -140,12 +163,22 @@ public class SelectFragment extends Fragment implements AddToListInterface {
         }
         selectedPokemon.add(ip);
 
-        Bitmap temp = Util.createImage(pokemon, 150f, getResources());
+        Bitmap temp = Util.createImage(pokemon, 120f, getResources());
         ImageView localView = new ImageView(getActivity());
         localView.setImageBitmap(temp);
         selected.addView(localView);
     }
 
+    public void addPokemonToOpponentParty(PBAPokemon pokemon) {
+        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+
+        Bitmap temp = Util.createImage(pokemon, 120f, getResources());
+        ImageView localView = new ImageView(getActivity());
+        localView.setImageBitmap(temp);
+        estimate.addView(localView);
+    }
+
+    @Override
     public void removePokemonFromList(PBAPokemon pokemon) {
 
     }
