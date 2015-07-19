@@ -29,10 +29,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SelectFragment extends Fragment implements AddToListInterface {
+public class SelectFragment extends PGLFragment implements AddToListInterface {
     private PartyDatabaseHelper databaseHelper = null;
 
-    private Party opponent = null;
     private Party mine = null;
 
     private LinearLayout selected = null;
@@ -65,6 +64,7 @@ public class SelectFragment extends Fragment implements AddToListInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_select, container, false);
         selected = (LinearLayout) rootView.findViewById(R.id.selected);
         estimate = (LinearLayout) rootView.findViewById(R.id.opponent);
@@ -93,7 +93,7 @@ public class SelectFragment extends Fragment implements AddToListInterface {
     public void onResume() {
         super.onResume();
         createPartyList();
-        determineOpponent();
+        //determineOpponent();
     }
 
     private void initPartyList(View rootView) {
@@ -115,10 +115,9 @@ public class SelectFragment extends Fragment implements AddToListInterface {
 
     private void createPartyList() {
         try {
-            opponent = databaseHelper.selectOpponentParty();
-            if (opponent != null) {
-                for (int i = 0; i < opponent.getMember().size(); i++) {
-                    IndividualPBAPokemon p = opponent.getMember().get(i);
+            if (party != null) {
+                for (int i = 0; i < party.getMember().size(); i++) {
+                    IndividualPBAPokemon p = party.getMember().get(i);
                     Bitmap image = Util.createImage(p, 250f, getResources());
                     opponentParty[i].setImageBitmap(image);
                 }
@@ -140,7 +139,7 @@ public class SelectFragment extends Fragment implements AddToListInterface {
 
     private void determineOpponent(){
         estimate.removeAllViews();
-        IndividualPBAPokemon[] estimated = EstimateOpponentElection.estimate(mine, opponent);
+        IndividualPBAPokemon[] estimated = EstimateOpponentElection.estimate(mine, party);
         for(IndividualPBAPokemon p : estimated){
             addPokemonToOpponentParty(p);
         }

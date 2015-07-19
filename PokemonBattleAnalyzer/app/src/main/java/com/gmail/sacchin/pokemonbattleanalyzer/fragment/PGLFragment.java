@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class PGLFragment extends Fragment {
-    private PartyDatabaseHelper databaseHelper = null;
+    protected PartyDatabaseHelper databaseHelper = null;
 //    private ArrayList<String> skills = null;
 //    private ArrayList<String> items = null;
     protected Party party = null;
@@ -100,4 +100,28 @@ public class PGLFragment extends Fragment {
 
     public void setTrend(){}
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

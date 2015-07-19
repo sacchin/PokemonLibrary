@@ -44,12 +44,11 @@ import java.util.concurrent.Executors;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends Fragment implements AddToListInterface{
+public class MainFragment extends PGLFragment implements AddToListInterface{
     private ViewGroup.LayoutParams LP = new ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
 
-    private PartyDatabaseHelper databaseHelper;
     private Party party = null;
     private static ScrollView scrollView;
     private static LinearLayout partyLayout = null;
@@ -73,10 +72,10 @@ public class MainFragment extends Fragment implements AddToListInterface{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         partyLayout = (LinearLayout) rootView.findViewById(R.id.party);
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
-        databaseHelper = new PartyDatabaseHelper(getActivity());
         party = new Party();
 
         Button createOpponentParty = (Button) rootView.findViewById(R.id.createOpponent);
