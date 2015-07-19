@@ -43,58 +43,61 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	private Util util = new Util();
 
 	private static final String[] DATABASE_DEFINITIONS = {
-		POKEMON_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
-				"no TEXT, " +
-				"jname TEXT, " +
-				"ename TEXT, " +
-				"h INTEGER, " +
-				"a INTEGER, " +
-				"b INTEGER, " +
-				"c INTEGER, " +
-				"d INTEGER, " +
-				"s INTEGER, " +
-				"characteristic1 TEXT, " +
-				"characteristic2 TEXT, " +
-				"characteristicd TEXT, " +
-				"type1 INTEGER, " +
-				"type2 INTEGER, " +
-				"weight REAL, " +
-				"count INTEGER)",
-
-				SKILL_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, skillName TEXT)",
-				ITEM_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, itemName TEXT)",
-
-				PARTY_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
-						"time INTEGER, " +
-						"userName TEXT, " +
-						"member1 INTEGER, " +
-						"member2 INTEGER, " +
-						"member3 INTEGER, " + 
-						"member4 INTEGER, " +
-						"member5 INTEGER, " +
-						"member6 INTEGER, " +
-						"memo text)",
-
-						POKEMON_INDIVIDUAL_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
-								"time INTEGER, " +
-								"item TEXT, " +
-								"characteristic TEXT, " +
-								"skillNo1 TEXT, " +
-								"skillNo2 TEXT, " +
-								"skillNo3 TEXT, " +
-								"skillNo4 TEXT, " +
-								"pokemonNo String)",
-								
-								MEGA_POKEMON_TABLE_NAME + "(" + BaseColumns._ID + "_mega INTEGER PRIMARY KEY, " +
-										"pokemonNo INTEGER, " +
-										"h INTEGER, " +
-										"a INTEGER, " +
-										"b INTEGER, " +
-										"c INTEGER, " +
-										"d INTEGER, " +
-										"s INTEGER, " +
-										"characteristic String, " +
-										"megaType String)"
+			(POKEMON_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
+					"no TEXT, " +
+					"jname TEXT, " +
+					"ename TEXT, " +
+					"h INTEGER, " +
+					"a INTEGER, " +
+					"b INTEGER, " +
+					"c INTEGER, " +
+					"d INTEGER, " +
+					"s INTEGER, " +
+					"characteristic1 TEXT, " +
+					"characteristic2 TEXT, " +
+					"characteristicd TEXT, " +
+					"type1 INTEGER, " +
+					"type2 INTEGER, " +
+					"weight REAL, " +
+					"count INTEGER)"),
+			(SKILL_MASTER_TABLE_NAME + "(" + BaseColumns._ID +
+					" INTEGER PRIMARY KEY, " +
+					"skillName TEXT, " +
+					"type INTEGER, " +
+					"power INTEGER, " +
+					"accuracy INTEGER, " +
+					"category INTEGER, " +
+					"pp INTEGER)"),
+			(ITEM_MASTER_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, itemName TEXT)"),
+			(PARTY_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
+					"time INTEGER, " +
+					"userName TEXT, " +
+					"member1 INTEGER, " +
+					"member2 INTEGER, " +
+					"member3 INTEGER, " +
+					"member4 INTEGER, " +
+					"member5 INTEGER, " +
+					"member6 INTEGER, " +
+					"memo text)"),
+			(POKEMON_INDIVIDUAL_TABLE_NAME + "(" + BaseColumns._ID + " INTEGER PRIMARY KEY, " +
+					"time INTEGER, " +
+					"item TEXT, " +
+					"characteristic TEXT, " +
+					"skillNo1 TEXT, " +
+					"skillNo2 TEXT, " +
+					"skillNo3 TEXT, " +
+					"skillNo4 TEXT, " +
+					"pokemonNo String)"),
+			(MEGA_POKEMON_TABLE_NAME + "(" + BaseColumns._ID + "_mega INTEGER PRIMARY KEY, " +
+					"pokemonNo INTEGER, " +
+					"h INTEGER, " +
+					"a INTEGER, " +
+					"b INTEGER, " +
+					"c INTEGER, " +
+					"d INTEGER, " +
+					"s INTEGER, " +
+					"characteristic String, " +
+					"megaType String)")
 	};
 
 	public PartyDatabaseHelper(Context context) {
@@ -142,7 +145,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		if (db.isReadOnly()){
 			throw new IOException("Cannot get writable access to DB.");
 		}
-		for(String sql : DATABASE_DEFINITIONS){
+		for(String sql : DATABASE_TABLE_NAMES){
 			try {
 				Log.w("dropTablesIfExist", sql);
 				db.execSQL("DROP TABLE IF EXISTS " + sql);
@@ -215,7 +218,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		return -1;
 	}
 
-	synchronized public void insertSkillData(String name) throws IOException, SQLException {
+	synchronized public void insertSkillData(String name, int type, int power, int accuracy, int category, int pp, boolean direcr, boolean isMamoru) throws IOException, SQLException {
 		if (name == null){
 			throw new NullPointerException("argument is null.");
 		}
@@ -227,6 +230,11 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		try {
 			ContentValues values = new ContentValues();
 			values.put("skillName", name);
+			values.put("type", type);
+			values.put("power", power);
+			values.put("accuracy", accuracy);
+			values.put("category", category);
+			values.put("pp", pp);
 			db.insert(SKILL_MASTER_TABLE_NAME, null, values );
 		}catch (IllegalStateException e) {
 			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);

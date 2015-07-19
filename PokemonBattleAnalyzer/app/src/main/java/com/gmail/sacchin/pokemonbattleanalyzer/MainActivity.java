@@ -41,11 +41,10 @@ public class MainActivity extends Activity {
         transaction.add(R.id.FragmentContainer, MainFragment.newInstance(0));
         transaction.commit();
 
-        firstLaunch();
-
         databaseHelper = new PartyDatabaseHelper(this);
         executorService.execute(
                 new PokemonRankingDownloader(databaseHelper));
+        firstLaunch();
     }
 
     private void firstLaunch() {
