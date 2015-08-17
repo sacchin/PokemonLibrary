@@ -1,10 +1,8 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,40 +14,30 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
-import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonTrendDownloader;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickIndividualPokemon;
 import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
-import java.io.IOException;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class ToolFragment extends Fragment {
-    private PartyDatabaseHelper databaseHelper = null;
+public class ToolFragment extends PGLFragment {
 //    private ArrayList<String> skills = null;
 //    private ArrayList<String> items = null;
-    private Party party = null;
     private int index = 0;
+
     private LinearLayout mainView = null;
     private LinearLayout partyLayout = null;
-
     private TableLayout tl = null;
-    protected ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-
 
     public static ToolFragment newInstance(int sectionNumber) {
         ToolFragment fragment = new ToolFragment();
@@ -63,11 +51,11 @@ public class ToolFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_tool, container, false);
         mainView = (LinearLayout)rootView.findViewById(R.id.mainview);
         tl = (TableLayout) rootView.findViewById(R.id.status);
         partyLayout = (LinearLayout)rootView.findViewById(R.id.party);
-        databaseHelper = new PartyDatabaseHelper(getActivity());
         Button save = (Button) rootView.findViewById(R.id.back);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,30 +71,6 @@ public class ToolFragment extends Fragment {
         super.onResume();
         resetParty();
         createPartyList();
-    }
-
-    private void resetParty() {
-        final Handler handler = new Handler();
-        try {
-            party = databaseHelper.selectOpponentParty();
-            for(int i = 0 ; i < party.getMember().size() ; i++){
-                IndividualPBAPokemon p = party.getMember().get(i);
-                String pokemonNo = p.getNo();
-                if(!pokemonNo.contains("-")){
-                    try {
-                        pokemonNo = String.valueOf(Integer.parseInt(p.getNo())) + "-0";
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                }
-                executorService.execute(
-                        new PokemonTrendDownloader(pokemonNo, this, i, handler));
-            }
-//            skills = databaseHelper.selectAllSkill();
-//            items = databaseHelper.selectAllItem();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void createPartyList() {
@@ -204,13 +168,6 @@ public class ToolFragment extends Fragment {
         tv.setText(text);
         tv.setBackgroundColor(bgColor);
         return tv;
-    }
-
-    public void finishDownload(int index, RankingPokemonTrend trend){
-        if(party == null || party.getMember() == null || party.getMember().size() < index){
-            return;
-        }
-        party.getMember().get(index).setTrend(trend);
     }
 
     public void setTrend(){

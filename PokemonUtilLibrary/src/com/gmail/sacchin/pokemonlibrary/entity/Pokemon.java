@@ -104,31 +104,25 @@ public abstract class Pokemon {
 	}
 	
 	public int getAttackValue(int iv, int ev) {
-		return (int)((((a*2+iv+ev/4)/2)+5) * getAttackRevision());
+		return (int)((((a*2+iv+ev/4)/2)+5));
 	}
 
 	public int getDeffenceValue(int iv, int ev) {
-		return (int)((((b*2+iv+ev/4)/2)+5) * getDeffenceRevision());
+		return (int)((((b*2+iv+ev/4)/2)+5));
 	}
 
 	public int getSpecialAttackValue(int iv, int ev) {
-		return (int)((((c*2+iv+ev/4)/2)+5) * getSpecialAttackRevision());
+		return (int)((((c*2+iv+ev/4)/2)+5));
 	}
 
 	public int getSpecialDeffenceValue(int iv, int ev) {
-		return (int)((((d*2+iv+ev/4)/2)+5) * getSpecialDeffenceRevision());
+		return (int)((((d*2+iv+ev/4)/2)+5));
 	}
 
 	public int getSpeedValue(int iv, int ev) {
-		return (int)((((s*2+iv+ev/4)/2)+5) * getSpeedRevision());
+		return (int)((((s*2+iv+ev/4)/2)+5));
 	}
 	
-	public abstract float getAttackRevision();
-	public abstract float getDeffenceRevision();
-	public abstract float getSpecialAttackRevision();
-	public abstract float getSpecialDeffenceRevision();
-	public abstract float getSpeedRevision();
-
 	public String getAbility1() {
 		return ability1;
 	}

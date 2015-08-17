@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.fragment.PGLFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.ToolFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
 
@@ -35,7 +36,7 @@ public class PokemonTrendDownloader implements Runnable {
     private String pokemonNo = "";
     private int index = 0;
     private Handler handler = null;
-    private ToolFragment fragment = null;
+    private PGLFragment fragment = null;
 
     /**
      * @param pokemonNo トレンドをダウンロードするポケモンのNo
@@ -43,7 +44,7 @@ public class PokemonTrendDownloader implements Runnable {
      * @param index パーティーの何番目のポケモンか？
      * @param handler 利用するhandler
      */
-    public PokemonTrendDownloader(String pokemonNo, ToolFragment fragment, int index, Handler handler){
+    public PokemonTrendDownloader(String pokemonNo, PGLFragment fragment, int index, Handler handler){
         this.pokemonNo = pokemonNo;
         this.index = index;
         this.handler = handler;
