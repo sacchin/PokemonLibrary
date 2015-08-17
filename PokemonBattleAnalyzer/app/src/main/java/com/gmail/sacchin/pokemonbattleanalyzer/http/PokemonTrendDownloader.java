@@ -127,6 +127,12 @@ public class PokemonTrendDownloader implements Runnable {
                     fragment.setTrend();
                 }
             });
+        }else if(index == 5){
+            handler.post(new Runnable() {
+                public void run() {
+                    fragment.finishAllDownload();
+                }
+            });
         }
     }
 }

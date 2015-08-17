@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -78,14 +80,20 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
         party = new Party();
 
-        Button createOpponentParty = (Button) rootView.findViewById(R.id.createOpponent);
-        createOpponentParty.setOnClickListener(new OnClickCreateNewPartyButton(this, false));
         Button createMyParty = (Button) rootView.findViewById(R.id.createMine);
         createMyParty.setOnClickListener(new OnClickCreateNewPartyButton(this, true));
         Button showAffinity = (Button) rootView.findViewById(R.id.affinityButton);
         showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
 
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.first_fab);
+        fab.setOnClickListener(new OnClickCreateNewPartyButton(this, false));
+
         return rootView;
+    }
+
+    @Override
+    public void setTrend() {
+
     }
 
     @Override
@@ -223,7 +231,7 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
         party.setTime(new Timestamp(System.currentTimeMillis()));
         party.setUserName("mine");
         executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
-        Toast.makeText(getActivity(), "登録しました。", Toast.LENGTH_SHORT).show();
+        Snackbar.make(partyLayout, "登録しました。", Snackbar.LENGTH_LONG).show();
     }
 
     public void showAffinity(){
@@ -233,4 +241,10 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
         }
         ((MainActivity)getActivity()).startAffinityActivity(party.getMember().get(0));
     }
+
+    @Override
+    public void finishAllDownload() {
+
+    }
+
 }
