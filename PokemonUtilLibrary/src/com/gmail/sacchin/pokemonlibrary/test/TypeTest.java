@@ -51,18 +51,7 @@ public class TypeTest {
 	@Test
 	public void testCalcurateAffinity() {
 		Pokemon cuheat = new Pokemon("303-01", "クチート", "", 50, 80, 80, 55, 55, 50, 
-				"", "", "", 16, 17, 50){
-			@Override
-			public float getAttackRevision(){return 0.9f;}
-			@Override
-			public float getDeffenceRevision(){return 1.0f;}
-			@Override
-			public float getSpecialAttackRevision(){return 1.0f;}
-			@Override
-			public float getSpecialDeffenceRevision(){return 1.0f;}
-			@Override
-			public float getSpeedRevision(){return 1.0f;}
-		};
+				"", "", "", 16, 17, 50){};
 		float result = Type.calcurateAffinity(TypeCode.FIRE, cuheat);
 		assertEquals(2f, result, 0.1f);
 		result = Type.calcurateAffinity(TypeCode.DRAGON, cuheat);
@@ -73,18 +62,7 @@ public class TypeTest {
 		assertEquals(-1f, result, 0.1f);
 		
 		Pokemon torimian = new Pokemon("676-01", "トリミアン", "", 50, 80, 80, 55, 55, 50, 
-				"", "", "", 0, -1, 50){
-			@Override
-				public float getAttackRevision(){return 0.9f;}
-				@Override
-				public float getDeffenceRevision(){return 1.0f;}
-				@Override
-				public float getSpecialAttackRevision(){return 1.0f;}
-				@Override
-				public float getSpecialDeffenceRevision(){return 1.0f;}
-				@Override
-				public float getSpeedRevision(){return 1.0f;}
-			};
+				"", "", "", 0, -1, 50){};
 		
 		result = Type.calcurateAffinity(TypeCode.FIGHTING, torimian);
 		assertEquals(2f, result, 0.1f);

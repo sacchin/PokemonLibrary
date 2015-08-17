@@ -4,7 +4,7 @@ public class Skill {
 	private int no;
 	private String jname;
 	private String ename;
-	private int type;
+	private Type.TypeCode type;
 	private int power;
 	private int accuracy;
 	private int category;
@@ -25,7 +25,7 @@ public class Skill {
 		this.no = no;
 		this.jname = jname;
 		this.ename = ename;
-		this.type = type;
+		this.type = Type.convertNoToTypeCode(type);
 		this.power = power;
 		this.accuracy = accuracy;
 		this.category = category;
@@ -44,7 +44,7 @@ public class Skill {
 		return ename;
 	}
 
-	public int getType() {
+	public Type.TypeCode getType() {
 		return type;
 	}
 
