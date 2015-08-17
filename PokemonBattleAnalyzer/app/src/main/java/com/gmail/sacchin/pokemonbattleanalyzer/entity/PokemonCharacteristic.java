@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 import com.gmail.sacchin.pokemonlibrary.entity.Characteristic;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PokemonCharacteristic extends Characteristic{
 	private int ranking = 0;
 	private double usageRate = 0;
@@ -35,16 +38,8 @@ public class PokemonCharacteristic extends Characteristic{
 		return ranking;
 	}
 
-	public void setRanking(int ranking) {
-		this.ranking = ranking;
-	}
-
 	public double getUsageRate() {
 		return usageRate;
-	}
-
-	public void setUsageRate(double usageRate) {
-		this.usageRate = usageRate;
 	}
 
 	public String getName() {
@@ -59,8 +54,7 @@ public class PokemonCharacteristic extends Characteristic{
 		return sequenceNumber;
 	}
 
-	public void setSequenceNumber(int sequenceNumber) {
-		this.sequenceNumber = sequenceNumber;
+	public float[] getRevision(){
+		return Characteristic.CHARACTERRISTIC_TABLE[Characteristic.convertCharacteristicNameToNo(name)];
 	}
-
 }

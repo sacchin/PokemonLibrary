@@ -18,8 +18,9 @@ public class OnClickIndividualPokemon implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		IndividualPBAPokemon p = fragment.getIndividualPBAPokemon(index);
-        fragment.setMainView(p);
-        fragment.setIndex(index);
-        fragment.setTrend();
+		fragment.startDetailActivity(p);
+//        fragment.setMainView(p);
+//        fragment.setIndex(index);
+//        fragment.setTrend();
 	}
 }

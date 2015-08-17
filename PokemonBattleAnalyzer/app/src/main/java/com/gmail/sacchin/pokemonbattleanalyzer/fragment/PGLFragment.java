@@ -32,7 +32,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class PGLFragment extends Fragment {
+public abstract class PGLFragment extends Fragment {
     protected PartyDatabaseHelper databaseHelper = null;
 //    private ArrayList<String> skills = null;
 //    private ArrayList<String> items = null;
@@ -48,11 +48,11 @@ public class PGLFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static PGLFragment newInstance(int sectionNumber) {
-        PGLFragment fragment = new PGLFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+//        PGLFragment fragment = new PGLFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//        fragment.setArguments(args);
+        return null;
     }
     public PGLFragment(){}
 
@@ -98,7 +98,8 @@ public class PGLFragment extends Fragment {
         party.getMember().get(index).setTrend(trend);
     }
 
-    public void setTrend(){}
+    public abstract void finishAllDownload();
+    public abstract void setTrend();
 
     @Override
     public void onStart() {

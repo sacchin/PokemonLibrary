@@ -3,6 +3,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromList;
 
 import java.io.IOException;
@@ -72,20 +74,17 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
         initPartyList(rootView);
 
         databaseHelper = new PartyDatabaseHelper(getActivity());
-        Button save = (Button) rootView.findViewById(R.id.back);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-        Button next = (Button) rootView.findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.first_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((SelectActivity)getActivity()).startToolActivity();
             }
         });
+
+
+
         return rootView;
     }
 
@@ -93,7 +92,6 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
     public void onResume() {
         super.onResume();
         createPartyList();
-        //determineOpponent();
     }
 
     private void initPartyList(View rootView) {
@@ -115,6 +113,7 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
 
     private void createPartyList() {
         try {
+            resetParty();
             if (party != null) {
                 for (int i = 0; i < party.getMember().size(); i++) {
                     IndividualPBAPokemon p = party.getMember().get(i);
@@ -174,4 +173,14 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
     public void removePokemonFromList(PBAPokemon pokemon) {
 
     }
+
+    @Override
+    public void setTrend(){
+    }
+    @Override
+    public void finishAllDownload() {
+        determineOpponent();
+
+    }
+
 }

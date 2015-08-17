@@ -1,7 +1,5 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.entity;
 
-import android.util.Log;
-
 import com.gmail.sacchin.pokemonlibrary.entity.*;
 
 import java.util.ArrayList;
@@ -97,31 +95,5 @@ public class PBAPokemon extends Pokemon{
             scaleMap.put(type, temp);
         }
         return scaleMap;
-    }
-
-
-    @Override
-    public float getAttackRevision() {
-        return 0;
-    }
-
-    @Override
-    public float getDeffenceRevision() {
-        return 0;
-    }
-
-    @Override
-    public float getSpecialAttackRevision() {
-        return 0;
-    }
-
-    @Override
-    public float getSpecialDeffenceRevision() {
-        return 0;
-    }
-
-    @Override
-    public float getSpeedRevision() {
-        return 0;
     }
 }
