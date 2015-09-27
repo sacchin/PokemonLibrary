@@ -1,4 +1,8 @@
-package com.gmail.sacchin.pokemonbattleanalyzer;
+package com.gmail.sacchin.pokemonbattleanalyzer.activity;
+
+import com.gmail.sacchin.pokemonbattleanalyzer.R;
+import com.gmail.sacchin.pokemonbattleanalyzer.activity.DetailActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.fragment.ToolFragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -7,22 +11,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.fragment.SelectFragment;
-
-public class SelectActivity extends AppCompatActivity {
+public class ToolActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+		getWindow().setExitTransition(new Explode());
+
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-		transaction.add(R.id.FragmentContainer, SelectFragment.newInstance(0));
-		transaction.commit();
+        transaction.add(R.id.FragmentContainer, ToolFragment.newInstance(0));
+        transaction.commit();
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		toolbar.setTitle("Pokemon Battle Tool");
@@ -42,11 +49,6 @@ public class SelectActivity extends AppCompatActivity {
         super.onStop();
 	}
 
-	public void startToolActivity() {
-		Intent intent = new Intent(SelectActivity.this, ToolActivity.class);
-		startActivityForResult(intent, 1);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -60,6 +62,8 @@ public class SelectActivity extends AppCompatActivity {
 		boolean result = true;
 		switch (id) {
 			case R.id.action_settings:
+				Intent intent = new Intent(this, DetailActivity.class);
+				startActivity(intent);
 				break;
 			case android.R.id.home:
 				finish();

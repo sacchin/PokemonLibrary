@@ -236,9 +236,8 @@ public class IndividualPBAPokemon extends PBAPokemon {
         return super.getSpeedValue(31, speedEffortValue);
     }
 
-    public int getSpeedValue(PokemonCharacteristic characteristic) {
-        int m = Characteristic.convertCharacteristicNameToNo(characteristic.getName());
-        float[] rate = Characteristic.CHARACTERRISTIC_TABLE[m];
+    public int getSpeedValue(int characteristicNo) {
+        float[] rate = Characteristic.CHARACTERRISTIC_TABLE[characteristicNo];
         if(rate != null && 4 < rate.length){
             return (int)(super.getHPValue(31, speedEffortValue) * rate[4]);
         }else{
@@ -273,5 +272,12 @@ public class IndividualPBAPokemon extends PBAPokemon {
             }
         }
         return resultMap;
+    }
+
+    public String toString(){
+        return "id:" + id + ", item:" + item + ", ability:" + ability +
+                ", skill1" + skillNo1 + ", skill2" + skillNo2 + ", skill3" + skillNo3 + ", skill4" + skillNo4 +
+                ", H:" + hpEffortValue + ", A:" + attackEffortValue + ", B:" + deffenceEffortValue +
+                ", C:" + specialAttackEffortValue + ", D:" + specialDeffenceEffortValue + ", S:" + speedEffortValue;
     }
 }

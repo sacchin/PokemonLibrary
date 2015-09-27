@@ -1,19 +1,19 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.EstimateOpponentElection;
-import com.gmail.sacchin.pokemonbattleanalyzer.SelectActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.logic.EstimateOpponentElection;
+import com.gmail.sacchin.pokemonbattleanalyzer.activity.SelectActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.insert.PartyInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
 import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
@@ -21,13 +21,10 @@ import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
-import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickCreateNewPartyButton;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickFromList;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +39,7 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
     private ImageView myParty[] = null;
     private ImageView opponentParty[] = null;
 
-    private List<IndividualPBAPokemon> selectedPokemon = null;
+    private Party choicedPokemon = null;
 
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -79,11 +76,15 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SelectActivity)getActivity()).startToolActivity();
+                if(choicedPokemon == null || choicedPokemon.getMember().size() != 3){
+                    Snackbar.make(estimate, "3体選択して下さい。", Snackbar.LENGTH_SHORT).show();
+                }else{
+                    choicedPokemon.setTime(new Timestamp(System.currentTimeMillis()));
+                    executorService.execute(new PartyInsertHandler(databaseHelper, choicedPokemon, false));
+                    ((SelectActivity)getActivity()).startToolActivity();
+                }
             }
         });
-
-
 
         return rootView;
     }
@@ -91,6 +92,7 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
     @Override
     public void onResume() {
         super.onResume();
+        resetParty(false);
         createPartyList();
     }
 
@@ -113,7 +115,6 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
 
     private void createPartyList() {
         try {
-            resetParty();
             if (party != null) {
                 for (int i = 0; i < party.getMember().size(); i++) {
                     IndividualPBAPokemon p = party.getMember().get(i);
@@ -138,21 +139,24 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
 
     private void determineOpponent(){
         estimate.removeAllViews();
-        IndividualPBAPokemon[] estimated = EstimateOpponentElection.estimate(mine, party);
-        for(IndividualPBAPokemon p : estimated){
-            addPokemonToOpponentParty(p);
-        }
+        IndividualPBAPokemon[][] estimated = EstimateOpponentElection.createAllPattern(mine, party);
+//        for(IndividualPBAPokemon[] p : estimated){
+//            addPokemonToOpponentParty(p);
+//        }
+        addPokemonToOpponentParty(estimated[0]);
     }
 
     @Override
     public void addPokemonToList(PBAPokemon pokemon) {
         IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
-        if (selectedPokemon == null) {
-            selectedPokemon = new ArrayList<>();
-        } else if (selectedPokemon.size() == 3) {
-            Toast.makeText(getActivity(), "すでに3体選択しています。", Toast.LENGTH_SHORT).show();
+        if (choicedPokemon == null) {
+            choicedPokemon = new Party();
+            choicedPokemon.setUserName("choiced");
+        } else if (choicedPokemon.getMember().size() == 3) {
+            Snackbar.make(estimate, "すでに3体選択しています。", Snackbar.LENGTH_SHORT).show();
+            return;
         }
-        selectedPokemon.add(ip);
+        choicedPokemon.getMember().add(ip);
 
         Bitmap temp = Util.createImage(pokemon, 120f, getResources());
         ImageView localView = new ImageView(getActivity());
@@ -160,13 +164,27 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
         selected.addView(localView);
     }
 
-    public void addPokemonToOpponentParty(PBAPokemon pokemon) {
-        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+    public void addPokemonToOpponentParty(final PBAPokemon[] pokemons) {
+        LinearLayout l = new LinearLayout(getActivity());
+        l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        l.setOrientation(LinearLayout.HORIZONTAL);
+//        l.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, pokemons[2].getJname(), Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
 
-        Bitmap temp = Util.createImage(pokemon, 120f, getResources());
-        ImageView localView = new ImageView(getActivity());
-        localView.setImageBitmap(temp);
-        estimate.addView(localView);
+        for(PBAPokemon p : pokemons){
+            IndividualPBAPokemon ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+
+            Bitmap temp = Util.createImage(p, 120f, getResources());
+            ImageView localView = new ImageView(getActivity());
+            localView.setImageBitmap(temp);
+
+            l.addView(localView);
+        }
+        estimate.addView(l);
     }
 
     @Override
@@ -180,7 +198,6 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
     @Override
     public void finishAllDownload() {
         determineOpponent();
-
     }
 
 }

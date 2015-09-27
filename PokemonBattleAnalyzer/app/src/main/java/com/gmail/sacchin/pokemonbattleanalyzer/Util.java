@@ -450,5 +450,14 @@ public class Util {
         image = Bitmap.createBitmap(image, 0, 0, image.getWidth(),image.getHeight(), matrix, true);
         return image;
     }
+
+	public static Bitmap createImage(int resourceId, float scale, Resources resource){
+		Bitmap image = BitmapFactory.decodeResource(resource, resourceId);
+		Matrix matrix = new Matrix();
+		matrix.postScale(scale / (float)image.getWidth(), scale / (float)image.getHeight());
+		image = Bitmap.createBitmap(image, 0, 0, image.getWidth(),image.getHeight(), matrix, true);
+		return image;
+	}
+
 }
 

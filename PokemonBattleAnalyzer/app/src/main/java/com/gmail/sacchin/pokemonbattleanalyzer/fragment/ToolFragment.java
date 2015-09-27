@@ -1,38 +1,41 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.DetailActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.BattleUtil;
+import com.gmail.sacchin.pokemonbattleanalyzer.activity.DetailActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.logic.BattleCalculator;
+import com.gmail.sacchin.pokemonbattleanalyzer.logic.BattleCalculator.RiskDegree;
+import com.gmail.sacchin.pokemonbattleanalyzer.logic.EstimateOpponentElection;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
-import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
+import com.gmail.sacchin.pokemonbattleanalyzer.entity.Party;
+import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickChoicedPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.listener.OnClickIndividualPokemon;
-import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
-import java.util.TreeMap;
+import java.io.IOException;
 
 public class ToolFragment extends PGLFragment {
-//    private ArrayList<String> skills = null;
-//    private ArrayList<String> items = null;
     private int index = 0;
 
-    private LinearLayout mainView = null;
     private LinearLayout partyLayout = null;
+    private LinearLayout choicedLayout = null;
     private TableLayout tl = null;
+
+    private Party choiced = null;
 
     /**
      * The fragment argument representing the section number for this
@@ -54,17 +57,26 @@ public class ToolFragment extends PGLFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_tool, container, false);
-        mainView = (LinearLayout)rootView.findViewById(R.id.mainview);
         tl = (TableLayout) rootView.findViewById(R.id.status);
         partyLayout = (LinearLayout)rootView.findViewById(R.id.party);
+        choicedLayout = (LinearLayout)rootView.findViewById(R.id.choiced);
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        resetParty();
+        resetParty(true);
+        resetMyParty();
         createPartyList();
+    }
+
+    protected void resetMyParty() {
+        try {
+            choiced = databaseHelper.selectMyChoicedParty();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createPartyList() {
@@ -78,16 +90,39 @@ public class ToolFragment extends PGLFragment {
         if(party != null){
             for (int i = 0; i < party.getMember().size(); i++) {
                 IndividualPBAPokemon p = party.getMember().get(i);
-                Bitmap image = Util.createImage(p, 150f, getResources());
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setImageBitmap(image);
-                imageView.setOnClickListener(new OnClickIndividualPokemon(this, i));
-                partyLayout.addView(imageView);
-                if(i == index){
-                    setMainView(p);
-                }
+                FrameLayout frame = createFrameLayout(p, 210f);
+                frame.setOnClickListener(new OnClickIndividualPokemon(this, i, (ImageView)frame.getChildAt(0)));
+                partyLayout.addView(frame);
             }
         }
+
+        if(choicedLayout == null){
+            Log.e("choicedLayout", "null!");
+            return;
+        }else{
+            choicedLayout.removeAllViews();
+        }
+
+        if(choiced != null){
+            for (int i = 0; i < choiced.getMember().size(); i++) {
+                IndividualPBAPokemon p = choiced.getMember().get(i);
+                FrameLayout frame = createFrameLayout(p, 280f);
+                frame.setOnClickListener(new OnClickChoicedPokemon(this, i));
+                choicedLayout.addView(frame);
+            }
+        }
+    }
+
+    public FrameLayout createFrameLayout(PBAPokemon p, float size){
+        FrameLayout fl = new FrameLayout(getActivity());
+
+        Bitmap temp = Util.createImage(p, size, getResources());
+        ImageView localView = new ImageView(getActivity());
+        localView.setImageBitmap(temp);
+        localView.setTransitionName("image");
+        fl.addView(localView);
+
+        return fl;
     }
 
     public IndividualPBAPokemon getIndividualPBAPokemon(int index){
@@ -103,149 +138,44 @@ public class ToolFragment extends PGLFragment {
         this.index = index;
     }
 
-    public void setMainView(IndividualPBAPokemon p) {
-        mainView.removeAllViews();
-
-        createPBAPokemonStatus(p);
-        if(p.getMega() != null){
-            for(Pokemon mega : p.getMega()){
-                createPBAPokemonStatus((PBAPokemon)mega);
-            }
-        }
-    }
-
-    private void createPBAPokemonStatus(PBAPokemon p) {
-        Log.e("createPBAPokemonStatus", p.getJname());
-        LinearLayout sss = new LinearLayout(getActivity());
-        sss.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        sss.setOrientation(LinearLayout.HORIZONTAL);
-
-        Bitmap temp = Util.createImage(p, 150f, getResources());
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView.setImageBitmap(temp);
-        sss.addView(imageView);
-
-        TableLayout status = new TableLayout(getActivity());
-        status.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-        status.setStretchAllColumns(true);
-
-        String headers[] = {"H", "A", "B", "C", "D", "S"};
-        status.addView(createTableRow(headers, 0, Color.parseColor("#EF5350"), Color.WHITE));
-
-        String statuses[] = {String.valueOf(p.getH()), String.valueOf(p.getA()), String.valueOf(p.getB()),
-                String.valueOf(p.getC()), String.valueOf(p.getD()), String.valueOf(p.getS())};
-        status.addView(createTableRow(statuses, 0, Color.TRANSPARENT, Color.BLACK));
-
-        String characteristics[] = {p.getAbility1(), p.getAbility2(), p.getAbilityd()};
-        status.addView(createTableRow(characteristics, 2, Color.TRANSPARENT, Color.BLACK));
-
-        sss.addView(status);
-
-        mainView.addView(sss);
-    }
-
-    public TableRow createTableRow(String[] texts, int layoutSpan, int bgColor, int txtColor){
-        TableRow row = new TableRow(getActivity());
-        TableRow.LayoutParams p = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        if(0 < layoutSpan){
-            p.span = layoutSpan;
-        }
-        row.setLayoutParams(p);
-        for(String temp : texts){
-            if(layoutSpan <= 0){
-                row.addView(createTextView(temp, bgColor, txtColor));
-            }else{
-                row.addView(createTextView(temp, bgColor, txtColor), p);
-            }
-        }
-        return row;
-    }
-
-    public TextView createTextView(String text, int bgColor, int txtColor){
-        TextView tv = new TextView(getActivity());
-        tv.setText(text);
-        tv.setBackgroundColor(bgColor);
-        tv.setTextColor(txtColor);
-        return tv;
-    }
-
+    @Override
     public void setTrend(){
-        if(tl == null){
-            Log.e("setTrend","tl == null!");
-            return;
-        }
-        tl.removeAllViews();
 
-        String skillHeaders[] = {"技", "所持率"};
-        tl.addView(createTableRow(skillHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
+    }
 
-        RankingPokemonTrend trend = party.getMember().get(index).getTrend();
-        if(trend == null){
-            String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
-        }else{
-            TreeMap<String, String[]> skill = trend.createSkillMap();
-            for(String key : skill.keySet()){
-                String[] temp = skill.get(key).clone();
-                temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
-            }
-        }
-
-        String characteristicHeaders[] = {"性格", "所持率"};
-        tl.addView(createTableRow(characteristicHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
-
-        trend = party.getMember().get(index).getTrend();
-        if(trend == null){
-            String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
-        }else{
-            TreeMap<String, String[]> characteristic = trend.createCharacteristicMap();
-            for(String key : characteristic.keySet()){
-                String[] temp = characteristic.get(key).clone();
-                temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
-            }
-        }
-
-        String itemHeaders[] = {"持ち物", "所持率"};
-        tl.addView(createTableRow(itemHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
-
-        trend = party.getMember().get(index).getTrend();
-        if(trend == null){
-            String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
-        }else{
-            TreeMap<String, String[]> item = trend.createItemMap();
-            for(String key : item.keySet()){
-                String[] temp = item.get(key).clone();
-                temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
-            }
-        }
-
-        String abilityHeaders[] = {"特性", "所持率"};
-        tl.addView(createTableRow(abilityHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
-
-        trend = party.getMember().get(index).getTrend();
-        if(trend == null){
-            String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
-        }else{
-            TreeMap<String, String[]> ability = trend.createAbilityMap();
-            for(String key : ability.keySet()){
-                String[] temp = ability.get(key).clone();
-                temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
+    public void setAlert(int index){
+        IndividualPBAPokemon tapped = choiced.getMember().get(index);
+        if(party != null){
+            for (int i = 0; i < party.getMember().size(); i++) {
+                IndividualPBAPokemon p = party.getMember().get(i);
+                FrameLayout frame = (FrameLayout)partyLayout.getChildAt(i);
+                if(1 < frame.getChildCount()){
+                    frame.removeViewAt(frame.getChildCount() - 1);
+                }
+                Bitmap over;
+                ImageView overView = new ImageView(getActivity());
+                switch (BattleCalculator.getAttackOrder(tapped, p)){
+                    case SAFE:
+                        over = Util.createImage(R.drawable.safe, 210f, getResources());
+                        break;
+                    case FATAL:
+                        over = Util.createImage(R.drawable.caution, 210f, getResources());
+                        break;
+                    default:
+                        over = Util.createImage(R.drawable.alert, 210f, getResources());
+                        break;
+                }
+                overView.setImageBitmap(over);
+                frame.addView(overView);
             }
         }
     }
 
-    public void startDetailActivity(IndividualPBAPokemon pokemon){
+    public void startDetailActivity(IndividualPBAPokemon pokemon, ImageView from){
         Intent intent = new Intent(getActivity(), DetailActivity.class);
         intent.putExtra("id", pokemon.getId());
-        startActivity(intent);
+        startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(getActivity(), from, "image").toBundle());
     }
 
     @Override

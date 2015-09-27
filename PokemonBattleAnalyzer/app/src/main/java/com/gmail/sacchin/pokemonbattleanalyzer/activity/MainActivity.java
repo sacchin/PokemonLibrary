@@ -1,9 +1,8 @@
-package com.gmail.sacchin.pokemonbattleanalyzer;
+package com.gmail.sacchin.pokemonbattleanalyzer.activity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -18,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
+import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.fragment.MainFragment;
 import com.gmail.sacchin.pokemonbattleanalyzer.http.PokemonRankingDownloader;
@@ -27,8 +28,12 @@ import com.gmail.sacchin.pokemonbattleanalyzer.insert.SkillInsertHandler;
 import com.gmail.sacchin.pokemonbattleanalyzer.insert.ItemInsertHandler;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int TOOL_ACTIVITY_CODE = 0;
+    private static final int SELECT_ACTIVITY_CODE = 0;
     private static final int AFFINITY_ACTIVITY_CODE = 1;
+    private static final int EDIT_ACTIVITY_CODE = 0;
+
+    public boolean buttonEnable = true;
+    private SharedPreferences serviceStatePreferences;
 
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        serviceStatePreferences = getSharedPreferences("pokemon", MODE_PRIVATE);
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -55,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(
                 new PokemonRankingDownloader(databaseHelper));
         firstLaunch();
+        buttonEnable = serviceStatePreferences.getBoolean("enable", true);
     }
 
     private void firstLaunch() {
-        SharedPreferences serviceStatePreferences = getSharedPreferences("pokemon", MODE_PRIVATE);
         if(serviceStatePreferences.getBoolean("isFirst", true)){
             executorService.execute(
                     new PokemonInsertHandler(databaseHelper));
@@ -91,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
         boolean result = true;
         switch (id) {
             case R.id.action_settings:
+                SharedPreferences serviceStatePreferences = getSharedPreferences("pokemon", MODE_PRIVATE);
+                Editor editor = serviceStatePreferences.edit();
+                editor.putBoolean("enable", !serviceStatePreferences.getBoolean("enable", true));
+                editor.apply();
+                break;
+            case R.id.action_modify:
+                startEditActivity();
                 break;
             case android.R.id.home:
                 finish();
@@ -102,9 +116,14 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    public void startToolActivity() {
+    public void startEditActivity() {
+        Intent intent = new Intent(MainActivity.this, EditActivity.class);
+        startActivityForResult(intent, EDIT_ACTIVITY_CODE);
+    }
+
+    public void startSelectActivity() {
         Intent intent = new Intent(MainActivity.this, SelectActivity.class);
-        startActivityForResult(intent, TOOL_ACTIVITY_CODE);
+        startActivityForResult(intent, SELECT_ACTIVITY_CODE);
     }
 
     public void startAffinityActivity(PBAPokemon selected) {
@@ -119,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == TOOL_ACTIVITY_CODE) {
+        if (requestCode == SELECT_ACTIVITY_CODE) {
 
 //        }else if (requestCode == AFFINITY_ACTIVITY_CODE) {
 //            partyLayout.removeAllViews();

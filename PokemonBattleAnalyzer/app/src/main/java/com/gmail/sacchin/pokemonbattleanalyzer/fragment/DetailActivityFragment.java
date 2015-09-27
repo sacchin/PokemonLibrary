@@ -1,4 +1,4 @@
-package com.gmail.sacchin.pokemonbattleanalyzer;
+package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,10 +14,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.gmail.sacchin.pokemonbattleanalyzer.activity.DetailActivity;
+import com.gmail.sacchin.pokemonbattleanalyzer.R;
+import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.PBAPokemon;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.pgl.RankingPokemonTrend;
-import com.gmail.sacchin.pokemonbattleanalyzer.fragment.PGLFragment;
 import com.gmail.sacchin.pokemonlibrary.entity.Pokemon;
 
 import java.util.TreeMap;
@@ -25,7 +27,10 @@ import java.util.TreeMap;
 public class DetailActivityFragment extends PGLFragment {
 
     private long id;
-    private TableLayout tl = null;
+    private TableLayout skilltl = null;
+    private TableLayout characteristictl = null;
+    private TableLayout itemtl = null;
+    private TableLayout abilitytl = null;
     private ImageView iv;
     private LinearLayout mainView = null;
     private CollapsingToolbarLayout toolbar = null;
@@ -39,8 +44,12 @@ public class DetailActivityFragment extends PGLFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         iv = (ImageView)view.findViewById(R.id.image);
-        tl = (TableLayout)view.findViewById(R.id.table);
-        mainView = (LinearLayout)view.findViewById(R.id.mainview);
+        skilltl = (TableLayout)view.findViewById(R.id.skilltable);
+        characteristictl = (TableLayout)view.findViewById(R.id.characteristictable);
+        itemtl = (TableLayout)view.findViewById(R.id.itemtable);
+        abilitytl = (TableLayout)view.findViewById(R.id.abilitytable);
+
+        mainView = (LinearLayout)view.findViewById(R.id.statusview);
         toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
         toolbar.setCollapsedTitleTextColor(Color.WHITE);
 
@@ -59,14 +68,21 @@ public class DetailActivityFragment extends PGLFragment {
     @Override
     public void onResume() {
         super.onResume();
-        resetParty();
+        resetParty(true);
+        if(party != null && party.getMember() != null){
+            for(IndividualPBAPokemon p : party.getMember()){
+                if(p.getId() == this.id){
+                    iv.setImageResource(p.getResourceId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void finishAllDownload() {
         for(IndividualPBAPokemon p : party.getMember()){
             if(p.getId() == this.id){
-                iv.setImageResource(p.getResourceId());
                 setTrend(p);
                 setMainView(p);
                 toolbar.setTitle(p.getJname());
@@ -79,76 +95,62 @@ public class DetailActivityFragment extends PGLFragment {
     public void setTrend() {}
 
     public void setTrend(IndividualPBAPokemon p) {
-        if(tl == null){
-            Log.e("setTrend", "tl == null!");
-            return;
-        }
-        tl.removeAllViews();
+        skilltl.removeAllViews();
+        characteristictl.removeAllViews();
+        itemtl.removeAllViews();
+        abilitytl.removeAllViews();
 
-        TableLayout.LayoutParams lp = new TableLayout.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        tl.setLayoutParams(lp);
-        Log.v("setTrend", String.valueOf(tl.getLayoutParams().width));
-
-        String skillHeaders[] = {"技", "所持率"};
-        tl.addView(createTableRow(skillHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
         RankingPokemonTrend trend = p.getTrend();
         if(trend == null){
             String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
+            skilltl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK, 12));
         }else{
             TreeMap<String, String[]> skill = trend.createSkillMap();
             for(String key : skill.keySet()){
                 String[] temp = skill.get(key).clone();
                 temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
+                skilltl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK, 12));
             }
         }
 
-        String characteristicHeaders[] = {"性格", "所持率"};
-        tl.addView(createTableRow(characteristicHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
         if(trend == null){
             String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
+            characteristictl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK, 12));
         }else{
             TreeMap<String, String[]> characteristic = trend.createCharacteristicMap();
             for(String key : characteristic.keySet()){
                 String[] temp = characteristic.get(key).clone();
                 temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
+                characteristictl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK, 12));
             }
         }
 
-        String itemHeaders[] = {"持ち物", "所持率"};
-        tl.addView(createTableRow(itemHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
         if(trend == null){
             String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
+            itemtl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK, 12));
         }else{
             TreeMap<String, String[]> item = trend.createItemMap();
             for(String key : item.keySet()){
                 String[] temp = item.get(key).clone();
                 temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
+                itemtl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK, 12));
             }
         }
 
-        String abilityHeaders[] = {"特性", "所持率"};
-        tl.addView(createTableRow(abilityHeaders, 0, Color.parseColor("#EF5350"), Color.WHITE));
         if(trend == null){
             String nullText[] = {"-", "-"};
-            tl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK));
+            abilitytl.addView(createTableRow(nullText, 0, Color.TRANSPARENT, Color.BLACK, 12));
         }else{
             TreeMap<String, String[]> ability = trend.createAbilityMap();
             for(String key : ability.keySet()){
                 String[] temp = ability.get(key).clone();
                 temp[1] = temp[1] + "%";
-                tl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK));
+                abilitytl.addView(createTableRow(temp, 0, Color.TRANSPARENT, Color.BLACK, 12));
             }
         }
     }
 
-    public TableRow createTableRow(String[] texts, int layoutSpan, int bgColor, int txtColor){
+    public TableRow createTableRow(String[] texts, int layoutSpan, int bgColor, int txtColor, int txtSize){
         TableRow row = new TableRow(getActivity());
         TableRow.LayoutParams p = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         if(0 < layoutSpan){
@@ -157,19 +159,20 @@ public class DetailActivityFragment extends PGLFragment {
         row.setLayoutParams(p);
         for(String temp : texts){
             if(layoutSpan <= 0){
-                row.addView(createTextView(temp, bgColor, txtColor));
+                row.addView(createTextView(temp, bgColor, txtColor, txtSize));
             }else{
-                row.addView(createTextView(temp, bgColor, txtColor), p);
+                row.addView(createTextView(temp, bgColor, txtColor, txtSize), p);
             }
         }
         return row;
     }
 
-    public TextView createTextView(String text, int bgColor, int txtColor){
+    public TextView createTextView(String text, int bgColor, int txtColor, int txtSize){
         TextView tv = new TextView(getActivity());
         tv.setText(text);
         tv.setBackgroundColor(bgColor);
         tv.setTextColor(txtColor);
+        tv.setTextSize(txtSize);
         TableRow.LayoutParams p = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(p);
         return tv;
@@ -203,14 +206,14 @@ public class DetailActivityFragment extends PGLFragment {
         status.setStretchAllColumns(true);
 
         String headers[] = {"H", "A", "B", "C", "D", "S"};
-        status.addView(createTableRow(headers, 0, Color.parseColor("#EF5350"), Color.WHITE));
+        status.addView(createTableRow(headers, 0, Color.TRANSPARENT, Color.GRAY, 12));
 
         String statuses[] = {String.valueOf(p.getH()), String.valueOf(p.getA()), String.valueOf(p.getB()),
                 String.valueOf(p.getC()), String.valueOf(p.getD()), String.valueOf(p.getS())};
-        status.addView(createTableRow(statuses, 0, Color.TRANSPARENT, Color.BLACK));
+        status.addView(createTableRow(statuses, 0, Color.TRANSPARENT, Color.BLACK, 18));
 
         String characteristics[] = {p.getAbility1(), p.getAbility2(), p.getAbilityd()};
-        status.addView(createTableRow(characteristics, 2, Color.TRANSPARENT, Color.BLACK));
+        status.addView(createTableRow(characteristics, 2, Color.TRANSPARENT, Color.BLACK, 12));
 
         sss.addView(status);
 
@@ -220,9 +223,5 @@ public class DetailActivityFragment extends PGLFragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(tl != null){
-            tl.removeAllViews();
-            tl = null;
-        }
     }
 }

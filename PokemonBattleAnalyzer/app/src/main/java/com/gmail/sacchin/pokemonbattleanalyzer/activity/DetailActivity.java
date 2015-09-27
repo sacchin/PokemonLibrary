@@ -1,4 +1,4 @@
-package com.gmail.sacchin.pokemonbattleanalyzer;
+package com.gmail.sacchin.pokemonbattleanalyzer.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.gmail.sacchin.pokemonbattleanalyzer.R;
 
 public class DetailActivity extends AppCompatActivity {
 

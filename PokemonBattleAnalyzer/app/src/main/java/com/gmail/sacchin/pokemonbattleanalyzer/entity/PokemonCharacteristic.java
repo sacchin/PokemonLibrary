@@ -13,6 +13,33 @@ public class PokemonCharacteristic extends Characteristic{
 	private double usageRate = 0;
 	private String name = "";
 	private int sequenceNumber = 0;
+	public static final String[] CHARACTERISTIC = {
+			"さみしがり",
+			"いじっぱり",
+			"やんちゃ",
+			"ゆうかん",
+			"ずぶとい",
+			"わんぱく",
+			"のうてんき",
+			"のんき",
+			"ひかえめ",
+			"おっとり",
+			"うっかりや",
+			"れいせい",
+			"おだやか",
+			"おとなしい",
+			"しんちょう",
+			"なまいき",
+			"おくびょう",
+			"せっかち",
+			"ようき",
+			"むじゃき",
+			"てれや",
+			"がんばりや",
+			"すなお",
+			"きまぐれ",
+			"まじめ"
+	};
 
 	public static PokemonCharacteristic createCharacteristic(JSONObject seikaku){
 		try {
