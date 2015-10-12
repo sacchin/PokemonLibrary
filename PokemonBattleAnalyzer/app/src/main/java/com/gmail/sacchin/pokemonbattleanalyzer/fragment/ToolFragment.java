@@ -3,6 +3,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +13,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
-import com.gmail.sacchin.pokemonbattleanalyzer.BattleUtil;
 import com.gmail.sacchin.pokemonbattleanalyzer.activity.DetailActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.logic.BattleCalculator;
-import com.gmail.sacchin.pokemonbattleanalyzer.logic.BattleCalculator.RiskDegree;
-import com.gmail.sacchin.pokemonbattleanalyzer.logic.EstimateOpponentElection;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
@@ -33,7 +33,8 @@ public class ToolFragment extends PGLFragment {
 
     private LinearLayout partyLayout = null;
     private LinearLayout choicedLayout = null;
-    private TableLayout tl = null;
+    private TableLayout status = null;
+    private ImageView selected = null;
 
     private Party choiced = null;
 
@@ -57,9 +58,10 @@ public class ToolFragment extends PGLFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_tool, container, false);
-        tl = (TableLayout) rootView.findViewById(R.id.status);
+        status = (TableLayout) rootView.findViewById(R.id.status);
         partyLayout = (LinearLayout)rootView.findViewById(R.id.party);
         choicedLayout = (LinearLayout)rootView.findViewById(R.id.choiced);
+        selected = (ImageView)rootView.findViewById(R.id.selected_image);
         return rootView;
     }
 
@@ -152,10 +154,13 @@ public class ToolFragment extends PGLFragment {
                 if(1 < frame.getChildCount()){
                     frame.removeViewAt(frame.getChildCount() - 1);
                 }
-                Bitmap over;
+                Bitmap over = null;
                 ImageView overView = new ImageView(getActivity());
                 switch (BattleCalculator.getAttackOrder(tapped, p)){
                     case SAFE:
+                        //set no frame
+                        break;
+                    case LGTM:
                         over = Util.createImage(R.drawable.safe, 210f, getResources());
                         break;
                     case FATAL:
@@ -165,10 +170,92 @@ public class ToolFragment extends PGLFragment {
                         over = Util.createImage(R.drawable.alert, 210f, getResources());
                         break;
                 }
-                overView.setImageBitmap(over);
+                if(over != null){
+                    overView.setImageBitmap(over);
+                }
                 frame.addView(overView);
             }
         }
+    }
+
+    public TableRow createTableRow(String[] texts, int layoutSpan, int bgColor, int txtColor, int txtSize){
+        TableRow row = new TableRow(getActivity());
+        TableRow.LayoutParams p = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        if(0 < layoutSpan){
+            p.span = layoutSpan;
+        }
+        row.setLayoutParams(p);
+        for(String temp : texts){
+            if(layoutSpan <= 0){
+                row.addView(createTextView(temp, bgColor, txtColor, txtSize));
+            }else{
+                row.addView(createTextView(temp, bgColor, txtColor, txtSize), p);
+            }
+        }
+        return row;
+    }
+
+    public TextView createTextView(String text, int bgColor, int txtColor, int txtSize){
+        TextView tv = new TextView(getActivity());
+        tv.setText(text);
+        tv.setBackgroundColor(bgColor);
+        tv.setTextColor(txtColor);
+        tv.setTextSize(txtSize);
+        TableRow.LayoutParams p = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        tv.setLayoutParams(p);
+        return tv;
+    }
+
+    public void setMainView(int index){
+        IndividualPBAPokemon tapped = choiced.getMember().get(index);
+        selected.setImageBitmap(Util.createImage(tapped.getResourceId(), 210f, getResources()));
+
+        String headers[] = {"", "H", "A", "B", "C", "D", "S"};
+        status.addView(createTableRow(headers, 0, Color.TRANSPARENT, Color.GRAY, 12));
+
+        String base[] = {"種族", String.valueOf(tapped.getH()), String.valueOf(tapped.getA()), String.valueOf(tapped.getB()),
+                String.valueOf(tapped.getC()), String.valueOf(tapped.getD()), String.valueOf(tapped.getS())};
+        status.addView(createTableRow(base, 0, Color.TRANSPARENT, Color.BLACK, 18));
+
+        String effort[] = {"努力", String.valueOf(tapped.getHpEffortValue()), String.valueOf(tapped.getAttackEffortValue()),
+                String.valueOf(tapped.getDeffenceEffortValue()), String.valueOf(tapped.getSpecialAttackEffortValue()),
+                String.valueOf(tapped.getSpecialDeffenceEffortValue()), String.valueOf(tapped.getSpeedEffortValue())};
+        status.addView(createTableRow(effort, 0, Color.TRANSPARENT, Color.BLACK, 18));
+
+        String actual[] = {"実数", String.valueOf(tapped.getHPValue()), String.valueOf(tapped.getAttackValue()), String.valueOf(tapped.getDeffenceValue()),
+                String.valueOf(tapped.getSpecialAttackValue()), String.valueOf(tapped.getSpecialDeffenceValue()), String.valueOf(tapped.getSpeedValue())};
+        status.addView(createTableRow(actual, 0, Color.TRANSPARENT, Color.BLACK, 18));
+
+
+//        if(party != null){
+//            for (int i = 0; i < party.getMember().size(); i++) {
+//                IndividualPBAPokemon p = party.getMember().get(i);
+//                FrameLayout frame = (FrameLayout)partyLayout.getChildAt(i);
+//                if(1 < frame.getChildCount()){
+//                    frame.removeViewAt(frame.getChildCount() - 1);
+//                }
+//                Bitmap over = null;
+//                ImageView overView = new ImageView(getActivity());
+//                switch (BattleCalculator.getAttackOrder(tapped, p)){
+//                    case SAFE:
+//                        //set no frame
+//                        break;
+//                    case LGTM:
+//                        over = Util.createImage(R.drawable.safe, 210f, getResources());
+//                        break;
+//                    case FATAL:
+//                        over = Util.createImage(R.drawable.caution, 210f, getResources());
+//                        break;
+//                    default:
+//                        over = Util.createImage(R.drawable.alert, 210f, getResources());
+//                        break;
+//                }
+//                if(over != null){
+//                    overView.setImageBitmap(over);
+//                }
+//                frame.addView(overView);
+//            }
+//        }
     }
 
     public void startDetailActivity(IndividualPBAPokemon pokemon, ImageView from){
@@ -181,9 +268,9 @@ public class ToolFragment extends PGLFragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(tl != null){
-            tl.removeAllViews();
-            tl = null;
+        if(status != null){
+            status.removeAllViews();
+            status = null;
         }
     }
 }

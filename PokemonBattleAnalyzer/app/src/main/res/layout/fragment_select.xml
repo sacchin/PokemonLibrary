@@ -164,11 +164,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="bottom|right"
             app:fabSize="normal"
-            android:src="@drawable/ic_launcher"
-            app:backgroundTint="#EF9A9A"
+            android:src="@drawable/monsterball"
+            app:backgroundTint="@color/accent"
             app:borderWidth="0dp"/>
     </android.support.design.widget.CoordinatorLayout>
 

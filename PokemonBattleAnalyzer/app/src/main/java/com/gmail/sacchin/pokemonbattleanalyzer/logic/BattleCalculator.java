@@ -43,18 +43,20 @@ public class BattleCalculator {
     }
 
     public static RiskDegree getAttackOrder(IndividualPBAPokemon mine, IndividualPBAPokemon opponent){
-        float rate = 0;
+        float secondRate = 0;
         RankingPokemonTrend trend = opponent.getTrend();
         if(trend != null){
             List<PokemonCharacteristic> opponentCharacteristic = trend.getCharacteristicList();
             for (PokemonCharacteristic pc : opponentCharacteristic) {
-                Log.v("getAttackOrder", mine.getCharacteristic());
-                IndividualPBAPokemon[] order = BattleUtil.getAttackOrder("おとなしい", mine, pc, opponent);
-                if(order[0] == mine){
-                    rate += pc.getUsageRate();
+                IndividualPBAPokemon[] order = BattleUtil.getAttackOrder(mine.getCharacteristic().toString(), mine, pc, opponent);
+                if(order[1] == mine){
+                    secondRate += pc.getUsageRate();
                 }
+//                Log.v(mine.getJname() + "(S:" + mine.getS() + ")",
+//                        mine.getCharacteristic().toString() + " vs " + opponent.getJname() +
+//                        "(S:" + opponent.getS() + ":" + (int)pc.getUsageRate() + "%)" + ":" + pc.getName());
             }
-            return getRiskDegree(rate);
+            return getRiskDegree(secondRate);
         }else{
             Log.e("getAttackOrder", "Trend is null!");
         }

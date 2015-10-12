@@ -148,7 +148,8 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
 
     @Override
     public void addPokemonToList(PBAPokemon pokemon) {
-        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+        IndividualPBAPokemon ip = (IndividualPBAPokemon)pokemon;
+        ip.setTime(new Timestamp(System.currentTimeMillis()));
         if (choicedPokemon == null) {
             choicedPokemon = new Party();
             choicedPokemon.setUserName("choiced");
@@ -176,7 +177,7 @@ public class SelectFragment extends PGLFragment implements AddToListInterface {
 //        });
 
         for(PBAPokemon p : pokemons){
-            IndividualPBAPokemon ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+            IndividualPBAPokemon ip = new IndividualPBAPokemon(p, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "", "");
 
             Bitmap temp = Util.createImage(p, 120f, getResources());
             ImageView localView = new ImageView(getActivity());

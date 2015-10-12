@@ -39,10 +39,17 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        boolean result = true;
+        switch (id) {
+            case R.id.action_settings:
+                break;
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+        return result;
     }
 }

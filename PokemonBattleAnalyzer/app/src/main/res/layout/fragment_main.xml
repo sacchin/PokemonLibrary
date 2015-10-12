@@ -51,8 +51,8 @@
             android:layout_marginRight="16dp"
             android:layout_gravity="bottom|right"
             app:fabSize="normal"
-            android:src="@drawable/ic_launcher"
-            app:backgroundTint="#EF9A9A"
+            android:src="@drawable/monsterball"
+            app:backgroundTint="@color/accent"
             app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,9 +49,9 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 					"c INTEGER, " +
 					"d INTEGER, " +
 					"s INTEGER, " +
-					"characteristic1 TEXT, " +
-					"characteristic2 TEXT, " +
-					"characteristicd TEXT, " +
+					"ability1 TEXT, " +
+					"ability2 TEXT, " +
+					"abilityd TEXT, " +
 					"type1 INTEGER, " +
 					"type2 INTEGER, " +
 					"weight REAL, " +
@@ -109,7 +105,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	public PartyDatabaseHelper(Context context) {
 		super(context, DB_FILE, null, 1);
 
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Field[] fields = PartyDatabaseHelper.class.getDeclaredFields();
 		for(Field f : fields){
 			if(f.getName().endsWith("_TABLE_NAME") &&
@@ -163,12 +159,12 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	synchronized public void insertPBAPokemonData(int no, String ｊname, String ename, int h, int a, int b, int c, int d, int s,
-			String characteristic1, String characteristic2, String characteristicd, int type1, int type2, double weight) throws IOException, SQLException {
-		insertPBAPokemonData(String.valueOf(no), ｊname, ename, h, a, b, c, d, s, characteristic1, characteristic2, characteristicd, type1, type2, weight);
+			String ability1, String ability2, String abilityd, int type1, int type2, double weight) throws IOException, SQLException {
+		insertPBAPokemonData(String.valueOf(no), ｊname, ename, h, a, b, c, d, s, ability1, ability2, abilityd, type1, type2, weight);
 	}
 
 	synchronized public void insertPBAPokemonData(String no, String ｊname, String ename, int h, int a, int b, int c, int d, int s,
-			String characteristic1, String characteristic2, String characteristicd, int type1, int type2, double weight) throws IOException, SQLException {
+			String ability1, String ability2, String abilityd, int type1, int type2, double weight) throws IOException, SQLException {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db.isReadOnly()){
 			throw new IOException("Cannot get writable access to DB.");
@@ -184,9 +180,9 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 			values.put("c", c);
 			values.put("d", d);
 			values.put("s", s);
-			values.put("characteristic1", characteristic1);
-			values.put("characteristic2", characteristic2);
-			values.put("characteristicd", characteristicd);
+			values.put("ability1", ability1);
+			values.put("ability2", ability2);
+			values.put("abilityd", abilityd);
 			values.put("type1", type1);
 			values.put("type2", type2);
 			values.put("weight", weight);
@@ -271,46 +267,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	synchronized public void insertPBAPokemonItemData(int PBAPokemonNo, int itemNo) throws IOException, SQLException {
-		if (PBAPokemonNo < 0 || itemNo < 0){
-			throw new NullPointerException("argument is null.");
-		}
-
-		SQLiteDatabase db = getWritableDatabase();
-		if (db.isReadOnly()){
-			throw new IOException("Cannot get writable access to DB.");
-		}
-		try {
-			ContentValues values = new ContentValues();
-			values.put("time", System.currentTimeMillis());
-			values.put("itemNo", itemNo);
-			values.put("pokemonNo", PBAPokemonNo);
-			db.insert(POKEMON_ITEM_TABLE_NAME, null, values );
-		}catch (IllegalStateException e) {
-			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);
-		}
-	}
-
-	synchronized public void insertPBAPokemonSkillData(int PBAPokemonNo, int skillNo) throws IOException, SQLException {
-		if (PBAPokemonNo < 0 || skillNo < 0){
-			throw new NullPointerException("argument is null.");
-		}
-
-		SQLiteDatabase db = getWritableDatabase();
-		if (db.isReadOnly()){
-			throw new IOException("Cannot get writable access to DB.");
-		}
-		try {
-			ContentValues values = new ContentValues();
-			values.put("time", System.currentTimeMillis());
-			values.put("skillNo", skillNo);
-			values.put("pokemonNo", PBAPokemonNo);
-			db.insert(POKEMON_INDIVIDUAL_TABLE_NAME, null, values );
-		}catch (IllegalStateException e) {
-			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);
-		}
-	}
-
 	synchronized public ArrayList<PBAPokemon> selectAllPBAPokemon() throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cur = db.query(POKEMON_MASTER_TABLE_NAME, null, null, null, null, null, "count desc, " + BaseColumns._ID + " desc", null);
@@ -321,7 +277,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				PBAPokemon p = createPBAPokemon(cur);
 				p.setRowId(cur.getInt(0));
 
-				Integer id = util.imageResource.get(String.valueOf(p.getNo()));
+				Integer id = util.pokemonImageResource.get(String.valueOf(p.getNo()));
 				if(id == null){
 					continue;
 				}
@@ -343,7 +299,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
                 PBAPokemon p = createPBAPokemon(cur);
                 p.setRowId(cur.getInt(0));
 
-                Integer id = util.imageResource.get(String.valueOf(p.getNo()));
+                Integer id = util.pokemonImageResource.get(String.valueOf(p.getNo()));
                 if(id != null){
                     p.setResourceId(id);
                 }
@@ -385,77 +341,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		return list;
 	}
 
-	synchronized public HashMap<String, Integer> selectIndividualPBAPokemonCount() throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor cur = db.rawQuery("select pokemonNo, count(*) from " + POKEMON_INDIVIDUAL_TABLE_NAME +
-				" group by pokemonNo", null);
-		try {
-			HashMap<String, Integer> result = new HashMap<String, Integer>();
-			while(cur.moveToNext()) {
-				int no = cur.getInt(0);
-				int count = cur.getInt(1);
-				result.put(String.valueOf(no), count);
-			}
-			return result;
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		}
-		cur.close();
-		return null;
-	}
-
-	synchronized public Map<String, Integer> selectIndividualPBAPokemonItemCount(int rowId) throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor cur = db.rawQuery("select item, count(*) from " + POKEMON_INDIVIDUAL_TABLE_NAME +
-				" where pokemonNo = " + rowId + " group by item", null);
-
-		try {
-			Map<String, Integer> result = new HashMap<>();
-			while(cur.moveToNext()) {
-				String item = cur.getString(0);
-				if(item != null && !item.isEmpty()){
-					int count = cur.getInt(1);
-					result.put(item, count);
-				}
-			}
-			result = new TreeMap<>(result);
-			return result;
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		}
-		cur.close();
-		return null;
-	}
-
-	synchronized public Map<String, Integer> selectIndividualPBAPokemonSkillCount(int rowId) throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor cur = db.rawQuery("select * from " + POKEMON_INDIVIDUAL_TABLE_NAME +
-                " where pokemonNo = " + rowId, null);
-
-		try {
-			Map<String, Integer> result = new HashMap<String, Integer>();
-			while(cur.moveToNext()) {
-				for (int i = 4; i < 8; i++) {
-					String skill = cur.getString(i);
-					if(skill != null && !skill.isEmpty()){
-						Integer count = result.get(skill);
-						if(count == null){
-							result.put(skill, 1);
-						}else{
-							result.put(skill, count + 1);
-						}
-					}
-				}
-			}
-			result = new TreeMap<String, Integer>(result);
-			return result;
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		}
-		cur.close();
-		return null;
-	}
-
 	synchronized public IndividualPBAPokemon selectIndividualPBAPokemonByID(long rowId) throws IOException {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor individualCur = db.query(POKEMON_INDIVIDUAL_TABLE_NAME, null, BaseColumns._ID + " = ?", new String[]{String.valueOf(rowId)}, null, null, null, null);
@@ -464,6 +349,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 				long id = individualCur.getLong(0);
 				Timestamp time = new Timestamp(individualCur.getLong(1));
 				String item = individualCur.getString(2);
+//				String ability = individualCur.getString(3);
 				String characteristic = individualCur.getString(3);
 				String skillNo1 = individualCur.getString(4);
 				String skillNo2 = individualCur.getString(5);
@@ -480,11 +366,18 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 
 				PBAPokemon p = createPBAPokemon(rowNo);
 				IndividualPBAPokemon result = new IndividualPBAPokemon(p, id, time, item,
-						characteristic, skillNo1, skillNo2, skillNo3, skillNo4);
+						"", characteristic, skillNo1, skillNo2, skillNo3, skillNo4);
 				result.setRowId(Integer.parseInt(rowNo));
-				Integer resouceId = util.imageResource.get(result.getNo());
-				if(resouceId != null){
-					result.setResourceId(resouceId);
+				result.setHpEffortValue(evh);
+				result.setAttackEffortValue(eva);
+				result.setDeffenceEffortValue(evb);
+				result.setSpecialAttackEffortValue(evc);
+				result.setSpecialDeffenceEffortValue(evd);
+				result.setSpeedEffortValue(evs);
+
+				Integer resourceId = util.pokemonImageResource.get(result.getNo());
+				if(resourceId != null){
+					result.setResourceId(resourceId);
 				}
 				Log.v("selectIndividualPBAPok", result.toString());
 
@@ -528,7 +421,7 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 						cur.getInt(19), cur.getInt(20), cur.getInt(21), cur.getInt(22), cur.getInt(23), cur.getInt(24), cur.getString(25),
 						"", "", 0, 0, 0, 0);
 
-				Integer resouceId = util.imageResource.get(result.getNo() + "m" + cur.getString(26));
+				Integer resouceId = util.pokemonImageResource.get(result.getNo() + "m" + cur.getString(26));
 				if(resouceId != null){
 					mega.setResourceId(resouceId);
 				}
@@ -558,7 +451,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 
 			for (int i = 0; i < party.getMember().size(); i++) {
 				long id = this.insertIndividualPBAPokemonData(party.getMember().get(i), party.getTime());
-				Log.v("insertPartyData", String.valueOf(id));
 				values.put("member" + (i + 1), id);
 			}
 
@@ -600,26 +492,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	synchronized public void updatePBAPokemonData(HashMap<String, Integer> countMap) throws IOException, SQLException {
-		if (countMap == null){
-			throw new NullPointerException("argument is null.");
-		}
-
-		SQLiteDatabase db = getWritableDatabase();
-		if (db.isReadOnly()){
-			throw new IOException("Cannot get writable access to DB.");
-		}
-		try {
-			ContentValues values = new ContentValues();
-			for(String key : countMap.keySet()){
-				values.put("count", countMap.get(key));
-				db.update(POKEMON_MASTER_TABLE_NAME, values, BaseColumns._ID  + " = ?", new String[] {key});
-			}
-		}catch (IllegalStateException e) {
-			Log.w(getClass().getSimpleName(), "perhaps, service was restarted or un/reinstalled.", e);
-		}
-	}
-
 	synchronized public void updateIndividualPBAPokemonData(
 			long id, String item, String characteristic,
 			String skill1, String skill2, String skill3, String skill4,
@@ -637,6 +509,13 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 			values.put("skillNo2", skill2);
 			values.put("skillNo3", skill3);
 			values.put("skillNo4", skill4);
+			values.put("evh", h);
+			values.put("eva", a);
+			values.put("evb", b);
+			values.put("evc", c);
+			values.put("evd", d);
+			values.put("evs", s);
+
 			db.update(POKEMON_INDIVIDUAL_TABLE_NAME, values, BaseColumns._ID + " = ?", new String[] {String.valueOf(id)});
 
 			Log.v("updateIndividual", values.toString());
@@ -722,95 +601,6 @@ public class PartyDatabaseHelper extends SQLiteOpenHelper {
 		}
 		cur.close();
 		return null;
-	}
-
-	synchronized public ArrayList<Party> selectAllParty(int limit) throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		if(limit <= 0){
-			limit = 50;
-		}
-		Cursor cur = db.query(PARTY_TABLE_NAME, new String[] { "time", "userName", 
-				"member1", "member2", "member3", "member4", "member5", "member6", "memo"}, 
-				null, null, null, null, "time desc", String.valueOf(limit));
-
-		ArrayList<Party> parties = new ArrayList<Party>();
-		try {
-			while(cur.moveToNext()) {
-				IndividualPBAPokemon member1 = selectIndividualPBAPokemonByID(cur.getLong(2));
-				IndividualPBAPokemon member2 = selectIndividualPBAPokemonByID(cur.getLong(3));
-				IndividualPBAPokemon member3 = selectIndividualPBAPokemonByID(cur.getLong(4));
-				IndividualPBAPokemon member4 = selectIndividualPBAPokemonByID(cur.getLong(5));
-				IndividualPBAPokemon member5 = selectIndividualPBAPokemonByID(cur.getLong(6));
-				IndividualPBAPokemon member6 = selectIndividualPBAPokemonByID(cur.getLong(7));
-				parties.add(
-						new Party(new Timestamp(cur.getLong(0)), 
-								member1, member2, member3, member4, member5, member6, 
-								cur.getString(8), cur.getString(1)));
-			}
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		}
-		cur.close();
-		return parties;
-	}
-
-	synchronized public JSONArray selectAllPartyForJSON() throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor cur = db.query(PARTY_TABLE_NAME, null, 
-				null, null, null, null, "time desc", null);
-
-		JSONArray allParty = new JSONArray();
-		try {
-			while(cur.moveToNext()) {
-				JSONObject temp = new JSONObject();
-				temp.put(BaseColumns._ID, cur.getInt(0));
-				temp.put("time", cur.getLong(1));
-				temp.put("userName", cur.getString(2));
-				temp.put("member1", cur.getLong(3));
-				temp.put("member2", cur.getLong(4));
-				temp.put("member3", cur.getLong(5));
-				temp.put("member4", cur.getLong(6));
-				temp.put("member5", cur.getLong(7));
-				temp.put("member6", cur.getLong(8));
-				temp.put("memo", cur.getString(9));
-				allParty.put(temp);
-			}
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		cur.close();
-		return allParty;
-	}
-
-	synchronized public JSONArray selectAllIndiviualPBAPokemonForJSON() throws IOException {
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor cur = db.query(POKEMON_INDIVIDUAL_TABLE_NAME, null,
-				null, null, null, null, "time desc", null);
-
-		JSONArray allParty = new JSONArray();
-		try {
-			while(cur.moveToNext()) {
-				JSONObject temp = new JSONObject();
-				temp.put(BaseColumns._ID, cur.getInt(0));
-				temp.put("time", cur.getLong(1));
-				temp.put("item", cur.getString(2));
-				temp.put("characteristic", cur.getString(3));
-				temp.put("skillNo1", cur.getString(4));
-				temp.put("skillNo2", cur.getString(5));
-				temp.put("skillNo3", cur.getString(6));
-				temp.put("skillNo4", cur.getString(7));
-				temp.put("pokemonNo", cur.getString(8));
-				allParty.put(temp);
-			}
-		} catch (SQLiteException e) {
-			Log.e("selectPBAPokemonByNo", "not found");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		cur.close();
-		return allParty;
 	}
 
 	synchronized public long insertIndividualPBAPokemonData(JSONObject individualPBAPokemon) throws IOException, SQLException {

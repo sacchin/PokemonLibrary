@@ -196,7 +196,7 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
     }
 
     public void addPokemonToList(PBAPokemon pokemon){
-        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "", "");
         int index = party.setMember(ip);
         if(index == -1){
             Snackbar.make(partyLayout, "すでに6体選択しています。", Snackbar.LENGTH_SHORT).show();

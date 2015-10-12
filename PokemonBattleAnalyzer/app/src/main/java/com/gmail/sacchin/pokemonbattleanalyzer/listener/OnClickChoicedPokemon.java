@@ -17,5 +17,6 @@ public class OnClickChoicedPokemon implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		fragment.setAlert(index);
+		fragment.setMainView(index);
 	}
 }

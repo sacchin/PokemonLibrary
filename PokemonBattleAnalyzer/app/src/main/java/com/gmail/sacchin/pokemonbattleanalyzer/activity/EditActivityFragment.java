@@ -2,6 +2,7 @@ package com.gmail.sacchin.pokemonbattleanalyzer.activity;
 
 import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.InputType;
@@ -33,6 +34,7 @@ import java.io.IOException;
 public class EditActivityFragment extends Fragment {
     private static LinearLayout scrollView;
     private View rootView;
+    private FloatingActionButton fab;
     private Party mine = null;
     private String[] item;
     private String[] skill;
@@ -54,12 +56,12 @@ public class EditActivityFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_edit, container, false);
         scrollView = (LinearLayout)rootView.findViewById(R.id.scrollView);
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.first_fab);
+        fab = (FloatingActionButton) rootView.findViewById(R.id.first_fab);
         fab.setOnClickListener(new OnClickSaveMyParty(this));
 
         try {
-            item = databaseHelper.selectAllItem().toArray(new String[0]);
-            skill = databaseHelper.selectAllSkill().toArray(new String[0]);
+            item = databaseHelper.selectAllItem().toArray(new String[1]);
+            skill = databaseHelper.selectAllSkill().toArray(new String[1]);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,12 +111,12 @@ public class EditActivityFragment extends Fragment {
         tableLayout.addView(createSpinnerRow("技2", skill, pokemon.getSkillNo2()));
         tableLayout.addView(createSpinnerRow("技3", skill, pokemon.getSkillNo3()));
         tableLayout.addView(createSpinnerRow("技4", skill, pokemon.getSkillNo4()));
-        tableLayout.addView(createInputRow("H", true));
-        tableLayout.addView(createInputRow("A", true));
-        tableLayout.addView(createInputRow("B", true));
-        tableLayout.addView(createInputRow("C", true));
-        tableLayout.addView(createInputRow("D", true));
-        tableLayout.addView(createInputRow("S", true));
+        tableLayout.addView(createInputRow("H", true, pokemon.getHpEffortValue()));
+        tableLayout.addView(createInputRow("A", true, pokemon.getAttackEffortValue()));
+        tableLayout.addView(createInputRow("B", true, pokemon.getDeffenceEffortValue()));
+        tableLayout.addView(createInputRow("C", true, pokemon.getSpecialAttackEffortValue()));
+        tableLayout.addView(createInputRow("D", true, pokemon.getSpecialDeffenceEffortValue()));
+        tableLayout.addView(createInputRow("S", true, pokemon.getSpeedEffortValue()));
         bloack.addView(tableLayout);
 
         all.addView(bloack);
@@ -129,7 +131,7 @@ public class EditActivityFragment extends Fragment {
         row.addView(tv);
 
         Spinner sp = new Spinner(getActivity());
-        ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+        ArrayAdapter<String> a = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
         a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         int position = a.getPosition(defaultStr);
         sp.setAdapter(a);
@@ -139,7 +141,7 @@ public class EditActivityFragment extends Fragment {
         return row;
     }
 
-    private TableRow createInputRow(String title, boolean onlyNumber){
+    private TableRow createInputRow(String title, boolean onlyNumber, int defaultValue){
         TableRow row = new TableRow(getActivity());
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
@@ -152,6 +154,9 @@ public class EditActivityFragment extends Fragment {
         if(onlyNumber){
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
+        if(isEffortValue(defaultValue)){
+            editText.setText(String.valueOf(defaultValue));
+        }
         row.addView(editText);
 
         return row;
@@ -159,11 +164,15 @@ public class EditActivityFragment extends Fragment {
 
     public void parseAlInput(){
         for (int i = 0; i < scrollView.getChildCount() ; i++) {
-            parseInput(i, (TableLayout)((LinearLayout) scrollView.getChildAt(i)).getChildAt(1));
+            try {
+                parseInput(i, (TableLayout)((LinearLayout) scrollView.getChildAt(i)).getChildAt(1));
+            }catch (ParseException e){
+                Snackbar.make(fab, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
-    public void parseInput(int index, TableLayout input){
+    public void parseInput(int index, TableLayout input) throws ParseException{
         String item = (String)((Spinner)((TableRow)input.getChildAt(0)).getChildAt(1)).getSelectedItem();
         String characteristic = (String)((Spinner)((TableRow)input.getChildAt(1)).getChildAt(1)).getSelectedItem();
         String skill1 = (String)((Spinner)((TableRow)input.getChildAt(2)).getChildAt(1)).getSelectedItem();
@@ -187,20 +196,30 @@ public class EditActivityFragment extends Fragment {
         }
     }
 
-    private int getEffortValue(TableLayout input, int position){
+    private int getEffortValue(TableLayout input, int position) throws ParseException{
         String ev = ((EditText)((TableRow)input.getChildAt(position)).getChildAt(1)).getText().toString();
         if(ev.isEmpty()){
-            return 0;
+            throw new ParseException("未入力が存在します");
         }
         try {
             int value = Integer.parseInt(ev);
-            if(0 <= value && value < 253 ){
+            if(isEffortValue(value)){
                 return value;
+            }else{
+                throw new ParseException("努力値として不正な値です");
             }
         }catch (NumberFormatException e){
-            e.printStackTrace();
+            throw new ParseException("努力値として不正な値です");
         }
-        return 0;
     }
 
+    public static boolean isEffortValue(int value){
+        return (0 <= value && value < 253);
+    }
+
+    private class ParseException extends Exception {
+        public ParseException(String message){
+            super(message);
+        }
+    }
 }
