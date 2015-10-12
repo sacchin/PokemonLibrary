@@ -20,6 +20,7 @@ public class IndividualPBAPokemon extends PBAPokemon {
     private long id = 0;
     private Timestamp time = null;
     private String item = "";
+    private String characteristic = null;
     private String ability = null;
     private String skillNo1 = "";
     private String skillNo2 = "";
@@ -34,7 +35,7 @@ public class IndividualPBAPokemon extends PBAPokemon {
 
     private RankingPokemonTrend trend = null;
 
-    public IndividualPBAPokemon(PBAPokemon p, long id, Timestamp time, String item, String ability,
+    public IndividualPBAPokemon(PBAPokemon p, long id, Timestamp time, String item, String ability, String characteristic,
                                 String skillNo1, String skillNo2, String skillNo3, String skillNo4) {
         super(p.getNo(), p.getJname(), p.getEname(), p.getH(), p.getA(), p.getB(), p.getC(), p.getD(), p.getS(), p.getAbility1(),
                 p.getAbility2(), p.getAbilityd(), 0, 0, 0, 0);
@@ -43,6 +44,7 @@ public class IndividualPBAPokemon extends PBAPokemon {
         this.time = time;
         this.item = item;
         this.ability = ability;
+        this.characteristic = characteristic;
         this.skillNo1 = skillNo1;
         this.skillNo2 = skillNo2;
         this.skillNo3 = skillNo3;
@@ -106,12 +108,11 @@ public class IndividualPBAPokemon extends PBAPokemon {
 
 
     public String getCharacteristic() {
-        return ability;
+        return characteristic;
     }
 
-
     public void setCharacteristic(String characteristic) {
-        this.ability = characteristic;
+        this.characteristic = characteristic;
     }
 
 
@@ -168,6 +169,30 @@ public class IndividualPBAPokemon extends PBAPokemon {
 
     public void setAbility(String ability) {
         this.ability = ability;
+    }
+
+    public int getHpEffortValue() {
+        return hpEffortValue;
+    }
+
+    public int getAttackEffortValue() {
+        return attackEffortValue;
+    }
+
+    public int getDeffenceEffortValue() {
+        return deffenceEffortValue;
+    }
+
+    public int getSpecialAttackEffortValue() {
+        return specialAttackEffortValue;
+    }
+
+    public int getSpecialDeffenceEffortValue() {
+        return specialDeffenceEffortValue;
+    }
+
+    public int getSpeedEffortValue() {
+        return speedEffortValue;
     }
 
     public void setHpEffortValue(int hpEffortValue) {
@@ -236,11 +261,10 @@ public class IndividualPBAPokemon extends PBAPokemon {
         return super.getSpeedValue(31, speedEffortValue);
     }
 
-    public int getSpeedValue(PokemonCharacteristic characteristic) {
-        int m = Characteristic.convertCharacteristicNameToNo(characteristic.getName());
-        float[] rate = Characteristic.CHARACTERRISTIC_TABLE[m];
+    public int getSpeedValue(int characteristicNo) {
+        float[] rate = Characteristic.CHARACTERRISTIC_TABLE[characteristicNo];
         if(rate != null && 4 < rate.length){
-            return (int)(super.getHPValue(31, speedEffortValue) * rate[4]);
+            return (int)(getSpeedValue() * rate[4]);
         }else{
             return getSpeedValue();
         }
@@ -273,5 +297,12 @@ public class IndividualPBAPokemon extends PBAPokemon {
             }
         }
         return resultMap;
+    }
+
+    public String toString(){
+        return "id:" + id + ", No:" + getNo() + ", Name:" + getJname() + ", item:" + item + ", ability:" + ability + ", characteristic:" + characteristic +
+                ", skill1" + skillNo1 + ", skill2" + skillNo2 + ", skill3" + skillNo3 + ", skill4" + skillNo4 +
+                ", H:" + hpEffortValue + ", A:" + attackEffortValue + ", B:" + deffenceEffortValue +
+                ", C:" + specialAttackEffortValue + ", D:" + specialDeffenceEffortValue + ", S:" + speedEffortValue;
     }
 }

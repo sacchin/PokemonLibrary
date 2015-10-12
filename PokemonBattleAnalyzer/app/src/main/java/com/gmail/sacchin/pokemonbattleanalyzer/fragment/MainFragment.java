@@ -1,7 +1,6 @@
 package com.gmail.sacchin.pokemonbattleanalyzer.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,11 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gmail.sacchin.pokemonbattleanalyzer.interfaces.AddToListInterface;
-import com.gmail.sacchin.pokemonbattleanalyzer.MainActivity;
-import com.gmail.sacchin.pokemonbattleanalyzer.PartyDatabaseHelper;
+import com.gmail.sacchin.pokemonbattleanalyzer.activity.MainActivity;
 import com.gmail.sacchin.pokemonbattleanalyzer.R;
 import com.gmail.sacchin.pokemonbattleanalyzer.Util;
 import com.gmail.sacchin.pokemonbattleanalyzer.entity.IndividualPBAPokemon;
@@ -54,6 +51,8 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
     private Party party = null;
     private static ScrollView scrollView;
     private static LinearLayout partyLayout = null;
+    private View rootView;
+
     protected ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
@@ -75,20 +74,36 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        rootView = inflater.inflate(R.layout.fragment_main, container, false);
         partyLayout = (LinearLayout) rootView.findViewById(R.id.party);
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
         party = new Party();
-
-        Button createMyParty = (Button) rootView.findViewById(R.id.createMine);
-        createMyParty.setOnClickListener(new OnClickCreateNewPartyButton(this, true));
-        Button showAffinity = (Button) rootView.findViewById(R.id.affinityButton);
-        showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.first_fab);
         fab.setOnClickListener(new OnClickCreateNewPartyButton(this, false));
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if(((MainActivity)getActivity()).buttonEnable){
+            Button createMyParty = new Button(getActivity());
+            createMyParty.setText("My Party");
+            createMyParty.setTextSize(10);
+            createMyParty.setOnClickListener(new OnClickCreateNewPartyButton(this, true));
+
+            Button showAffinity = new Button(getActivity());
+            showAffinity.setText("Show Affinity Complete");
+            showAffinity.setTextSize(10);
+            showAffinity.setOnClickListener(new OnClickCheckAffinityButton(this));
+
+            LinearLayout buttonLayout = (LinearLayout) rootView.findViewById(R.id.button);
+            buttonLayout.addView(createMyParty);
+            buttonLayout.addView(showAffinity);
+        }
     }
 
     @Override
@@ -181,10 +196,10 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
     }
 
     public void addPokemonToList(PBAPokemon pokemon){
-        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "");
+        IndividualPBAPokemon ip = new IndividualPBAPokemon(pokemon, 0, new Timestamp(System.currentTimeMillis()), "", "", "", "", "", "", "");
         int index = party.setMember(ip);
         if(index == -1){
-            Toast.makeText(getActivity(), "すでに6体選択しています。", Toast.LENGTH_SHORT).show();
+            Snackbar.make(partyLayout, "すでに6体選択しています。", Snackbar.LENGTH_SHORT).show();
         }else {
             Bitmap temp = Util.createImage(pokemon, 120f, getResources());
             ImageView localView = new ImageView(getActivity());
@@ -215,28 +230,30 @@ public class MainFragment extends PGLFragment implements AddToListInterface{
 
     public void createOpponentParty(){
         if(party.getMember() == null || party.getMember().size() < 1){
-            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            Snackbar.make(partyLayout, "ポケモンが選択されていません。", Snackbar.LENGTH_SHORT).show();
             return;
         }
         party.setTime(new Timestamp(System.currentTimeMillis()));
+        party.setUserName("opponent");
         executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
-        ((MainActivity)getActivity()).startToolActivity();
+        ((MainActivity)getActivity()).startSelectActivity();
     }
 
     public void createMyParty(){
         if(party.getMember() == null || party.getMember().size() < 1){
-            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            Snackbar.make(partyLayout, "ポケモンが選択されていません。", Snackbar.LENGTH_SHORT).show();
+
             return;
         }
         party.setTime(new Timestamp(System.currentTimeMillis()));
         party.setUserName("mine");
         executorService.execute(new PartyInsertHandler(databaseHelper, party, false));
-        Snackbar.make(partyLayout, "登録しました。", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(partyLayout, "登録しました。", Snackbar.LENGTH_SHORT).show();
     }
 
     public void showAffinity(){
         if(party.getMember() == null || party.getMember().size() < 1){
-            Toast.makeText(getActivity(), "ポケモンが選択されていません。", Toast.LENGTH_SHORT).show();
+            Snackbar.make(partyLayout, "ポケモンが選択されていません。", Snackbar.LENGTH_SHORT).show();
             return;
         }
         ((MainActivity)getActivity()).startAffinityActivity(party.getMember().get(0));

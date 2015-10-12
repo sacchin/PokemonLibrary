@@ -7,29 +7,11 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <LinearLayout
+            android:id="@+id/button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/createMine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="自分のパーティー"
-                android:layout_weight="1"
-                android:textSize="5pt">
-            </Button>
-
-            <Button
-                android:id="@+id/affinityButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show Affinity Complete"
-                android:layout_weight="1"
-                android:textSize="5pt" >
-            </Button>
-    </LinearLayout>
+            android:orientation="horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,8 +51,8 @@
             android:layout_marginRight="16dp"
             android:layout_gravity="bottom|right"
             app:fabSize="normal"
-            android:src="@drawable/ic_launcher"
-            app:backgroundTint="#EF9A9A"
+            android:src="@drawable/monsterball"
+            app:backgroundTint="@color/accent"
             app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

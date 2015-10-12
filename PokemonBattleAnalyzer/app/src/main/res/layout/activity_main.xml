@@ -9,7 +9,7 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:minHeight="?attr/actionBarSize"
-        android:background="#F44336">
+        android:background="@color/dark_primary">
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout
